@@ -1,0 +1,32 @@
+<Bindings>
+  <Layer name="SI_KEYBINDINGS_LAYER_GENERAL">
+	<Category name="|cffe823Tamriel Unlimited IT|r">
+	  <Action name="DEBUG_UI">
+	     <Down>TamrielUnlimitedIT.ReloadUIFn()</Down>
+      </Action>
+	  <Action name="TUI_SHOW_PANEL">
+        <Down>
+		
+		if(SCENE_MANAGER:GetCurrentScene():GetName()~="market") then
+			if(ZO_MenuBar_GetSelectedDescriptor(TamrielUnlimitedIT.categoryBar)==1) then
+				ZO_MenuBar_ClearSelection(TamrielUnlimitedIT.categoryBar)
+				SCENE_MANAGER:ShowBaseScene()
+			else
+				if(TamrielUnlimitedIT.BackToMainPage) then
+					TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TuiUtenti")
+					TamrielUnlimitedIT.BackToMainPage=false
+				else
+					ZO_MenuBar_SelectDescriptor(TamrielUnlimitedIT.categoryBar, 1, true)
+				end
+				
+				ZO_MenuBar_ClearSelection(MAIN_MENU_KEYBOARD.categoryBar)
+				
+			end
+			ChiudiAddRemoveFriend()
+		end
+
+		</Down>
+      </Action>
+    </Category>
+  </Layer>
+</Bindings>

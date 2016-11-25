@@ -1,0 +1,138 @@
+<GuiXml>
+  <Controls>
+	<TopLevelControl name="AddRemoveControl" mouseEnabled="true" topmost="true" movable="false" hidden="true">
+      <Dimensions x="245" y="245" />
+      <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="CENTER" />
+      <Controls>
+		<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	
+		
+		<Label name="$(parent)Label_NomeAdd" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Nome PG">
+			<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
+			<Dimensions x="220" y="20" />
+		</Label> 
+		
+		<Button name="$(parent)AddFriend" alpha="1">
+			<Dimensions x="220" y="20" />
+			<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Label_NomeAdd" offsetY="15"></Anchor>
+			<OnMouseDown>
+				AggiungiAmico(self)
+			</OnMouseDown>
+			
+			<Controls>
+				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
+				<Label name="$(parent)Label_AddFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Aggiungi">
+					<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
+					<Dimensions x="220" y="20" />
+				</Label>
+			</Controls>
+		 </Button>	
+		 
+		<Button name="$(parent)RemoveFriend" alpha="1">
+			<Dimensions x="220" y="20" />
+			<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)AddFriend" offsetX="0" offsetY="20"></Anchor>
+			<OnMouseDown>
+				RimuoviAmico(self)
+			</OnMouseDown>
+			<Controls>
+				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
+				<Label name="$(parent)Label_RemoveFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Rimuovi">
+					<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
+					<Dimensions x="220" y="20" />
+				</Label>
+			</Controls>
+		 </Button>	
+		 
+		 <Button name="$(parent)InviaMail" alpha="1">
+			<Dimensions x="220" y="20" />
+			<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)RemoveFriend" offsetX="0" offsetY="20"></Anchor>
+			<OnMouseDown>
+				InviaMail(self)
+			</OnMouseDown>
+			<Controls>
+				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
+				<Label name="$(parent)Label_SendMailFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Invia Mail">
+					<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
+					<Dimensions x="220" y="20" />
+				</Label>
+			</Controls>
+		 </Button>
+		 
+		 
+		 <Button name="$(parent)Bisbiglia" alpha="1">
+			<Dimensions x="220" y="20" />
+			<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)InviaMail" offsetX="0" offsetY="20"></Anchor>
+			<OnMouseDown>
+				Bisbiglia(self)
+			</OnMouseDown>
+			<Controls>
+				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
+				<Label name="$(parent)Label_WhisperFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Bisbiglia">
+					<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
+					<Dimensions x="220" y="20" />
+				</Label>
+			</Controls>
+		 </Button> 
+		 
+		 <Button name="$(parent)DettagliUserID" alpha="1">
+			<Dimensions x="220" y="20" />
+			<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Bisbiglia" offsetX="0" offsetY="40"></Anchor>
+			<OnMouseDown>
+				
+				ApriDettagliPlayer(self,self:GetParent():GetNamedChild("Label_CallPage"):GetText())
+				
+			</OnMouseDown>
+			<Controls>
+				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
+				<Label name="$(parent)Label_DettagliUserID" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Dettagli">
+					<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
+					<Dimensions x="220" y="20" />
+				</Label>
+			</Controls>
+		 </Button>
+
+		<Label name="$(parent)Label_CallPage"  hidden="true" text="TuiCommunity">
+			<Anchor point="CENTER" relativeTo="$(parent)Label_DettagliUtente" relativePoint="CENTER" offsetY="0"/>
+		</Label> 
+		 
+      </Controls>
+    </TopLevelControl>
+	
+	
+	
+	<TopLevelControl name="UtentiPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
+		<Dimensions x="920" y="640" />
+		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
+	</TopLevelControl>
+		
+	<TopLevelControl name="GildePanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
+		<Dimensions x="920" y="640" />
+		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
+	</TopLevelControl>	
+	
+	<TopLevelControl name="EventiPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
+		<Dimensions x="920" y="640" />
+		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
+	</TopLevelControl>	
+	<TopLevelControl name="CommunityPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
+		<Dimensions x="920" y="640" />
+		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
+	</TopLevelControl>	
+	<TopLevelControl name="ConvalidaPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
+		<Dimensions x="920" y="640" />
+		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
+	</TopLevelControl>
+
+	<TopLevelControl name="ContributoriPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
+		<Dimensions x="920" y="640" />
+		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
+	</TopLevelControl>
+	
+	<TopLevelControl name="DettagliUtentePanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
+		<Dimensions x="920" y="640" />
+		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
+	</TopLevelControl>
+
+	
+	
+  </Controls>
+</GuiXml>
