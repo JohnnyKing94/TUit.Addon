@@ -255,6 +255,7 @@ function CreatePlayerArray(arr)
 					copy[c]={}
 					copy[c].lev=value2.lev
 					copy[c].CP=value.CP
+					copy[c].Sex=value.Sex
 					copy[c].sex=value2.sex
 					copy[c].pg_name=key2
 					copy[c].race=value2.race

@@ -89,6 +89,7 @@ function TamrielUnlimitedIT.InitializeSavedVars()
 	AccountData = {
 		Guilds = {},
 		CP = 0,
+		Sex = 1
 	}
 	CharactersData = {
 		lev = 0,
@@ -873,6 +874,7 @@ function ApriDettagliPlayer(self, BackPage)
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTesto"):SetDimensions(900, (tablelength(DettagliArray.PG) - 1) * 100)
 
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoUserID"):SetText(self:GetNamedChild("Label_DettagliUserID"):GetText())
+		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoSex"):SetText( (DettagliArray.Sex > 0 and GetString("SI_GENDER", DettagliArray.Sex) or "N.D.") )
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoRiga5Label_BackPage"):SetText(BackPage)
 
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):SetText("")
