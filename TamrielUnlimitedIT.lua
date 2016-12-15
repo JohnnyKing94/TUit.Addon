@@ -88,7 +88,7 @@ end
 function TamrielUnlimitedIT.InitializeSavedVars()
 	AccountData = {
 		Guilds = {},
-		CP = 0,
+		CP = 0
 	}
 	CharactersData = {
 		lev = 0,
@@ -613,7 +613,7 @@ function LoadPlayeList()
 		v1:SetAnchor(TOPLEFT, pre, BOTTOMLEFT, 0, 0)
 		v1:GetNamedChild("Colonna0Label"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["lev"])
 		v1:GetNamedChild("Colonna1Label"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["CP"])
-		v1:GetNamedChild("Colonna2Label"):SetText(GetString("SI_GENDER", TamrielUnlimitedIT.PlayerTemp[i]["sex"]))
+		v1:GetNamedChild("Colonna2Label"):SetText(GetString("SI_GENDER", TamrielUnlimitedIT.PlayerTemp[i]["sex"]) .. "(RL: " .. (TamrielUnlimitedIT.PlayerTemp[i]["real_sex"] > 0 and string.sub(GetString("SI_GENDER", TamrielUnlimitedIT.PlayerTemp[i]["real_sex"]), 1, 1) or "-") .. ")")
 		v1:GetNamedChild("Colonna3bttn_friendLabel"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["pg_name"])
 		v1:GetNamedChild("Colonna3bttn_friendLabel"):SetColor(0, 186, 255, 1)
 		v1:GetNamedChild("Colonna3bttn_friendLabel_UserID"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["userid"])
@@ -861,6 +861,50 @@ function Bisbiglia(self)
 	StartChatInput("", CHAT_CHANNEL_WHISPER, self:GetParent():GetNamedChild("Label_NomeAdd"):GetText())
 	ChiudiAddRemoveFriend()
 end
+function GetCreditByUserID(userID)
+	local credit = ""
+	if TUitDataVar.Admins ~= nil then
+		if #TUitDataVar.Admins ~= 0 then
+			for i = 1, #TUitDataVar.Admins do
+				if TUitDataVar.Admins[i] == userID then
+					credit = credit .. (credit == "" and "" or ", ") .. "|cff0000Amministratore|r"
+					break
+				end
+			end
+		end
+	end
+	if TUitDataVar.Developers ~= nil then
+		if #TUitDataVar.Developers ~= 0 then
+			for i = 1, #TUitDataVar.Developers do
+				if TUitDataVar.Developers[i] == userID then
+					credit = credit .. (credit == "" and "" or ", ") .. "|ca1d490Sviluppatore|r"
+					break
+				end
+			end
+		end
+	end
+	if TUitDataVar.Translators ~= nil then
+		if #TUitDataVar.Translators ~= 0 then
+			for i = 1, #TUitDataVar.Translators do
+				if TUitDataVar.Translators[i] == userID then
+					credit = credit .. (credit == "" and "" or ", ") .. "|cc390d4Traduttore|r"
+					break
+				end
+			end
+		end
+	end
+	if TUitDataVar.Guildmasters ~= nil then
+		if #TUitDataVar.Guildmasters ~= 0 then
+			for i = 1, #TUitDataVar.Guildmasters do
+				if TUitDataVar.Guildmasters[i] == userID then
+					credit = credit .. (credit == "" and "" or ", ") .. "|c90c3d4GuildMaster|r"
+					break
+				end
+			end
+		end
+	end
+	return credit
+end
 function ApriDettagliPlayer(self, BackPage)
 	local DettagliArray = TamrielUnlimitedIT.TUitDataVar.PlayersData[self:GetNamedChild("Label_DettagliUserID"):GetText()]
 	if (DettagliArray == nil) then
@@ -870,9 +914,13 @@ function ApriDettagliPlayer(self, BackPage)
 
 		local pre = TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTesto")
 
+		local credit = GetCreditByUserID(self:GetNamedChild("Label_DettagliUserID"):GetText())
+
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTesto"):SetDimensions(900, (tablelength(DettagliArray.PG) - 1) * 100)
 
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoUserID"):SetText(self:GetNamedChild("Label_DettagliUserID"):GetText())
+		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoSex"):SetText(DettagliArray.Sex > 0 and GetString("SI_GENDER", DettagliArray.Sex) or "N.D.")
+		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoCredit"):SetText(credit)
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoRiga5Label_BackPage"):SetText(BackPage)
 
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):SetText("")
@@ -896,15 +944,18 @@ function ApriDettagliPlayer(self, BackPage)
 		local i = 1
 
 		for key, value in pairs(DettagliArray) do
-			if (key~="Guilds" and key~="CP") then
+			--if (key~="Guilds" and key~="CP") then
+			if (key == "PG") then
 				for key1, value1 in pairs(value) do
 
 					local v1 = el1:GetNamedChild("Dynamic_stampa_Row_User" .. i)
 
+					--[[
 					alli = TamrielUnlimitedIT.PlayerTemp[i]["alli"]
 					sex = TamrielUnlimitedIT.PlayerTemp[i]["sex"]
 					race = TamrielUnlimitedIT.PlayerTemp[i]["race"]
 					class = TamrielUnlimitedIT.PlayerTemp[i]["class"]
+					]]--
 
 					if v1 == nil then
 						v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Row_User", el1, "DynamicRowDettagliUtente", i)
