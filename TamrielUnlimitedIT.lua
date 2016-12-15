@@ -861,6 +861,50 @@ function Bisbiglia(self)
 	StartChatInput("", CHAT_CHANNEL_WHISPER, self:GetParent():GetNamedChild("Label_NomeAdd"):GetText())
 	ChiudiAddRemoveFriend()
 end
+function GetCreditByUserID(userID)
+	local credit = ""
+	if TUitDataVar.Admins ~= nil then
+		if #TUitDataVar.Admins ~= 0 then
+			for i = 1, #TUitDataVar.Admins do
+				if TUitDataVar.Admins[i] == userID then
+					credit = credit .. (credit == "" and "" or ", ") .. "|cff0000Amministratore|r"
+					break
+				end
+			end
+		end
+	end
+	if TUitDataVar.Developers ~= nil then
+		if #TUitDataVar.Developers ~= 0 then
+			for i = 1, #TUitDataVar.Developers do
+				if TUitDataVar.Developers[i] == userID then
+					credit = credit .. (credit == "" and "" or ", ") .. "|ca1d490Sviluppatore|r"
+					break
+				end
+			end
+		end
+	end
+	if TUitDataVar.Translators ~= nil then
+		if #TUitDataVar.Translators ~= 0 then
+			for i = 1, #TUitDataVar.Translators do
+				if TUitDataVar.Translators[i] == userID then
+					credit = credit .. (credit == "" and "" or ", ") .. "|cc390d4Traduttore|r"
+					break
+				end
+			end
+		end
+	end
+	if TUitDataVar.Guildmasters ~= nil then
+		if #TUitDataVar.Guildmasters ~= 0 then
+			for i = 1, #TUitDataVar.Guildmasters do
+				if TUitDataVar.Guildmasters[i] == userID then
+					credit = credit .. (credit == "" and "" or ", ") .. "|c90c3d4GuildMaster|r"
+					break
+				end
+			end
+		end
+	end
+	return credit
+end
 function ApriDettagliPlayer(self, BackPage)
 	local DettagliArray = TamrielUnlimitedIT.TUitDataVar.PlayersData[self:GetNamedChild("Label_DettagliUserID"):GetText()]
 	if (DettagliArray == nil) then
@@ -870,10 +914,13 @@ function ApriDettagliPlayer(self, BackPage)
 
 		local pre = TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTesto")
 
+		local credit = GetCreditByUserID(self:GetNamedChild("Label_DettagliUserID"):GetText())
+
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTesto"):SetDimensions(900, (tablelength(DettagliArray.PG) - 1) * 100)
 
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoUserID"):SetText(self:GetNamedChild("Label_DettagliUserID"):GetText())
-		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoSex"):SetText( (DettagliArray.Sex > 0 and GetString("SI_GENDER", DettagliArray.Sex) or "N.D.") )
+		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoSex"):SetText(DettagliArray.Sex > 0 and GetString("SI_GENDER", DettagliArray.Sex) or "N.D.")
+		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoCredit"):SetText(credit)
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoRiga5Label_BackPage"):SetText(BackPage)
 
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):SetText("")

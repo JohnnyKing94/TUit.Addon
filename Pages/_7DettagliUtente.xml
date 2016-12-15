@@ -27,16 +27,21 @@
 
 						<Label name="$(parent)UserID" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="@UserID">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="30"/>
-							<Dimensions x="250" y="35" />
+							<Dimensions x="150" y="35" />
 						</Label>
 
 						<Label name="$(parent)Sex" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="@Sex">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)UserID" relativePoint="TOPLEFT" offsetX="250"/>
 							<Dimensions x="250" y="35" />
 						</Label>
+
+						<Label name="$(parent)Credit" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)UserID" relativePoint="TOPLEFT" offsetX="0" offsetY="35"/>
+							<Dimensions x="850" y="35" />
+						</Label>
 						
 						<Label name="$(parent)Gilde" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="LEFT" text="Gilde">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)UserID" relativePoint="TOPLEFT" offsetY="35" offsetX="0"/>
+							<Anchor point="TOPLEFT" relativeTo="$(parent)Credit" relativePoint="TOPLEFT" offsetY="35" offsetX="0"/>
 							<Dimensions x="115" y="35" />
 						</Label>
 						
