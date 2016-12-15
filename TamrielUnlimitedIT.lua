@@ -88,8 +88,7 @@ end
 function TamrielUnlimitedIT.InitializeSavedVars()
 	AccountData = {
 		Guilds = {},
-		CP = 0,
-		Sex = 1
+		CP = 0
 	}
 	CharactersData = {
 		lev = 0,
@@ -614,7 +613,7 @@ function LoadPlayeList()
 		v1:SetAnchor(TOPLEFT, pre, BOTTOMLEFT, 0, 0)
 		v1:GetNamedChild("Colonna0Label"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["lev"])
 		v1:GetNamedChild("Colonna1Label"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["CP"])
-		v1:GetNamedChild("Colonna2Label"):SetText(GetString("SI_GENDER", TamrielUnlimitedIT.PlayerTemp[i]["sex"]))
+		v1:GetNamedChild("Colonna2Label"):SetText(GetString("SI_GENDER", TamrielUnlimitedIT.PlayerTemp[i]["sex"]) .. "(RL: " .. (TamrielUnlimitedIT.PlayerTemp[i]["real_sex"] > 0 and string.sub(GetString("SI_GENDER", TamrielUnlimitedIT.PlayerTemp[i]["real_sex"]), 1, 1) or "-") .. ")")
 		v1:GetNamedChild("Colonna3bttn_friendLabel"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["pg_name"])
 		v1:GetNamedChild("Colonna3bttn_friendLabel"):SetColor(0, 186, 255, 1)
 		v1:GetNamedChild("Colonna3bttn_friendLabel_UserID"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["userid"])
@@ -898,15 +897,18 @@ function ApriDettagliPlayer(self, BackPage)
 		local i = 1
 
 		for key, value in pairs(DettagliArray) do
-			if (key~="Guilds" and key~="CP") then
+			--if (key~="Guilds" and key~="CP") then
+			if (key == "PG") then
 				for key1, value1 in pairs(value) do
 
 					local v1 = el1:GetNamedChild("Dynamic_stampa_Row_User" .. i)
 
+					--[[
 					alli = TamrielUnlimitedIT.PlayerTemp[i]["alli"]
 					sex = TamrielUnlimitedIT.PlayerTemp[i]["sex"]
 					race = TamrielUnlimitedIT.PlayerTemp[i]["race"]
 					class = TamrielUnlimitedIT.PlayerTemp[i]["class"]
+					]]--
 
 					if v1 == nil then
 						v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Row_User", el1, "DynamicRowDettagliUtente", i)

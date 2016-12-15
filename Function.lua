@@ -250,12 +250,13 @@ function CreatePlayerArray(arr)
 	local c=1
 	for key, value in pairs(arr) do
 		for key1, value1 in pairs(value) do
-			if(key1~="Guilds" and key1~="CP") then
+			--if(key1~="Guilds" and key1~="CP") then
+			if (key1 == "PG") then
 				for key2, value2 in pairs(value1) do
 					copy[c]={}
 					copy[c].lev=value2.lev
 					copy[c].CP=value.CP
-					copy[c].Sex=value.Sex
+					copy[c].real_sex=value.Sex
 					copy[c].sex=value2.sex
 					copy[c].pg_name=key2
 					copy[c].race=value2.race

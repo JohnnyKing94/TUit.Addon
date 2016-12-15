@@ -31,7 +31,7 @@
 						</Label>
 
 						<Label name="$(parent)Sex" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="@Sex">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="30"/>
+							<Anchor point="TOPLEFT" relativeTo="$(parent)UserID" relativePoint="TOPLEFT" offsetX="250"/>
 							<Dimensions x="250" y="35" />
 						</Label>
 						
