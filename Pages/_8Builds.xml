@@ -1,0 +1,368 @@
+<GuiXml>
+	<Controls>
+		<Control name="DynamicTextBuilds"  virtual="true" >
+			<Dimensions x="920" y="680" />
+			<Controls>
+				<Control name="$(parent)Container" inherits="ZO_ScrollContainer">
+					<Anchor point="TOPLEFT" offsetY="12" />
+					<Anchor point="BOTTOMRIGHT" offsetY="-12" />
+                </Control>
+			</Controls> 
+		</Control>
+
+		<!-- BUILDS LIST -->
+		<Control name="DynamicScrollPageBuilds" virtual="true" >
+			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
+			<Dimensions x="900" y="200" />
+			<Controls>
+				<Label name="$(parent)Label" mouseEnabled="true" font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Builds">
+					<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
+					<Dimensions x="130" y="50" />
+				</Label>
+				<Control name="$(parent)SearchBuild_control"  >
+					<Dimensions x="200" y="30" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$(parent)Label" offsetY="-3" offsetX="100"/>
+					<Controls>
+						<Backdrop name="$(parent)TextBG" centerColor="000000" edgeColor="AAAAAA">
+							<AnchorFill />
+							<Edge edgeSize="2" />
+						</Backdrop>
+						<EditBox name="SearchBuild_edit" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="100"  editEnabled="true" multiLine="false" newLineEnabled="false"   >
+							<Dimensions x="196" y="22" />
+							<Anchor point="CENTER" relativePoint="CENTER" relativeTo="$(parent)"  />
+						</EditBox>
+					</Controls>
+				</Control>
+				<Button name="$(parent)SearchBuild_btn" alpha="1">
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT"  relativeTo="$(parent)SearchBuild_control" offsetY="-5" />
+					<Textures normal="/esoui/art/miscellaneous/search_icon.dds"  mouseOver="/esoui/art/miscellaneous/search_icon.dds" ></Textures>
+					<Dimensions x="40" y="40" />
+					<OnMouseDown>SearchBuilds(SearchBuild_edit:GetText())</OnMouseDown>
+				</Button>
+				<Control name="$(parent)Tabella">
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
+					<Dimensions x="900" y="200" />
+					<Controls>
+						<!--Header-->
+						<Control name="$(parent)print_Row0" >
+							<Dimensions y="40" x="900" />
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
+							<Controls>
+								<Control name="$(parent)NoBuilds"  >
+									<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="30" offsetY="40" />
+									<Dimensions x="850" y="50" />
+									<Controls>
+										<Label name="$(parent)Label" font="ZoFontWinH1" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
+											<Anchor point="TOP" relativePoint="TOP" offsetX="0" offsetY="0" relativeTo="$(parent)" />
+											<Dimensions x="850" y="50" />
+										</Label>
+									<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
+									</Controls>
+								</Control>
+								<Control name="$(parent)Colonna0"  >
+									<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
+									<Dimensions x="120" y="20" />
+									<Controls>
+										<Button name="$(parent)DateSortBtn" alpha="1">
+											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+											<Dimensions x="120" y="20" />
+											<OnMouseDown>SortBuildsByDate()</OnMouseDown>
+											<Controls>
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Data">
+													<Dimensions x="100" y="20" />
+													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+												</Label>
+											</Controls>
+										</Button>	
+									</Controls>
+								</Control>
+								<Control name="$(parent)Colonna1"  >
+									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna0" />
+									<Dimensions x="80" y="20" />
+									<Controls>
+										<Button name="$(parent)TargetSortBtn" alpha="1">
+											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+											<Dimensions x="80" y="20" />
+											<OnMouseDown>SortBuildsByTarget()</OnMouseDown>
+											<Controls>
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Target">
+													<Dimensions x="80" y="20" />
+													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+												</Label>
+											</Controls>
+										</Button>	
+									</Controls>
+								</Control>
+								<Control name="$(parent)Colonna2"  >
+									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna1" />
+									<Dimensions x="100" y="20" />
+									<Controls>
+										<Button name="$(parent)OwnerSortBtn" alpha="1">
+											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+											<Dimensions x="100" y="20" />
+											<OnMouseDown>SortBuildsByOwner()</OnMouseDown>
+											<Controls>
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Autore">
+													<Dimensions x="200" y="20" />
+													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+												</Label>
+											</Controls>
+										</Button>
+									</Controls>
+								</Control>
+								<Control name="$(parent)Colonna3"  >
+									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna2" />
+									<Dimensions x="200" y="20" />
+									<Controls>
+										<Button name="$(parent)NameSortBtn" alpha="1">
+											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+											<Dimensions x="200" y="20" />
+											<OnMouseDown>SortBuildsByName()</OnMouseDown>
+											<Controls>
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Nome">
+													<Dimensions x="200" y="20" />
+													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+												</Label>
+											</Controls>
+										</Button>	
+									</Controls>
+								</Control>
+								<Control name="$(parent)Colonna4"  >
+									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna3" />
+									<Dimensions x="150" y="20" />
+									<Controls>
+										<Button name="$(parent)RaceSortBtn" alpha="1">
+											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+											<Dimensions x="150" y="20" />
+											<OnMouseDown>SortBuildsByRace()</OnMouseDown>
+											<Controls>
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Razza">
+													<Dimensions x="150" y="20" />
+													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+												</Label>
+											</Controls>
+										</Button>	
+									</Controls>
+								</Control>
+								<Control name="$(parent)Colonna5"  >
+									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna4" />
+									<Dimensions x="150" y="20" />
+									<Controls>
+										<Button name="$(parent)ClassSortBtn" alpha="1">
+											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+											<Dimensions x="150" y="20" />
+											<OnMouseDown>SortBuildsByClass()</OnMouseDown>
+											<Controls>
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Classe">
+													<Dimensions x="150" y="20" />
+													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+												</Label>
+											</Controls>
+										</Button>	
+									</Controls>
+								</Control>
+								<Control name="$(parent)Colonna6"  >
+									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna5" />
+									<Dimensions x="100" y="20" />
+									<Controls>
+										<Button name="$(parent)RatingSortBtn" alpha="1">
+											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+											<Dimensions x="100" y="20" />
+											<OnMouseDown>SortBuildsByRating()</OnMouseDown>
+											<Controls>
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Valutazione">
+													<Dimensions x="100" y="20" />
+													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+												</Label>
+											</Controls>
+										</Button>
+									</Controls>
+								</Control>
+							</Controls>
+						</Control>
+						<!-- Rows added here dynamically -->
+					</Controls>
+				</Control>
+			</Controls>
+		</Control>
+		<!-- /BUILDS LIST -->
+
+		<!-- BUILDS ROW TEMPLATE -->
+		<Control name="BuildsDynamicRow" virtual="true">
+			<Dimensions y="20" x="900" />
+			<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
+			<Controls>
+				<Control name="$(parent)Colonna0">
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
+					<Dimensions x="120" y="20" />
+					<Controls>
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Data">
+							<Dimensions x="120" y="20" />
+							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+						</Label>
+					</Controls>
+				</Control>
+				<Control name="$(parent)Colonna1">
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna0" />
+					<Dimensions x="80" y="20" />
+					<Controls>
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Target">
+							<Dimensions x="80" y="20" />
+							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+						</Label>
+					</Controls>
+				</Control>
+				<Control name="$(parent)Colonna2"  >
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna1" />
+					<Dimensions x="100" y="20" />
+					<Controls>
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Autore">
+							<Dimensions x="100" y="20" />
+							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+						</Label>
+					</Controls>
+				</Control>
+				<Control name="$(parent)Colonna3">
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna2" />
+					<Dimensions x="200" y="20" />
+					<Controls>
+						<Button name="$(parent)NameButton">
+							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+							<MouseButton button="2" enabled="true"/>
+							<MouseButton button="1" enabled="true"/>
+							<OnMouseDown>OpenBuildDetails(self, "TuiBuilds")</OnMouseDown>
+							<Dimensions x="200" y="20" />
+							<Controls>
+								<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Nome">
+									<Dimensions x="200" y="20" />
+									<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+								</Label>
+								<Label name="$(parent)Label_BuildID" hidden="true" text="Id">
+									<Dimensions x="0" y="0" />
+									<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+								</Label>
+							</Controls>
+						</Button>
+					</Controls>
+				</Control>
+				<Control name="$(parent)Colonna4">
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna3" />
+					<Dimensions x="150" y="20" />
+					<Controls>
+						<!--Texture name="$(parent)RaceTexture" inheritAlpha="true">
+							<Dimensions x="64" y="64" />
+							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+						</Texture>
+						<Tooltip name="$(parent)RaceTooltip" font="ZoFontWinH5"/-->
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Razza">
+							<Dimensions x="150" y="20" />
+							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+						</Label>
+					</Controls>
+				</Control>
+				<Control name="$(parent)Colonna5">
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna4" />
+					<Dimensions x="150" y="20" />
+					<Controls>
+						<!--Texture name="$(parent)ClassTexture">
+							<Dimensions x="64" y="64" />
+							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+						</Texture>
+						<Tooltip name="$(parent)ClassTooltip" font="ZoFontWinH5"/-->
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Classe">
+							<Dimensions x="150" y="20" />
+							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+						</Label>
+					</Controls>
+				</Control>
+				<Control name="$(parent)Colonna6">
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna5" />
+					<Dimensions x="100" y="20" />
+					<Controls>
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Valutazione">
+							<Dimensions x="100" y="20" />
+							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+						</Label>
+					</Controls>
+				</Control>
+			</Controls>
+		</Control>
+		<!-- /BUILDS ROW TEMPLATE -->
+
+		<!-- BUILD DETAILS -->
+		<Control name="DynamicScrollPageBuildDetails" virtual="true">
+			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
+			<Dimensions x="900" y="160" />
+			<Controls>
+				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Dettagli Build">
+					<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
+					<Dimensions x="900" y="50" />
+				</Label>
+				<Control name="$(parent)ContTesto">
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
+					<Dimensions x="900" y="1105" />
+					<Controls>
+					<!--
+						<Label name="$(parent)UserID" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="@UserID">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="30"/>
+							<Dimensions x="150" y="35" />
+						</Label>
+						<Label name="$(parent)Sex" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="@Sex">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)UserID" relativePoint="TOPLEFT" offsetX="250"/>
+							<Dimensions x="250" y="35" />
+						</Label>
+						<Label name="$(parent)Credit" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)UserID" relativePoint="TOPLEFT" offsetX="0" offsetY="35"/>
+							<Dimensions x="850" y="35" />
+						</Label>
+						<Label name="$(parent)Gilde" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="LEFT" text="Gilde">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)Credit" relativePoint="TOPLEFT" offsetY="35" offsetX="0"/>
+							<Dimensions x="115" y="35" />
+						</Label>
+						<EditBox name="$(parent)GildeList" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="2048" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
+							<Dimensions x="850" y="150" />
+							<Anchor point="TOPLEFT" relativeTo="$(parent)Gilde" relativePoint="TOPLEFT"  offsetX="0" offsetY="35" />
+							<OnInitialized>
+								self:SetMultiLine(true)
+								self:SetText("Gilda1\r\Gilda2\r\nGilda3")
+							</OnInitialized>
+						</EditBox>
+						<Label name="$(parent)Personaggi" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Personaggi">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)GildeList" relativePoint="TOPLEFT" offsetX="0" offsetY="120"/>
+							<Dimensions x="250" y="35" />
+						</Label>						
+						<Control name="$(parent)ContUserDinamici">
+						<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Personaggi" offsetX="30" />
+							<Dimensions x="700" y="180" />
+							<Controls>
+								<Label name="$(parent)pre" hidden="true" text="">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+									<Dimensions x="0" y="0" />
+								</Label>
+							</Controls>
+						</Control>
+					-->
+						<Button name="$(parent)Riga5" alpha="1" inherits="ZO_DefaultButton">
+							<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" offsetX="0" offsetY="0" relativeTo="$(parent)ContTesto" />
+							<Dimensions x="180" y="35" />
+							<OnMouseDown>
+								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, self:GetNamedChild("Label_BackPage"):GetText())
+							</OnMouseDown>
+							<Controls>
+								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ritorna">
+									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
+									<Dimensions x="115" y="35" />
+								</Label> 
+								<Label name="$(parent)Label_BackPage"  hidden="true" text="TuiBuilds">
+									<Anchor point="CENTER" relativeTo="$(parent)Label_BuildDetails" relativePoint="CENTER" offsetY="0"/>
+								</Label> 
+							</Controls>
+						</Button>
+					</Controls>
+				</Control>
+			</Controls>
+		</Control>
+		<!-- /BUILD DETAILS -->
+		
+	</Controls>
+</GuiXml>

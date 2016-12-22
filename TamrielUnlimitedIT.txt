@@ -14,7 +14,10 @@
 libs/LibStub/LibStub.lua
 libs/LibMainMenu/LibMainMenu.lua
 TamrielUnlimitedIT.xml
+TUitConfigData.lua
 TUitData.lua
+SharedBuilds.lua
+Modules/TUI_Builds.lua
 Pages/_1Utenti.xml
 Pages/_2Gilde.xml
 Pages/_3Eventi.xml
@@ -22,6 +25,7 @@ Pages/_4Community.xml
 Pages/_5Convalida.xml
 Pages/_6Contributori.xml
 Pages/_7DettagliUtente.xml
+Pages/_8Builds.xml
 Function.lua
 TamrielUnlimitedIT.lua
 bindings.xml

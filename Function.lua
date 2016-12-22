@@ -218,6 +218,46 @@ function AddYear(dat,n)
 	end 
 end
 
+-- GAME
+function GetConfigRaceInfo(raceId)
+	if TUI_Config ~= nil then
+		if TUI_Config.Races ~= nil then
+			for key, value in pairs(TUI_Config.Races) do
+				if key == raceId then
+					return value
+				end
+			end
+		end
+	end
+	return nil
+end
+function GetConfigClassInfo(classId)
+	if TUI_Config ~= nil then
+		if TUI_Config.Classes ~= nil then
+			for key, value in pairs(TUI_Config.Classes) do
+				if key == classId then
+					return value
+				end
+			end
+		end
+	end
+	return nil
+end
+function GetRaceTexture(raceId)
+	local raceInfo = GetConfigRaceInfo(raceId)
+	if raceInfo ~= nil then
+		return (raceInfo.texture ~= "" and "TamrielUnlimitedIT/Textures/Race/" .. raceInfo.texture or "")
+	end
+	return ""
+end
+function GetClassTexture(classId)
+	local classInfo = GetConfigClassInfo(classId)
+	if classInfo ~= nil then
+		return (classInfo.texture ~= "" and "TamrielUnlimitedIT/Textures/Class/" .. classInfo.texture or "")
+	end
+	return ""
+end
+
 -- SORT
 
 function quicksort(t, FuncCheck, start, endi)

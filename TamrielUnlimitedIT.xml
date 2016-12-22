@@ -77,9 +77,7 @@
 			<Dimensions x="220" y="20" />
 			<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Bisbiglia" offsetX="0" offsetY="40"></Anchor>
 			<OnMouseDown>
-				
 				ApriDettagliPlayer(self,self:GetParent():GetNamedChild("Label_CallPage"):GetText())
-				
 			</OnMouseDown>
 			<Controls>
 				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
@@ -92,12 +90,10 @@
 
 		<Label name="$(parent)Label_CallPage"  hidden="true" text="TuiCommunity">
 			<Anchor point="CENTER" relativeTo="$(parent)Label_DettagliUtente" relativePoint="CENTER" offsetY="0"/>
-		</Label> 
+		</Label>
 		 
       </Controls>
     </TopLevelControl>
-	
-	
 	
 	<TopLevelControl name="UtentiPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
 		<Dimensions x="920" y="640" />
@@ -132,7 +128,10 @@
 		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
 	</TopLevelControl>
 
-	
+	<TopLevelControl name="BuildsPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
+		<Dimensions x="920" y="640" />
+		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
+	</TopLevelControl>
 	
   </Controls>
 </GuiXml>

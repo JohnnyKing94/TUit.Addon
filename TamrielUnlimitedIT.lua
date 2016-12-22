@@ -179,6 +179,21 @@ function TamrielUnlimitedIT:InitializeScene()
 	local sc = DynamicLabel_stampataDettagliUtente0ContainerScrollChild
 	TamrielUnlimitedIT.DynamicScrollPageDettagliUtente = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelDettagliUtente", sc, "DynamicScrollPageDettagliUtente", 0)
 
+	-- Module Builds
+	-- Create modules
+	TamrielUnlimitedIT.Builds = TUI_Builds
+	TamrielUnlimitedIT.Builds:Initialize()
+	if TamrielUnlimitedIT.Builds ~= nil then
+		if TamrielUnlimitedIT.Builds.Builds ~= nil then
+			d("Builds count: " .. #TamrielUnlimitedIT.Builds.Builds)
+			--TamrielUnlimitedIT.Builds:InitializeScene()
+		else
+			d("TUI_Builds.Builds is nil")
+		end
+	else
+		d("TUI_Builds.Create failed")
+	end
+
 	TamrielUnlimitedIT.CreateScene()
 end
 function TamrielUnlimitedIT.CreateScene()
@@ -192,6 +207,7 @@ function TamrielUnlimitedIT.CreateScene()
 	ZO_CreateStringId("SI_TUI_CONVALIDA", "Convalida")
 	ZO_CreateStringId("SI_TUI_CONTRIBUTORI", "Contributori")
 	ZO_CreateStringId("SI_TUI_DETTAGLI_UTENTE", "Dettagli Utente")
+	ZO_CreateStringId("SI_TUI_BUILDS", "Builds Condivise")
 	ZO_CreateStringId("SI_BINDING_NAME_TUI_SHOW_PANEL", "Apri TamrielUnlimitedIT")
 
 	-- Creazione Array dati per icona nel menu
@@ -395,6 +411,13 @@ function TamrielUnlimitedIT.CreateScene()
 				highlight = "EsoUI/art/mainmenu/menubar_social_over.dds",
 			},
 			{
+				categoryName = SI_TUI_BUILDS, -- Titolo vicino ai bottoni
+				descriptor = "TuiBuilds",
+				normal = "EsoUI/art/mainmenu/menubar_voip_up.dds",
+				pressed = "EsoUI/art/mainmenu/menubar_voip_down.dds",
+				highlight = "EsoUI/art/mainmenu/menubar_voip_over.dds",
+			},
+			{
 				categoryName = SI_TUI_GILDE, -- Titolo vicino ai bottoni
 				descriptor = "TuiGilde",
 				normal = "EsoUI/art/mainmenu/menubar_guilds_up.dds",
@@ -415,7 +438,6 @@ function TamrielUnlimitedIT.CreateScene()
 				pressed = "EsoUI/art/mainmenu/menubar_voip_down.dds",
 				highlight = "EsoUI/art/mainmenu/menubar_voip_over.dds",
 			},
-
 			{
 				categoryName = SI_TUI_CONVALIDA, -- Titolo vicino ai bottoni
 				descriptor = "TuiConvalida",
@@ -425,8 +447,16 @@ function TamrielUnlimitedIT.CreateScene()
 			},
 		}
 
+		-- Create the module Builds
+		if TamrielUnlimitedIT.Builds ~= nil then
+			d("Builds:CreateScene()")
+			TamrielUnlimitedIT.Builds:CreateScene()
+		else
+			d("Builds not initialized")
+		end
+
 		-- Registrazione scene in gruppo
-		SCENE_MANAGER:AddSceneGroup("TuiSceneGroup", ZO_SceneGroup:New("TuiUtenti", "TuiGilde", "TuiEventi", "TuiCommunity", "TuiConvalida", "TuiContributori", "TuiDettagliUtente"))
+		SCENE_MANAGER:AddSceneGroup("TuiSceneGroup", ZO_SceneGroup:New("TuiUtenti", "TuiGilde", "TuiEventi", "TuiCommunity", "TuiConvalida", "TuiContributori", "TuiDettagliUtente", "TuiBuilds"))
 
 		-- Aggiunge la categoria al menu in alto ( in teoria )
 		TamrielUnlimitedIT.MENU_CATEGORY_TUI = TamrielUnlimitedIT.LMM:AddCategory(TUI_MAIN_MENU_CATEGORY_DATA)
@@ -453,7 +483,7 @@ function TamrielUnlimitedIT.CreateScene()
 		ZO_MenuBar_AddButton(TamrielUnlimitedIT.categoryBar, TUI_MAIN_MENU_CATEGORY_DATA)
 
 		local MieTab = SCENE_MANAGER:GetSceneGroup("TuiSceneGroup").scenes
-		local MieTabNotBackToMainPage = {"TuiUtenti", "TuiGilde", "TuiEventi", "TuiCommunity", "TuiConvalida"}
+		local MieTabNotBackToMainPage = {"TuiUtenti", "TuiGilde", "TuiEventi", "TuiCommunity", "TuiConvalida", "TuiBuilds"}
 
 		ListaKeyBinding = {}
 
@@ -539,6 +569,7 @@ function TamrielUnlimitedIT.CreateScene()
 
 				end
 			end)
+		
 	end
 end
 
@@ -546,7 +577,6 @@ end
 
 
 -- LISTA PLAYER
-
 
 function ClearArrayPlayerTemp()
 	for k in pairs(TamrielUnlimitedIT.PlayerTemp) do
@@ -578,7 +608,6 @@ function CercaPlayer(Pattern)
 	LoadArrayPlayerTemp_NamePattern(Pattern)
 	SortCP()
 end
-
 function LoadPlayeList()
 	ChiudiAddRemoveFriend()
 
@@ -644,7 +673,6 @@ function LoadPlayeList()
 		ii = ii + 1
 	end
 end
-
 function LoadNoPlayer()
 	
 	local el1 = TamrielUnlimitedIT.DynamicScrollPagePlayer:GetNamedChild("Tabella")
@@ -670,7 +698,6 @@ end
 -- SORTING
 
 function SortLiv()
-
 	if TamrielUnlimitedIT.CurrPlayerSort == "LivDesc" then
 		TamrielUnlimitedIT.CurrPlayerSort = "LivAsc"
 		quicksort(TamrielUnlimitedIT.PlayerTemp, CheckLivAsc)
@@ -678,11 +705,9 @@ function SortLiv()
 		TamrielUnlimitedIT.CurrPlayerSort = "LivDesc"
 		quicksort(TamrielUnlimitedIT.PlayerTemp, CheckLivDesc)
 	end
-
 	LoadPlayeList()
 end
 function SortCP()
-
 	if TamrielUnlimitedIT.CurrPlayerSort == "CPDesc" then
 		TamrielUnlimitedIT.CurrPlayerSort = "CPAsc"
 		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["CP"] == v2["CP"]) then return CheckLivAsc(v1, v2) end return v1["CP"] <= v2["CP"] end)
@@ -690,7 +715,6 @@ function SortCP()
 		TamrielUnlimitedIT.CurrPlayerSort = "CPDesc"
 		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["CP"] == v2["CP"]) then return CheckLivDesc(v1, v2) end return v2["CP"] <= v1["CP"] end)
 	end
-
 	LoadPlayeList()
 end
 function SortSesso()
@@ -701,7 +725,6 @@ function SortSesso()
 		TamrielUnlimitedIT.CurrPlayerSort = "SessoDesc"
 		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["sex"] == v2["sex"]) then return CheckLivDesc(v1, v2) end return v2["sex"] <= v1["sex"] end)
 	end
-
 	LoadPlayeList()
 end
 function SortUser()
@@ -712,7 +735,6 @@ function SortUser()
 		TamrielUnlimitedIT.CurrPlayerSort = "UserDesc"
 		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["pg_name"] == v2["pg_name"]) then return CheckLivDesc(v1, v2) end return v2["pg_name"] <= v1["pg_name"] end)
 	end
-
 	LoadPlayeList()
 end
 function SortRace()
@@ -723,7 +745,6 @@ function SortRace()
 		TamrielUnlimitedIT.CurrPlayerSort = "RaceDesc"
 		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["race"] == v2["race"]) then return CheckLivDesc(v1, v2) end return v2["race"] <= v1["race"] end)
 	end
-
 	LoadPlayeList()
 end
 function SortClass()
@@ -734,7 +755,6 @@ function SortClass()
 		TamrielUnlimitedIT.CurrPlayerSort = "ClassDesc"
 		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["class"] == v2["class"]) then return CheckLivDesc(v1, v2) end return v2["class"] <= v1["class"] end)
 	end
-
 	LoadPlayeList()
 end
 function SortFazione()
@@ -745,12 +765,9 @@ function SortFazione()
 		TamrielUnlimitedIT.CurrPlayerSort = "FazioneDesc"
 		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["alli"] == v2["alli"]) then return CheckLivDesc(v1, v2) end return v2["alli"] <= v1["alli"] end)
 	end
-
 	LoadPlayeList()
 end
-
 function CheckLivAsc(v1, v2)
-
 	-- v1<=v2
 	if string.starts(v1["lev"], "VR") then
 		if string.starts(v2["lev"], "VR") then
@@ -761,12 +778,10 @@ function CheckLivAsc(v1, v2)
 	elseif string.starts(v2["lev"], "VR") then
 		return true;
 	else
-
 		return tonumber(v1["lev"]) <= tonumber(v2["lev"])
 	end
 end
 function CheckLivDesc(v1, v2)
-
 	-- v2<=v1
 	if string.starts(v2["lev"], "VR") then
 		if string.starts(v1["lev"], "VR") then
@@ -777,16 +792,13 @@ function CheckLivDesc(v1, v2)
 	elseif string.starts(v1["lev"], "VR") then
 		return true;
 	else
-
 		return tonumber(v2["lev"]) <= tonumber(v1["lev"])
 	end
-
 end
 
 -- CONTROLLI MENU' A TENDINA
 
 function ApriMenuPlayer(self, button, BackPage)
-
 	if button == 1 or GetUnitName("player") == self:GetNamedChild("Label"):GetText() then
 		-- ChiudiAddRemoveFriend() -- Blocca il menu a tendina
 		AddRemoveControl:SetHidden(false)
@@ -798,43 +810,31 @@ function ApriMenuPlayer(self, button, BackPage)
 		AddRemoveControlInviaMailLabel_SendMailFriend:SetColor(0.5, 0.5, 0.5, 1)
 		AddRemoveControlBisbiglia:SetEnabled(false)
 		AddRemoveControlBisbigliaLabel_WhisperFriend:SetColor(0.5, 0.5, 0.5, 1)
-
 		AddRemoveControlLabel_NomeAdd:SetText(self:GetNamedChild("Label"):GetText()) -- Aggiunge il nome PG
 		AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(self:GetNamedChild("Label_UserID"):GetText()) -- Aggiunge UserID alla voce dettagli
-
 		AddRemoveControl:ClearAnchors()
 		local mouseX, mouseY = GetUIMousePosition()
 		AddRemoveControl:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, mouseX, mouseY)
-
 		AddRemoveControlLabel_CallPage:SetText(BackPage)
-
 	else
 		AddRemoveControl:SetHidden(false)
-
 		if IsFriend(self:GetNamedChild("Label"):GetText()) then
 			AddRemoveControlAddFriend:SetEnabled(false)
 			AddRemoveControlRemoveFriend:SetEnabled(true)
 			AddRemoveControlAddFriendLabel_AddFriend:SetColor(0.5, 0.5, 0.5, 1)
 			AddRemoveControlRemoveFriendLabel_RemoveFriend:SetColor(1, 1, 1, 1)
-
-
 		else
 			AddRemoveControlAddFriend:SetEnabled(true)
 			AddRemoveControlRemoveFriend:SetEnabled(false)
 			AddRemoveControlAddFriendLabel_AddFriend:SetColor(1, 1, 1, 1)
 			AddRemoveControlRemoveFriendLabel_RemoveFriend:SetColor(0.5, 0.5, 0.5, 1)
-
 		end
-
 		AddRemoveControlLabel_NomeAdd:SetText(self:GetNamedChild("Label"):GetText()) -- Aggiunge il nome PG
 		AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(self:GetNamedChild("Label_UserID"):GetText()) -- Aggiunge UserID alla voce dettagli
-
 		AddRemoveControl:ClearAnchors()
 		local mouseX, mouseY = GetUIMousePosition()
 		AddRemoveControl:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, mouseX, mouseY)
-
 		AddRemoveControlLabel_CallPage:SetText(BackPage)
-
 	end
 end
 function MouseDownGenerale()
@@ -913,7 +913,6 @@ function ApriDettagliPlayer(self, BackPage)
 		TamrielUnlimitedIT.BackToMainPage = true
 
 		local pre = TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTesto")
-
 		local credit = GetCreditByUserID(self:GetNamedChild("Label_DettagliUserID"):GetText())
 
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTesto"):SetDimensions(900, (tablelength(DettagliArray.PG) - 1) * 100)
@@ -950,13 +949,6 @@ function ApriDettagliPlayer(self, BackPage)
 
 					local v1 = el1:GetNamedChild("Dynamic_stampa_Row_User" .. i)
 
-					--[[
-					alli = TamrielUnlimitedIT.PlayerTemp[i]["alli"]
-					sex = TamrielUnlimitedIT.PlayerTemp[i]["sex"]
-					race = TamrielUnlimitedIT.PlayerTemp[i]["race"]
-					class = TamrielUnlimitedIT.PlayerTemp[i]["class"]
-					]]--
-
 					if v1 == nil then
 						v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Row_User", el1, "DynamicRowDettagliUtente", i)
 					end
@@ -984,7 +976,6 @@ function ApriDettagliPlayer(self, BackPage)
 
 					pre = v1
 					i = i + 1
-					
 				end
 			end
 		end
@@ -998,9 +989,7 @@ function ApriDettagliPlayer(self, BackPage)
 		end
 
 		TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TuiDettagliUtente")
-
 	end
-
 end
 
 
@@ -1013,7 +1002,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 	ArrTemp = {}
 	local CurrentTimeStamp = GetTimeStamp() + 7200
 
-
 	for i = 1, #TamrielUnlimitedIT.TUitDataVar.Events do
 
 		if (TamrielUnlimitedIT.TUitDataVar.Events[i]["recurring"] ~= "" and TamrielUnlimitedIT.TUitDataVar.Events[i]["recurring"] ~= nil) then
@@ -1023,7 +1011,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 				local T2 = explode("=", T1[ii])
 				ArrRepTemp[T2[1]] = T2[2]
 			end
-
 
 			if (ArrRepTemp["FREQ"] ~= nil) then
 
@@ -1047,7 +1034,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
 							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
 
-
 							while (lastITS < DataTermineTS) do
 
 								tt1 = TimestampToDate(lastITS)
@@ -1064,9 +1050,7 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 								end
 							end
 
-
 						elseif (ArrRepTemp["COUNT"] ~= nil) then
-
 
 							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
 							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
@@ -1106,7 +1090,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 								AddDay(tt2, interval)
 								lastFTS = DateToTimestamp(tt2)
 
-
 								if (lastFTS > CurrentTimeStamp) then
 									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
 									iii = iii + 1
@@ -1119,12 +1102,8 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 					-- SETTIMANALE
 					if (ArrRepTemp["INTERVAL"] ~= nil) then
 						local interval = tonumber(ArrRepTemp["INTERVAL"])
-
 						if (ArrRepTemp["BYDAY"] ~= nil) then
-
 							ArrRepTemp["BYDAY"] = explode(",", ArrRepTemp["BYDAY"])
-
-
 
 							if (ArrRepTemp["UNTIL"] ~= nil) then
 								-- DATA TERMINE
@@ -1142,8 +1121,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
 
 								local cc = 1
-
-
 								while (lastITS < DataTermineTS) do
 
 									-- inizio evento
@@ -1177,7 +1154,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
 									end
 
-
 									if (cc >= #ArrRepTemp["BYDAY"]) then
 										cc = 1
 									else
@@ -1185,9 +1161,7 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 									end
 								end
 
-
 							elseif (ArrRepTemp["COUNT"] ~= nil) then
-
 
 								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
 								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
@@ -1224,8 +1198,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 									AddDay(tt2, dayNext)
 									lastFTS = DateToTimestamp(tt2)
 
-
-
 									-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
 
 									if (lastFTS > CurrentTimeStamp) then
@@ -1245,11 +1217,8 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 								local cc = 1
 
 								-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
-
 								local iii = 1
-
 								while (iii <= NumeroMaxRipetizioniSeNonSettate) do
-
 
 									-- inizio evento
 									tt1 = TimestampToDate(lastITS)
@@ -1279,7 +1248,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 									AddDay(tt2, dayNext)
 									lastFTS = DateToTimestamp(tt2)
 
-
 									if (lastFTS > CurrentTimeStamp) then
 										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
 										iii = iii + 1
@@ -1292,8 +1260,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 									end
 								end
 							end
-
-
 
 						else
 
@@ -1312,7 +1278,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
 								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
 
-
 								while (lastITS < DataTermineTS) do
 
 									tt1 = TimestampToDate(lastITS)
@@ -1329,9 +1294,7 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 									end
 								end
 
-
 							elseif (ArrRepTemp["COUNT"] ~= nil) then
-
 
 								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
 								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
@@ -1352,8 +1315,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 									if (lastFTS > CurrentTimeStamp) then
 										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
 									end
-
-
 								end
 							else
 
@@ -1362,7 +1323,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 
 								-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
 								local iii = 1
-
 								while (iii <= NumeroMaxRipetizioniSeNonSettate) do
 
 									tt1 = TimestampToDate(lastITS)
@@ -1373,24 +1333,20 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 									AddDay(tt2, interval * 7)
 									lastFTS = DateToTimestamp(tt2)
 
-
 									if (lastFTS > CurrentTimeStamp) then
 										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
 										iii = iii + 1
 									end
 								end
 							end
-
 						end
 					end
-
 
 					--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 				elseif (ArrRepTemp["FREQ"] == "MONTHLY") then
 					-- MENSILE
 					if (ArrRepTemp["INTERVAL"] ~= nil) then
 						local interval = tonumber(ArrRepTemp["INTERVAL"])
-
 						if (ArrRepTemp["UNTIL"] ~= nil) then
 							-- DATA TERMINE
 							-- 20150729T220000
@@ -1426,7 +1382,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 
 						elseif (ArrRepTemp["COUNT"] ~= nil) then
 
-
 							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
 							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
 
@@ -1446,8 +1401,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 								if (lastFTS > CurrentTimeStamp) then
 									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
 								end
-
-
 							end
 						else
 
@@ -1466,7 +1419,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 								AddMonth(tt2, interval)
 								lastFTS = DateToTimestamp(tt2)
 
-
 								if (lastFTS > CurrentTimeStamp) then
 									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
 									iii = iii + 1
@@ -1480,7 +1432,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 					-- ANNUALE
 					if (ArrRepTemp["INTERVAL"] ~= nil) then
 						local interval = tonumber(ArrRepTemp["INTERVAL"])
-
 						if (ArrRepTemp["UNTIL"] ~= nil) then
 							-- DATA TERMINE
 							-- 20150729T220000
@@ -1516,7 +1467,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 
 						elseif (ArrRepTemp["COUNT"] ~= nil) then
 
-
 							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
 							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
 
@@ -1536,8 +1486,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 								if (lastFTS > CurrentTimeStamp) then
 									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
 								end
-
-
 							end
 						else
 
@@ -1556,7 +1504,6 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 								AddYear(tt2, interval)
 								lastFTS = DateToTimestamp(tt2)
 
-
 								if (lastFTS > CurrentTimeStamp) then
 									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
 									iii = iii + 1
@@ -1564,11 +1511,8 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 							end
 						end
 					end
-
 				end
 			end
-
-
 		end
 	end
 
@@ -1579,15 +1523,10 @@ TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
 
 	-- AddErr(TamrielUnlimitedIT.TUitDataVar.Events)
 	-- zo_loadstring("d(\"test\"")()
-
-
 end
-
 function SortEventi()
 	quicksort(TamrielUnlimitedIT.TUitDataVar.Events, function (v1, v2) return v1[1] <= v2[1] end)
 end
-
-
 function LoadEventi()
 	el1 = TamrielUnlimitedIT.DynamicScrollPageEventi
 	eventMessage = TamrielUnlimitedIT.DynamicScrollPageEventiMessage
@@ -1604,7 +1543,6 @@ function LoadEventi()
 		LoadNoEventi()
 	end
 end
-
 function LoadNoEventi()
 	eventMessage:SetHidden(false)
 	el1:SetHidden(true)
@@ -1622,7 +1560,6 @@ function LoadEventiList()
 	local CurrentTimeStamp = GetTimeStamp() + 7200
 
 	local counterControl = 1
-
 
 	for i = 1, #TamrielUnlimitedIT.TUitDataVar.Events do
 
@@ -1651,7 +1588,6 @@ function LoadEventiList()
 			end
 			OrariTxt = OrariTxt .. DFine.minuto
 
-
 			v1:GetNamedChild("DataLabelGiornoMese"):SetText(DInizio.giorno .. "/" .. DInizio.mese)
 			v1:GetNamedChild("DataLabelOrario"):SetText(OrariTxt)
 			v1:GetNamedChild("TitoloLabel"):SetText(TamrielUnlimitedIT.TUitDataVar.Events[i]["title"])
@@ -1659,7 +1595,6 @@ function LoadEventiList()
 
 			pre = v1
 			counterControl = counterControl + 1
-
 
 			-- minore dell'inizio
 			if (CurrentTimeStamp < TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]) then
@@ -1669,11 +1604,9 @@ function LoadEventiList()
 				TamrielUnlimitedIT.ciao = "asd"
 				if (diff < 86400) then
 					-- Controllo che l'evento non inizia in meno di un ora
-
 					zo_callLater(function ()
 							TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento è appena iniziato!")
 						end, diff * 1000)
-
 					if (diff > 3600) then
 						zo_callLater(function ()
 								TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra 1 ora!")
@@ -1684,8 +1617,6 @@ function LoadEventiList()
 								TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra 10 minuti!")
 							end, (diff - 600) * 1000)
 					end
-
-
 					if ((diff > 661 and diff < 3600) or (diff > 60 and diff < 600)) then
 						if (DDiff.minuto == 1) then
 							AddPreLoadEvent(TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra " .. DDiff.minuto .. " minuto!"))
@@ -1693,20 +1624,14 @@ function LoadEventiList()
 							AddPreLoadEvent(TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra " .. DDiff.minuto .. " minuti!"))
 						end
 					end
-
 				end
-
 			else
 				AddPreLoadEvent(TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "è in corso in questo momento!"))
 			end
 		end
-
-
 	end
 
-
 	TamrielUnlimitedIT.DynamicScrollPageEventi:SetDimensions(900, AltezzaComponente * counterControl)
-
 
 	local ii = counterControl
 	while ii <= #TamrielUnlimitedIT.TUitDataVar.Events do
@@ -1717,7 +1642,6 @@ function LoadEventiList()
 		end
 		ii = ii + 1
 	end
-
 end
 
 TamrielUnlimitedIT.ShowEventMessage = function (Titolo, Corpo)
@@ -1739,7 +1663,6 @@ function LoadGilde()
 		LoadNOGilde()
 	end
 end
-
 function LoadNOGilde()
 	TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("NOGuilds"):SetHidden(false)
 	TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("AD"):SetHidden(true)
@@ -1748,9 +1671,7 @@ function LoadNOGilde()
 	TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("NOGuildsLabel"):SetText("Non è stato scaricato alcun dato!")
 end
 function LoadGildeList()
-	
 	TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("NOGuilds"):SetHidden(true)
-	
 	TamrielUnlimitedIT.GuildADTemp = deepcopy(TUitDataVar.GuildAD)
 	TamrielUnlimitedIT.GuildDCTemp = deepcopy(TUitDataVar.GuildDC)
 	TamrielUnlimitedIT.GuildEPTemp = deepcopy(TUitDataVar.GuildEP)
@@ -1805,19 +1726,15 @@ function LoadGildeList()
 
 	-- 280 somma delle altezze dei component prima di quelli dinamici
 	TamrielUnlimitedIT.DynamicScrollPageGilde:SetDimensions(900, DimTotale + 280)
-
 end
-
 function LoadNoGuildAD()
 	elAD:GetNamedChild("NoGuildAD"):SetHidden(false)
 	elAD:GetNamedChild("NoGuildADLabel"):SetText("Nessuna gilda negli Aldmeri Dominion")
 end
-
 function LoadGildeAD()
 	elAD:GetNamedChild("NoGuildAD"):SetHidden(true)
 	DimTotale = DimTotale + (AltezzaComponente * #TamrielUnlimitedIT.GuildADTemp) + preAD:GetHeight() + PaddingDopo
 	elAD:SetDimensions(710, (AltezzaComponente * #TamrielUnlimitedIT.GuildADTemp) + preAD:GetHeight() + PaddingDopo)
-
 
 	local i = 1
 	while i <= #TamrielUnlimitedIT.GuildADTemp do
@@ -1829,7 +1746,6 @@ function LoadGildeAD()
 		v1:SetDimensions(710, AltezzaComponente)
 		v1:SetHidden(false)
 		v1:SetAnchor(TOP, preAD, BOTTOM, 0, 10)
-
 
 		v1:GetNamedChild("TitoloLabel"):SetText(TamrielUnlimitedIT.GuildADTemp[i]["guild_name"])
 		v1:GetNamedChild("TestoEditBox"):SetText(TamrielUnlimitedIT.GuildADTemp[i]["description"])
@@ -1851,7 +1767,6 @@ function LoadGildeAD()
 		ii = ii + 1
 	end
 end
-
 function LoadNoGuildDC()
 	elDC:GetNamedChild("NoGuildDC"):SetHidden(false)
 	elDC:GetNamedChild("NoGuildDCLabel"):SetText("Nessuna gilda nei Daggerfall Covenant")
@@ -1871,7 +1786,6 @@ function LoadGildeDC()
 		v1:SetDimensions(710, AltezzaComponente)
 		v1:SetHidden(false)
 		v1:SetAnchor(TOP, preDC, BOTTOM, 0, 10)
-
 
 		v1:GetNamedChild("TitoloLabel"):SetText(TamrielUnlimitedIT.GuildDCTemp[i]["guild_name"])
 		v1:GetNamedChild("TestoEditBox"):SetText(TamrielUnlimitedIT.GuildDCTemp[i]["description"])
@@ -1893,7 +1807,6 @@ function LoadGildeDC()
 		ii = ii + 1
 	end
 end
-
 function LoadNoGuildEP()
 	elEP:GetNamedChild("NoGuildEP"):SetHidden(false)
 	elEP:GetNamedChild("NoGuildEPLabel"):SetText("Nessuna gilda negli Ebonheart Pact")
@@ -1913,7 +1826,6 @@ function LoadGildeEP()
 		v1:SetDimensions(710, AltezzaComponente)
 		v1:SetHidden(false)
 		v1:SetAnchor(TOP, preEP, BOTTOM, 0, 10)
-
 
 		v1:GetNamedChild("TitoloLabel"):SetText(TamrielUnlimitedIT.GuildEPTemp[i]["guild_name"])
 		v1:GetNamedChild("TestoEditBox"):SetText(TamrielUnlimitedIT.GuildEPTemp[i]["description"])
@@ -1957,7 +1869,6 @@ function LoadConvalida()
 		end
 	end
 end
-
 function ButtonSend()
 	str = NomeUtenteForum:GetText():gsub("%s+", "")
 	if str ~= "" then
@@ -1996,7 +1907,6 @@ function ButtonSend()
 		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Inserire un Nome Utente valido")
 	end
 end
-
 function SendMailConvalida()
 	local DettagliArray = TamrielUnlimitedIT.TUitDataVar.RefusedValidations
 	if DettagliArray ~= nil then
@@ -2017,7 +1927,6 @@ function SendMyMail(NomeAdmin, NomeForum)
 	SendMail(NomeAdmin, "RA_Addon - " .. NomeForum, "Richiesta Attivazione per " .. NomeForum)
 	CloseMailbox()
 end
-
 function LoadRefusedValidations()
 	local pre = TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("Label")
 	
@@ -2034,23 +1943,22 @@ function LoadRefusedValidations()
 	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvioLabel_Convalida"):SetText("Riprova")
 	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTesto"):SetAnchor(TOP, pre, BOTTOM, 0, 80 + #DettagliArray*25)
 	local i = 1
-		for key, value in pairs(DettagliArray) do
-			ForumName = TamrielUnlimitedIT.TUitDataVar.RefusedValidations[i]["ForumName"]
-			Reason = TamrielUnlimitedIT.TUitDataVar.RefusedValidations[i]["Reason"]
-			
-			if (value.ForumName ~= "" and value.Reason == "UnknowUsername" ) then
-				value.Reason = "Il nome utente del sito, " .. value.ForumName .. ", non esiste"
-			end
-			
-			if (value.ForumName == "" and value.Reason == "AccountAlreadyUsed" ) then
-				value.Reason = "L'account " .. GetDisplayName() .. " risulta essere già in uso e convalidato da un altro nome utente"
-			end
-			
-			TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgRefusedValidations"):SetText(TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgRefusedValidations"):GetText() .. "- " .. value.Reason .. "\r\n")
-			i = i + 1
+	for key, value in pairs(DettagliArray) do
+		ForumName = TamrielUnlimitedIT.TUitDataVar.RefusedValidations[i]["ForumName"]
+		Reason = TamrielUnlimitedIT.TUitDataVar.RefusedValidations[i]["Reason"]
+		
+		if (value.ForumName ~= "" and value.Reason == "UnknowUsername" ) then
+			value.Reason = "Il nome utente del sito, " .. value.ForumName .. ", non esiste"
 		end
+		
+		if (value.ForumName == "" and value.Reason == "AccountAlreadyUsed" ) then
+			value.Reason = "L'account " .. GetDisplayName() .. " risulta essere già in uso e convalidato da un altro nome utente"
+		end
+		
+		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgRefusedValidations"):SetText(TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgRefusedValidations"):GetText() .. "- " .. value.Reason .. "\r\n")
+		i = i + 1
+	end
 end
-
 function AlreadyActivated()
 	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(false)
 	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoRiga1"):SetHidden(true)
@@ -2058,6 +1966,33 @@ function AlreadyActivated()
 	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvio"):SetHidden(true)
 	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgAlreadyActivated"):SetColor(0.121, 1, 0.054, 1)
 	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgAlreadyActivated"):SetText("Il tuo account è gia stato convalidato")
+end
+
+-- SHARED BUILDS
+
+function SearchBuilds(searchText)
+	TamrielUnlimitedIT.Builds:SearchBuilds(searchText)
+end
+function SortBuildsById ()
+    TamrielUnlimitedIT.Builds:SortBuilds("id")
+end
+function SortBuildsByTarget ()
+    TamrielUnlimitedIT.Builds:SortBuilds("target")
+end
+function SortBuildsByOwner ()
+    TamrielUnlimitedIT.Builds:SortBuilds("owner")
+end
+function SortBuildsByName ()
+    TamrielUnlimitedIT.Builds:SortBuilds("name")
+end
+function SortBuildsByRating ()
+    TamrielUnlimitedIT.Builds:SortBuilds("rating")
+end
+function SortBuildsByDate ()
+    TamrielUnlimitedIT.Builds:SortBuilds("date")
+end
+function OpenBuildDetails(self, backPage)
+	--TamrielUnlimitedIT.Builds:ShowDetails(self:GetNamedChild("Label_BuildID"):GetText(), backPage)
 end
 
 -- SALVATAGGIO DATI-VARIABILI
