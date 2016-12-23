@@ -1,64 +1,74 @@
 TUI_Config = {
     Races = {
         ["1"] = {
+            id = 1,
             name = "Breton",
             texture = "breton.dds",
         },
         ["2"] = {
+            id = 2,
             name = "Redguard",
             texture = "redguard.dds",
         },
         ["3"] = {
+            id = 3,
             name = "Orc",
             texture = "orc.dds",
         },
         ["4"] = {
+            id = 4,
             name = "Dark Elf",
             texture = "dunmer.dds",
         },
-        ["3"] = {
-            name = "Orc",
-            texture = "orc.dds",
-        },
         ["5"] = {
+            id = 5,
             name = "Nord",
             texture = "nord.dds",
         },
         ["6"] = {
+            id = 6,
             name = "Argonian",
             texture = "argonian.dds",
         },
         ["7"] = {
+            id = 7,
             name = "High Elf",
             texture = "altmer.dds",
         },
         ["8"] = {
+            id = 8,
             name = "Wood Elf",
             texture = "bosmer.dds",
         },
         ["9"] = {
+            id = 9,
             name = "Khajiit",
             texture = "khajiit.dds",
         },
         ["10"] = {
+            id = 10,
             name = "Imperial",
             texture = "imperial.dds",
         },
     },
     Classes = {
         ["1"] = {
+            id = 1,
             name = "Dragonknight",
             texture = "dragonknight.dds",
         },
         ["2"] = {
+            id = 2,
             name = "Sorcerer",
             texture = "sorcerer.dds",
         },
         ["3"] = {
+            id = 3,
             name = "Nightblade",
             texture = "nightblade.dds",
         },
         ["6"] = {
+            id = 6,
             name = "Templar",
             texture = "templar.dds",
         }

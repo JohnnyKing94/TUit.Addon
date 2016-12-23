@@ -223,7 +223,7 @@ function GetConfigRaceInfo(raceId)
 	if TUI_Config ~= nil then
 		if TUI_Config.Races ~= nil then
 			for key, value in pairs(TUI_Config.Races) do
-				if key == raceId then
+				if value.id == raceId then
 					return value
 				end
 			end
@@ -235,7 +235,7 @@ function GetConfigClassInfo(classId)
 	if TUI_Config ~= nil then
 		if TUI_Config.Classes ~= nil then
 			for key, value in pairs(TUI_Config.Classes) do
-				if key == classId then
+				if value.id == classId then
 					return value
 				end
 			end
@@ -256,6 +256,31 @@ function GetClassTexture(classId)
 		return (classInfo.texture ~= "" and "TamrielUnlimitedIT/Textures/Class/" .. classInfo.texture or "")
 	end
 	return ""
+end
+function GetRatingTextures(rating)
+	local full = 0
+	local half = 0
+	for i = 0, 10, 1 do
+		if i > 0 and i <= rating then
+			half = half + 1
+			if half == 2 then
+				full = full + 1
+				half = 0
+			end
+		end
+	end
+	local textures = {}
+	local texture_index = 1
+	if full > 0 then
+		for i = 1, full do
+			textures[texture_index] = "TamrielUnlimitedIT/Textures/star-full.dds"
+			texture_index = texture_index + 1
+		end
+	end
+	if half > 0 then
+		textures[texture_index] = "TamrielUnlimitedIT/Textures/star-half.dds"
+	end
+	return textures
 end
 
 -- SORT

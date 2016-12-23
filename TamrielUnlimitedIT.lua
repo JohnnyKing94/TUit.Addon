@@ -1991,6 +1991,12 @@ end
 function SortBuildsByDate ()
     TamrielUnlimitedIT.Builds:SortBuilds("date")
 end
+function SortBuildsByRace ()
+    TamrielUnlimitedIT.Builds:SortBuilds("race")
+end
+function SortBuildsByClass ()
+    TamrielUnlimitedIT.Builds:SortBuilds("class")
+end
 function OpenBuildDetails(self, backPage)
 	--TamrielUnlimitedIT.Builds:ShowDetails(self:GetNamedChild("Label_BuildID"):GetText(), backPage)
 end

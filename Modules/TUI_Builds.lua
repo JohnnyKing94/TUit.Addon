@@ -92,10 +92,7 @@ function TUI_Builds:FillBuildsList ()
 			local raceTexture = GetRaceTexture(self.Builds[i].race)
 			local classTexture = GetClassTexture(self.Builds[i].class)
 
-			d("Race tex: " .. raceTexture)
-			d("Class tex: " .. classTexture)
-
-			v1:SetDimensions(900, 20)
+			v1:SetDimensions(900, 40)
 			v1:SetHidden(false)
 			v1:SetAnchor(TOPLEFT, pre, BOTTOMLEFT, 0, 0)
 			v1:GetNamedChild("Colonna0Label"):SetText(self.Builds[i].date)
@@ -104,27 +101,41 @@ function TUI_Builds:FillBuildsList ()
 			v1:GetNamedChild("Colonna3NameButtonLabel"):SetText(self.Builds[i].name)
 			v1:GetNamedChild("Colonna3NameButtonLabel"):SetColor(0, 186, 255, 1)
 			v1:GetNamedChild("Colonna3NameButtonLabel_BuildID"):SetText(self.Builds[i].id)
-			v1:GetNamedChild("Colonna4Label"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, self.Builds[i].race)))
 			--[[
+			v1:GetNamedChild("Colonna4Label"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, self.Builds[i].race)))
+			]]--
 			if raceTexture ~= "" then
 				v1:GetNamedChild("Colonna4RaceTexture"):SetTexture(raceTexture)
+				v1:GetNamedChild("Colonna4RaceTexture"):SetDimensions(32, 32)
 				v1:GetNamedChild("Colonna4RaceTexture"):SetHidden(false)
 			else
 				v1:GetNamedChild("Colonna4RaceTexture"):SetHidden(true)
 			end
 			--v1:GetNamedChild("Colonna4RaceTooltip"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, self.Builds[i].race)))
-			]]--
-			v1:GetNamedChild("Colonna5Label"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, self.Builds[i].class)))
 			--[[
+			v1:GetNamedChild("Colonna5Label"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, self.Builds[i].class)))
+			]]--
 			if classTexture ~= "" then
 				v1:GetNamedChild("Colonna5ClassTexture"):SetTexture(classTexture)
+				v1:GetNamedChild("Colonna5ClassTexture"):SetDimensions(32, 32)
 				v1:GetNamedChild("Colonna5ClassTexture"):SetHidden(false)
 			else
 				v1:GetNamedChild("Colonna5ClassTexture"):SetHidden(true)
 			end
 			--v1:GetNamedChild("Colonna5ClassTooltip"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, self.Builds[i].class)))
-			]]--
-			v1:GetNamedChild("Colonna6Label"):SetText(self.Builds[i].rating)
+			
+			local rating_textures = GetRatingTextures(self.Builds[i].rating)
+			for j = 1, 5, 1 do
+				local tex = v1:GetNamedChild("Colonna6Rating" .. j)
+				if tex ~= nil then
+					if j <= #rating_textures then
+						tex:SetTexture(rating_textures[j])
+						tex:SetHidden(false)
+					else
+						tex:SetHidden(true)
+					end
+				end
+			end
 
 			pre = v1
 			i = i + 1
@@ -140,21 +151,6 @@ function TUI_Builds:FillBuildsList ()
 		v1:SetHidden(true)
 		ii = ii + 1
 	end
-
-	--[[
-	if #SharedBuildDataVar > 0 and #self.Builds < #SharedBuildDataVar then
-		--local ii = i
-		--while ii <= #SharedBuildDataVar do
-		for ii = i, #SharedBuildDataVar do
-			local v1 = el1:GetNamedChild("Dynamic_print_BuildsRow" .. ii)
-			if v1 ~= nil then
-				v1:SetDimensions(0, 0)
-				v1:SetHidden(true)
-			end
-			ii = ii + 1
-		end
-	end
-	]]--
 end
 
 function TUI_Builds:SearchBuilds (searchText)
@@ -202,12 +198,27 @@ end
 
 function TUI_Builds:SortBuilds (field)
 	if self.Builds ~= nil and #self.Builds > 0 then
+		if field ~= self.Sort then
+			self.Sort = field
+			self.SortDir = 1
+		else
+			self.SortDir = self.SortDir * -1
+		end
 		quicksort(self.Builds, function (v1, v2)
 				if v1[field] == v2[field] then
 					return v1.rating == v2.rating and (v1.id <= v2.id) or (v1.rating <= v2.rating)
 				end
 				return (v1[field] <= v2[field])
 			end)
+		if self.SortDir < 0 then
+			local sortDesc = {}
+			local j = 1
+			for i = #self.Builds, 1, -1 do
+				sortDesc[j] = self.Builds[i]
+				j = j + 1
+			end
+			self.Builds = sortDesc
+		end
 	end
     TUI_Builds:FillBuildsList()
 end
