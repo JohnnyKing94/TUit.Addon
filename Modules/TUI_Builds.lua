@@ -247,6 +247,26 @@ end
 function TUI_Builds:Share (build)
 end
 
+function TUI_Builds:SetupEquipSlot(elementUI, equipSlot, texture, label)
+	local slot = elementUI:GetNamedChild("SlotsSlot" .. equipSlot);
+	if slot ~= nil then
+		if texture ~= nil and texture ~= "" then
+			slot:GetNamedChild("Texture"):SetTexture(texture)
+		end
+		if label == nil or label == "" then
+			slot:GetNamedChild("Label"):SetText("")
+			--slot:SetHidden(true)
+			--slot:SetDimensions(0, 0)
+			slot:GetNamedChild("Texture"):SetAlpha(0.5)
+		else
+			slot:GetNamedChild("Texture"):SetAlpha(1)
+			slot:GetNamedChild("Label"):SetText(label)
+			--slot:SetHidden(false)
+			--slot:SetDimensions(900, 48)
+		end
+	end
+end
+
 function TUI_Builds:ShowDetails (buildId, backPage)
 
 	local build = self:Get(buildId)
@@ -268,7 +288,6 @@ function TUI_Builds:ShowDetails (buildId, backPage)
 		el1:GetNamedChild("ClassLabel"):SetColor(TUI_Config.colors.gold:UnpackRGBA())
 		el1:GetNamedChild("ClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, build.class)))
 
-		local items = ""
 		--[[
 		if activeWeapon == ACTIVE_WEAPON_PAIR_MAIN then
 			firstWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_MAIN_HAND)
@@ -278,6 +297,11 @@ function TUI_Builds:ShowDetails (buildId, backPage)
 			secondWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_BACKUP_OFF)
 		end
 		]]--
+
+		for i = EQUIP_SLOT_MIN_VALUE + 1, EQUIP_SLOT_MAX_VALUE, 1 do
+			self:SetupEquipSlot(el1, i, ZO_Character_GetEmptyEquipSlotTexture(i), "")
+		end
+
 		if build.items ~= nil then
 			for i = 1, #build.items do
 				local item = GetItemSetData(build.items[i].code)
@@ -285,22 +309,13 @@ function TUI_Builds:ShowDetails (buildId, backPage)
 					local text = ""
 					local slot = TUI_Config.ItemData.slots[build.items[i].slot]
 					if slot ~= nil then
-						--local icon = item.bonuses.icon
-						text = string.format("%s: %s - %s\n%s", slot.name, item.name, item.itemType, item.source)
-					else
-						items = items .. (items == "" and "" or "\n\n") .. "Slot " .. build.items[i].slot .. " non valido"
+						local text = string.format( "|cBA5AC4%s|r |cC4855A[%s]|r   |c5A99C4%s|r", item.name, item.itemType, item.source )
+						self:SetupEquipSlot(el1, build.items[i].slot, ZO_Character_GetEmptyEquipSlotTexture(build.items[i].slot), text);
 					end
-					if text ~= "" then
-						items = items .. (items == "" and "" or "\n\n") .. text
-					end
-				else
-					items = items .. (items == "" and "" or "\n") .. "Oggetto " .. build.items[i].code .. " non valido"
 				end
 			end
-		else
-			items = "Nessun oggetto valido nella build"
 		end
-		el1:GetNamedChild("Items"):SetText(items)
+		--el1:GetNamedChild("Items"):SetText(items)
 
 		self.DynamicScrollPageBuildDetails:SetHidden(false)
 

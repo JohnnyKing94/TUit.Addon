@@ -331,7 +331,7 @@
 		<!-- BUILD DETAILS -->
 		<Control name="DynamicScrollPageBuildDetails" virtual="true">
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
-			<Dimensions x="900" y="160" />
+			<Dimensions x="900" y="0" />
 			<Controls>
 				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Dettagli Build">
 					<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
@@ -365,36 +365,230 @@
 							<Anchor point="TOPLEFT" relativeTo="$(parent)ClassTexture" relativePoint="TOPLEFT" offsetX="70"/>
 							<Dimensions x="250" y="48" />
 						</Label>
-						<Label name="$(parent)Items" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+						<Label name="$(parent)Items" hidden="true" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)ClassTexture" relativePoint="TOPLEFT" offsetX="0" offsetY="80"/>
 							<Dimensions x="850" y="0" />
 						</Label>
-						<!--Control name="$(parent)DynamicItems">
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Personaggi" offsetX="30" />
-							<Dimensions x="700" y="180" />
+						<Control name="$(parent)Slots">
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)ClassTexture" offsetY="80" />
+							<Dimensions x="850" y="0" />
 							<Controls>
-								<Control name="$(parent)pre" hidden="true" text="">
+								<!-- EQUIP_SLOT_HEAD -->
+								<Control name="$(parent)Slot0">
 									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
-									<Dimensions x="0" y="0" />
+									<Dimensions x="200" y="48" />
 									<Controls>
 										<Texture name="$(parent)Texture">
-											<Dimensions x="32" y="32" />
+											<Dimensions x="48" y="48" />
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
 										</Texture>
-										<Label name="$(parent)Label" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Personaggi">
-											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPRIGHT" offsetX="20"/>
-											<Dimensions x="250" y="50" />
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
 										</Label>
 									</Controls>
 								</Control>
+								<!-- EQUIP_SLOT_CHEST -->
+								<Control name="$(parent)Slot2">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot0" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_SHOULDERS -->
+								<Control name="$(parent)Slot3">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot2" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_HAND -->
+								<Control name="$(parent)Slot16">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot3" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_WAIST -->
+								<Control name="$(parent)Slot6">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot16" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_LEGS -->
+								<Control name="$(parent)Slot8">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot6" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_FEET -->
+								<Control name="$(parent)Slot9">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot8" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_NECK -->
+								<Control name="$(parent)Slot1">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot9" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_RING1 -->
+								<Control name="$(parent)Slot11">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot1" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_RING2 -->
+								<Control name="$(parent)Slot12">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot11" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_MAIN_HAND -->
+								<Control name="$(parent)Slot4">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot12" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_OFF_HAND -->
+								<Control name="$(parent)Slot5">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot4" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_BACKUP_MAIN -->
+								<Control name="$(parent)Slot20">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot5" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<!-- EQUIP_SLOT_BACKUP_OFF -->
+								<Control name="$(parent)Slot21">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot20" relativePoint="BOTTOMLEFT" offsetY="10"/>
+									<Dimensions x="200" y="48" />
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
+											<Dimensions x="800" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+																
 							</Controls>
-						</Control-->
+						</Control>
 						<Button name="$(parent)Riga5" alpha="1" inherits="ZO_DefaultButton">
 							<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" offsetX="0" offsetY="0" relativeTo="$(parent)ContTesto" />
 							<Dimensions x="180" y="35" />
-							<!--OnMouseDown>
-								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, self:GetNamedChild("Label_BackPage"):GetText())
-							</OnMouseDown-->
 							<OnMouseDown>
 								BackToBuilds()
 							</OnMouseDown>
