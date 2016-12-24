@@ -127,6 +127,8 @@ function TUI_Builds:FillBuildsList ()
 			end
 			--v1:GetNamedChild("Colonna5ClassTooltip"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, self.Builds[i].class)))
 			
+			self:SetRatingTextures(v1, "Colonna6", self.Builds[i].rating)
+			--[[
 			local rating_textures = GetRatingTextures(self.Builds[i].rating)
 			for j = 1, 5, 1 do
 				local tex = v1:GetNamedChild("Colonna6Rating" .. j)
@@ -138,7 +140,7 @@ function TUI_Builds:FillBuildsList ()
 						tex:SetHidden(true)
 					end
 				end
-			end
+			end]]--
 
 			pre = v1
 			i = i + 1
@@ -247,6 +249,21 @@ end
 function TUI_Builds:Share (build)
 end
 
+function TUI_Builds:SetRatingTextures(elementUI, ratingRootName, rating)
+	local rating_textures = GetRatingTextures(rating)
+	for j = 1, 5, 1 do
+		local tex = elementUI:GetNamedChild(ratingRootName .. "Rating" .. j)
+		if tex ~= nil then
+			if j <= #rating_textures then
+				tex:SetTexture(rating_textures[j])
+				tex:SetHidden(false)
+			else
+				tex:SetHidden(true)
+			end
+		end
+	end
+end
+
 function TUI_Builds:SetupEquipSlot(elementUI, equipSlot, texture, label)
 	local slot = elementUI:GetNamedChild("SlotsSlot" .. equipSlot);
 	if slot ~= nil then
@@ -279,6 +296,7 @@ function TUI_Builds:ShowDetails (buildId, backPage)
 
 		el1:GetNamedChild("Name"):SetColor(TUI_Config.colors.teal:UnpackRGBA())
 		el1:GetNamedChild("Name"):SetText(build.name)
+		self:SetRatingTextures(el1, "Rating", build.rating)
 		el1:GetNamedChild("Author"):SetColor(TUI_Config.colors.brown:UnpackRGBA())
 		el1:GetNamedChild("Author"):SetText("From: " .. build.owner)
 		el1:GetNamedChild("RaceTexture"):SetTexture(GetRaceTexture(build.race))
