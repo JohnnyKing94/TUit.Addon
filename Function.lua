@@ -282,6 +282,144 @@ function GetRatingTextures(rating)
 	end
 	return textures
 end
+function CheckItemSetFlag( flags, flagToCheck )
+	-- Lua is a scrub language with no native bitwise operators
+	return(math.floor(flags / flagToCheck) % 2 == 1);
+end
+function MakeItemSetLink( id, flags )
+	local quality = 364;
+	local crafted = 0;
+	local health = 10000;
+
+	if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.crafted)) then
+		quality = 370;
+		crafted = 1;
+	elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.jewelry)) then
+		quality = 363;
+		health = 0;
+	elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.weapon)) then
+		health = 500;
+	end
+
+	local style = ITEMSTYLE_NONE;
+
+	if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.allianceStyle)) then
+		style = ItemBrowser.allianceStyle;
+	elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.multiStyle)) then
+		style = ItemBrowser.multiStyle;
+	end
+
+	local itemLink = string.format("|H1:item:%d:%d:50:0:0:0:0:0:0:0:0:0:0:0:0:%d:%d:0:0:%d:0|h|h", id, quality, style, crafted, health);
+
+	if (crafted == 1) then
+		-- Attach an enchantment to crafted gear
+		local enchantments = {
+			[ARMORTYPE_NONE]   = 0,
+			[ARMORTYPE_HEAVY]  = 26580,
+			[ARMORTYPE_LIGHT]  = 26582,
+			[ARMORTYPE_MEDIUM] = 26588,
+		};
+		itemLink = itemLink:gsub("370:50:0:0:0", string.format("370:50:%d:370:50", enchantments[GetItemLinkArmorType(itemLink)]));
+	end
+
+	return(itemLink);
+end
+function GetItemSetDataVar(idSet)
+	if ItemsDataVar ~= nil then
+		for i = 1, #ItemsDataVar do
+			if ItemsDataVar[i].id == idSet then
+				return ItemsDataVar[i]
+			end
+		end
+	end
+	return {
+		id = 0,
+		name = "",
+		flag = 0x01,
+		zone = {},
+		traits = 0
+	}
+end
+function GetItemSetData( idSet )
+	local dataVar = GetItemSetDataVar(idSet)
+	local id = dataVar.id;
+	local flags = tonumber(dataVar.flag, 16);
+
+	local itemLink = MakeItemSetLink(id, flags);
+	local name, type, style, bonuses;
+	local zoneType = { };
+
+	if id == nil or id < 1 then
+		return nil
+	end
+
+	if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.weapon)) then
+		name = GetItemLinkName(itemLink)
+		type = "Arma"
+		bonuses = 0;
+	else
+		_, name, bonuses = GetItemLinkInfo(itemLink);
+		name = dataVar.name;
+
+		if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.crafted)) then
+			type = "Craft" .. (dataVar.traits > 0 and string.format(" (%d tratti)", dataVar.traits) or "")
+			zoneType[0] = true;
+		elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.jewelry)) then
+			type = GetString("SI_GAMEPADITEMCATEGORY", GAMEPAD_ITEM_CATEGORY_JEWELRY)
+		elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.monster)) then
+			type = "NPC"
+		elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.mixedWeights)) then
+			type = "Misto"
+		else
+			armorType = GetItemLinkArmorType(itemLink);
+			type = GetString("SI_ARMORTYPE", armorType)
+			--[[local armorColors = {
+				[ARMORTYPE_NONE]   = ZO_DEFAULT_TEXT,
+				[ARMORTYPE_HEAVY]  = ItemBrowser.colors.health,
+				[ARMORTYPE_LIGHT]  = ItemBrowser.colors.magicka,
+				[ARMORTYPE_MEDIUM] = ItemBrowser.colors.stamina,
+			};
+			type = LocalizeString("<<C:1>>", GetString("SI_ARMORTYPE", armorType));]]--
+		end
+	end
+
+	local source = "";
+
+	for i = 1, #dataVar.zone do
+		if (i > 1) then source = source .. ", " end
+		source = source .. (dataVar.zone[i] > 0 and GetZoneNameByIndex(GetZoneIndex(dataVar.zone[i])) or "Random Dungeon Finder");
+		zoneType[TUI_Config.ItemData.zoneClassification[dataVar.zone[i]]] = true;
+	end
+
+	if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.monster)) then
+		source = string.format("%s (%s)", source, TUI_Config.ItemData.undauntedNames[dataVar.traits]);
+	end
+
+	if ( not CheckItemSetFlag(flags, TUI_Config.ItemData.flags.jewelry) and
+	     not CheckItemSetFlag(flags, TUI_Config.ItemData.flags.monster) and
+	     not CheckItemSetFlag(flags, TUI_Config.ItemData.flags.multiStyle) ) then
+
+		--[[if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.allianceStyle)) then
+			style = GetString(SI_ITEMBROWSER_STYLE_ALLIANCE);
+		else
+			style = GetString("SI_ITEMSTYLE", GetItemLinkItemStyle(itemLink));
+		end]]--
+	end
+
+	zoneType[(GetItemLinkBindType(itemLink) == BIND_TYPE_ON_EQUIP) and 5 or 6] = true;
+
+	return({
+		numberSet = id,
+		data = dataVar,
+		name = name,
+		itemType = type,
+		source = source,
+		zoneType = zoneType,
+		style = style,
+		bonuses = bonuses,
+		itemLink = itemLink,
+	});
+end
 
 -- SORT
 

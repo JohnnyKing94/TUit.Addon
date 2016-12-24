@@ -1998,7 +1998,10 @@ function SortBuildsByClass ()
     TamrielUnlimitedIT.Builds:SortBuilds("class")
 end
 function OpenBuildDetails(self, backPage)
-	--TamrielUnlimitedIT.Builds:ShowDetails(self:GetNamedChild("Label_BuildID"):GetText(), backPage)
+	TamrielUnlimitedIT.Builds:ShowDetails(self:GetNamedChild("Label_BuildID"):GetText(), backPage)
+end
+function BackToBuilds()
+	TamrielUnlimitedIT.Builds:CloseDetails()
 end
 
 -- SALVATAGGIO DATI-VARIABILI

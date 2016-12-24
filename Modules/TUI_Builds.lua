@@ -23,6 +23,9 @@ function TUI_Builds:Initialize ()
 	self.BuildsUI:SetHidden(false)
 	local sc = DynamicLabel_screenBuilds0ContainerScrollChild
 	self.DynamicScrollPageBuilds = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuilds", sc, "DynamicScrollPageBuilds", 0)
+	
+	self.DynamicScrollPageBuildDetails = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuildDetails", sc, "DynamicScrollPageBuildDetails", 0)
+	self.DynamicScrollPageBuildDetails:SetHidden(true)
 
 	SearchBuild_edit:SetHandler("OnEnter", function (self, key, ctrl, alt, shift, command)
 			TUI_Builds:SearchBuilds(SearchBuild_edit:GetText())
@@ -223,9 +226,85 @@ function TUI_Builds:SortBuilds (field)
     TUI_Builds:FillBuildsList()
 end
 
+function TUI_Builds:CloseDetails ()
+	self.DynamicScrollPageBuildDetails:SetHidden(true)
+	self.DynamicScrollPageBuilds:SetHidden(false)
+	--ReloadUI()
+end
+
+function TUI_Builds:GetCurrentEquipment ()
+	local build = {}
+	local equipSlots = ZO_Character_EnumerateEquipSlotToEquipTypes()
+	for i = 1, equipSlots, 1 do
+		local equipped = GetEquippedItemInfo(i)
+		if equipped.slotHasItem ~= nil and equipped.slotHasItem == true then
+			
+		end
+	end
+	return build
+end
+
+function TUI_Builds:Share (build)
+end
+
 function TUI_Builds:ShowDetails (buildId, backPage)
 
 	local build = self:Get(buildId)
+
+	if build ~= nil then
+		
+		self.DynamicScrollPageBuilds:SetHidden(true)
+
+		local el1 = self.DynamicScrollPageBuildDetails:GetNamedChild("Content")
+
+		el1:GetNamedChild("Name"):SetColor(TUI_Config.colors.teal:UnpackRGBA())
+		el1:GetNamedChild("Name"):SetText(build.name)
+		el1:GetNamedChild("Author"):SetColor(TUI_Config.colors.brown:UnpackRGBA())
+		el1:GetNamedChild("Author"):SetText("From: " .. build.owner)
+		el1:GetNamedChild("RaceTexture"):SetTexture(GetRaceTexture(build.race))
+		el1:GetNamedChild("RaceLabel"):SetColor(TUI_Config.colors.gold:UnpackRGBA())
+		el1:GetNamedChild("RaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, build.race)))
+		el1:GetNamedChild("ClassTexture"):SetTexture(GetClassTexture(build.class))
+		el1:GetNamedChild("ClassLabel"):SetColor(TUI_Config.colors.gold:UnpackRGBA())
+		el1:GetNamedChild("ClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, build.class)))
+
+		local items = ""
+		--[[
+		if activeWeapon == ACTIVE_WEAPON_PAIR_MAIN then
+			firstWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_MAIN_HAND)
+			secondWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_OFF_HAND)
+		elseif activeWeapon == ACTIVE_WEAPON_PAIR_BACKUP then
+			firstWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_BACKUP_MAIN)
+			secondWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_BACKUP_OFF)
+		end
+		]]--
+		if build.items ~= nil then
+			for i = 1, #build.items do
+				local item = GetItemSetData(build.items[i].code)
+				if item ~= nil then
+					local text = ""
+					local slot = TUI_Config.ItemData.slots[build.items[i].slot]
+					if slot ~= nil then
+						--local icon = item.bonuses.icon
+						text = string.format("%s: %s - %s\n%s", slot.name, item.name, item.itemType, item.source)
+					else
+						items = items .. (items == "" and "" or "\n\n") .. "Slot " .. build.items[i].slot .. " non valido"
+					end
+					if text ~= "" then
+						items = items .. (items == "" and "" or "\n\n") .. text
+					end
+				else
+					items = items .. (items == "" and "" or "\n") .. "Oggetto " .. build.items[i].code .. " non valido"
+				end
+			end
+		else
+			items = "Nessun oggetto valido nella build"
+		end
+		el1:GetNamedChild("Items"):SetText(items)
+
+		self.DynamicScrollPageBuildDetails:SetHidden(false)
+
+	end
 
 	--[[
 	if button == 1 or GetUnitName("player") == self:GetNamedChild("Label"):GetText() then

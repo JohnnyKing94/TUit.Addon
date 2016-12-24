@@ -74,6 +74,22 @@ TUI_Config = {
         }
     },
     ItemData = {
+        slots = {
+            [EQUIP_SLOT_MAIN_HAND] = { name = "Mano Principale" },
+            [EQUIP_SLOT_OFF_HAND] = { name = "Mano Secondaria" },
+            [EQUIP_SLOT_BACKUP_MAIN] = { name = "Alternativa Principale" },
+            [EQUIP_SLOT_BACKUP_OFF] = { name = "Alternativa Secondaria" },
+            [EQUIP_SLOT_HEAD] = { name = "Testa" },
+            [EQUIP_SLOT_CHEST] = { name = "Torso" },
+            [EQUIP_SLOT_LEGS] = { name = "Gambe" },
+            [EQUIP_SLOT_SHOULDERS] = { name = "Spalle" },
+            [EQUIP_SLOT_FEET] = { name = "Scarpe" },
+            [EQUIP_SLOT_WAIST] = { name = "Cintura" },
+            [EQUIP_SLOT_HAND] = { name = "Guanti" },
+            [EQUIP_SLOT_NECK] = { name = "Collare" },
+            [EQUIP_SLOT_RING1] = { name = "Anello 1" },
+            [EQUIP_SLOT_RING2] = { name = "Anello 2" },
+        },
         flags = {
             crafted       = 0x01,
             jewelry       = 0x02,
@@ -463,5 +479,15 @@ TUI_Config = {
             { 71168, 0x04, { 677 } }, -- The Maelstrom's Lightning Staff
             { 79870, 0x04, { 677 } }, -- The Maelstrom's Restoration Staff
         },
-    }
+    },
+	colors = {
+		health  = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_POWER, POWERTYPE_HEALTH)),
+		magicka = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_POWER, POWERTYPE_MAGICKA)),
+		stamina = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_POWER, POWERTYPE_STAMINA)),
+		violet  = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_ITEM_QUALITY_COLORS, ITEM_QUALITY_ARTIFACT)),
+		gold    = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_ITEM_QUALITY_COLORS, ITEM_QUALITY_LEGENDARY)),
+		brown   = ZO_ColorDef:New("885533"),
+		teal    = ZO_ColorDef:New("66CCCC"),
+		pink    = ZO_ColorDef:New("FF99CC"),
+	},
 }

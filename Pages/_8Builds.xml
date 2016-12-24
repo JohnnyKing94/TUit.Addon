@@ -187,6 +187,7 @@
 		</Control>
 		<!-- /BUILDS LIST -->
 
+		<!-- RATING POINT TEMPLATE  -->
 		<Control name="BuildsRatingTemplateFull" virtual="true">
 			<Dimensions y="24" x="24" />
 			<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetY="5" />
@@ -197,6 +198,7 @@
 				</Texture>
 			</Controls>
 		</Control>
+		<!-- /RATING POINT TEMPLATE -->
 
 		<!-- BUILDS ROW TEMPLATE -->
 		<Control name="BuildsDynamicRow" virtual="true">
@@ -335,55 +337,66 @@
 					<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
 					<Dimensions x="900" y="50" />
 				</Label>
-				<Control name="$(parent)ContTesto">
+				<Control name="$(parent)Content">
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
 					<Dimensions x="900" y="1105" />
 					<Controls>
-					<!--
-						<Label name="$(parent)UserID" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="@UserID">
+						<Label name="$(parent)Name" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="30"/>
-							<Dimensions x="150" y="35" />
-						</Label>
-						<Label name="$(parent)Sex" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="@Sex">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)UserID" relativePoint="TOPLEFT" offsetX="250"/>
-							<Dimensions x="250" y="35" />
-						</Label>
-						<Label name="$(parent)Credit" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)UserID" relativePoint="TOPLEFT" offsetX="0" offsetY="35"/>
 							<Dimensions x="850" y="35" />
 						</Label>
-						<Label name="$(parent)Gilde" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="LEFT" text="Gilde">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)Credit" relativePoint="TOPLEFT" offsetY="35" offsetX="0"/>
-							<Dimensions x="115" y="35" />
+						<Label name="$(parent)Author" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="E6E6E6" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)Name" relativePoint="TOPLEFT" offsetY="35"/>
+							<Dimensions x="850" y="35" />
 						</Label>
-						<EditBox name="$(parent)GildeList" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="2048" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
-							<Dimensions x="850" y="150" />
-							<Anchor point="TOPLEFT" relativeTo="$(parent)Gilde" relativePoint="TOPLEFT"  offsetX="0" offsetY="35" />
-							<OnInitialized>
-								self:SetMultiLine(true)
-								self:SetText("Gilda1\r\Gilda2\r\nGilda3")
-							</OnInitialized>
-						</EditBox>
-						<Label name="$(parent)Personaggi" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Personaggi">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)GildeList" relativePoint="TOPLEFT" offsetX="0" offsetY="120"/>
-							<Dimensions x="250" y="35" />
-						</Label>						
-						<Control name="$(parent)ContUserDinamici">
-						<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Personaggi" offsetX="30" />
+						<Texture name="$(parent)RaceTexture">
+							<Dimensions x="48" y="48" />
+							<Anchor point="TOPLEFT" relativeTo="$(parent)Author" relativePoint="TOPLEFT" offsetY="50" />
+						</Texture>
+						<Label name="$(parent)RaceLabel" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)RaceTexture" relativePoint="TOPLEFT" offsetX="70"/>
+							<Dimensions x="250" y="48" />
+						</Label>
+						<Texture name="$(parent)ClassTexture">
+							<Dimensions x="48" y="48" />
+							<Anchor point="TOPLEFT" relativeTo="$(parent)RaceTexture" relativePoint="TOPLEFT" offsetY="60" />
+						</Texture>
+						<Label name="$(parent)ClassLabel" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="LEFT">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)ClassTexture" relativePoint="TOPLEFT" offsetX="70"/>
+							<Dimensions x="250" y="48" />
+						</Label>
+						<Label name="$(parent)Items" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)ClassTexture" relativePoint="TOPLEFT" offsetX="0" offsetY="80"/>
+							<Dimensions x="850" y="0" />
+						</Label>
+						<!--Control name="$(parent)DynamicItems">
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Personaggi" offsetX="30" />
 							<Dimensions x="700" y="180" />
 							<Controls>
-								<Label name="$(parent)pre" hidden="true" text="">
+								<Control name="$(parent)pre" hidden="true" text="">
 									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
 									<Dimensions x="0" y="0" />
-								</Label>
+									<Controls>
+										<Texture name="$(parent)Texture">
+											<Dimensions x="32" y="32" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Personaggi">
+											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPRIGHT" offsetX="20"/>
+											<Dimensions x="250" y="50" />
+										</Label>
+									</Controls>
+								</Control>
 							</Controls>
-						</Control>
-					-->
+						</Control-->
 						<Button name="$(parent)Riga5" alpha="1" inherits="ZO_DefaultButton">
 							<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" offsetX="0" offsetY="0" relativeTo="$(parent)ContTesto" />
 							<Dimensions x="180" y="35" />
-							<OnMouseDown>
+							<!--OnMouseDown>
 								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, self:GetNamedChild("Label_BackPage"):GetText())
+							</OnMouseDown-->
+							<OnMouseDown>
+								BackToBuilds()
 							</OnMouseDown>
 							<Controls>
 								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ritorna">

@@ -14,6 +14,7 @@
 libs/LibStub/LibStub.lua
 libs/LibMainMenu/LibMainMenu.lua
 TamrielUnlimitedIT.xml
+ItemsData.lua
 TUitConfigData.lua
 TUitData.lua
 SharedBuilds.lua
