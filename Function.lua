@@ -392,7 +392,7 @@ function GetItemSetData( idSet )
 	end
 
 	if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.monster)) then
-		source = string.format("%s (%s)", source, TUI_Config.ItemData.undauntedNames[dataVar.traits]);
+		source = string.format("%s (%s)", source, TUI_Config.ItemData.undauntedNames[dataVar.undaunted]);
 	end
 
 	if ( not CheckItemSetFlag(flags, TUI_Config.ItemData.flags.jewelry) and

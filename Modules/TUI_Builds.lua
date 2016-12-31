@@ -2,8 +2,46 @@ TUI_Builds = {}
 TUI_Builds.Builds = {}
 TUI_Builds.Filter = ""
 TUI_Builds.Sort = "id"
+TUI_Builds.MaxBuilds = 10
 
 local TUI_Builds_Target = { "PVE", "PVP", "PVP/PVE" }
+
+ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NAME"] = 
+{
+	title =
+	{
+		text = "Condividi Build",
+	},
+	mainText = 
+	{
+		text = "Assegna un Titolo alla build",
+	},
+	buttons =
+	{
+		[1] =
+		{
+			text = SI_OK
+		}
+	}
+}
+ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_MAXBUILDS"] = 
+{
+	title =
+	{
+		text = "Condividi Build",
+	},
+	mainText = 
+	{
+		text = "Hai raggiunto il numero massimo di build condivisibili",
+	},
+	buttons =
+	{
+		[1] =
+		{
+			text = SI_OK
+		}
+	}
+}
 
 function TUI_Builds:Get(buildId)
 	if self.Builds ~= nil then
@@ -17,6 +55,7 @@ function TUI_Builds:Get(buildId)
 end
 
 function TUI_Builds:Initialize ()
+
     -- Initialize UI for Builds screen
     self.BuildsUI = CreateControlFromVirtual("DynamicLabel_screenBuilds", BuildsPanelMainMenu, "DynamicTextBuilds", 0)
 	self.BuildsUI:SetAnchor(TOP, BuildsPanelMainMenu, TOP, 0, 0)
@@ -27,9 +66,23 @@ function TUI_Builds:Initialize ()
 	self.DynamicScrollPageBuildDetails = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuildDetails", sc, "DynamicScrollPageBuildDetails", 0)
 	self.DynamicScrollPageBuildDetails:SetHidden(true)
 
+	self.DynamicScrollPageBuildShare = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuildShare", sc, "DynamicScrollPageBuildShare", 0)
+	self.DynamicScrollPageBuildShare:SetHidden(true)
+
 	SearchBuild_edit:SetHandler("OnEnter", function (self, key, ctrl, alt, shift, command)
 			TUI_Builds:SearchBuilds(SearchBuild_edit:GetText())
 		end)
+	
+	if TamrielUnlimitedIT.savedVariablesGlobal.Builds == nil then
+		TamrielUnlimitedIT.savedVariablesGlobal.Builds = { Created = {}, Evaluated = {} }
+	else
+		if TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created == nil then
+			TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created = {}
+		end
+		if TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated == nil then
+			TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated = {}
+		end
+	end
 end
 
 function TUI_Builds:CreateScene ()
@@ -230,23 +283,9 @@ end
 
 function TUI_Builds:CloseDetails ()
 	self.DynamicScrollPageBuildDetails:SetHidden(true)
+	self.DynamicScrollPageBuildShare:SetHidden(true)
 	self.DynamicScrollPageBuilds:SetHidden(false)
 	--ReloadUI()
-end
-
-function TUI_Builds:GetCurrentEquipment ()
-	local build = {}
-	local equipSlots = ZO_Character_EnumerateEquipSlotToEquipTypes()
-	for i = 1, equipSlots, 1 do
-		local equipped = GetEquippedItemInfo(i)
-		if equipped.slotHasItem ~= nil and equipped.slotHasItem == true then
-			
-		end
-	end
-	return build
-end
-
-function TUI_Builds:Share (build)
 end
 
 function TUI_Builds:SetRatingTextures(elementUI, ratingRootName, rating)
@@ -272,14 +311,10 @@ function TUI_Builds:SetupEquipSlot(elementUI, equipSlot, texture, label)
 		end
 		if label == nil or label == "" then
 			slot:GetNamedChild("Label"):SetText("")
-			--slot:SetHidden(true)
-			--slot:SetDimensions(0, 0)
 			slot:GetNamedChild("Texture"):SetAlpha(0.5)
 		else
 			slot:GetNamedChild("Texture"):SetAlpha(1)
 			slot:GetNamedChild("Label"):SetText(label)
-			--slot:SetHidden(false)
-			--slot:SetDimensions(900, 48)
 		end
 	end
 end
@@ -294,11 +329,16 @@ function TUI_Builds:ShowDetails (buildId, backPage)
 
 		local el1 = self.DynamicScrollPageBuildDetails:GetNamedChild("Content")
 
-		el1:GetNamedChild("Name"):SetColor(TUI_Config.colors.teal:UnpackRGBA())
+		-- Load the build data
 		el1:GetNamedChild("Name"):SetText(build.name)
 		self:SetRatingTextures(el1, "Rating", build.rating)
-		el1:GetNamedChild("Author"):SetColor(TUI_Config.colors.brown:UnpackRGBA())
 		el1:GetNamedChild("Author"):SetText("From: " .. build.owner)
+		if build.description then
+			el1:GetNamedChild("Description"):SetText(build.description)
+			el1:GetNamedChild("Description"):SetHidden(false)
+		else
+			el1:GetNamedChild("Description"):SetHidden(true)
+		end
 		el1:GetNamedChild("RaceTexture"):SetTexture(GetRaceTexture(build.race))
 		el1:GetNamedChild("RaceLabel"):SetColor(TUI_Config.colors.gold:UnpackRGBA())
 		el1:GetNamedChild("RaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, build.race)))
@@ -306,20 +346,12 @@ function TUI_Builds:ShowDetails (buildId, backPage)
 		el1:GetNamedChild("ClassLabel"):SetColor(TUI_Config.colors.gold:UnpackRGBA())
 		el1:GetNamedChild("ClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, build.class)))
 
-		--[[
-		if activeWeapon == ACTIVE_WEAPON_PAIR_MAIN then
-			firstWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_MAIN_HAND)
-			secondWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_OFF_HAND)
-		elseif activeWeapon == ACTIVE_WEAPON_PAIR_BACKUP then
-			firstWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_BACKUP_MAIN)
-			secondWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_BACKUP_OFF)
-		end
-		]]--
-
+		-- Reset the equip slots
 		for i = EQUIP_SLOT_MIN_VALUE + 1, EQUIP_SLOT_MAX_VALUE, 1 do
 			self:SetupEquipSlot(el1, i, ZO_Character_GetEmptyEquipSlotTexture(i), "")
 		end
 
+		-- Load the items in the slots
 		if build.items ~= nil then
 			for i = 1, #build.items do
 				local item = GetItemSetData(build.items[i].code)
@@ -333,58 +365,100 @@ function TUI_Builds:ShowDetails (buildId, backPage)
 				end
 			end
 		end
-		--el1:GetNamedChild("Items"):SetText(items)
 
 		self.DynamicScrollPageBuildDetails:SetHidden(false)
 
 	end
+end
+
+function TUI_Builds:GetItemDataFromLink(link)
+	local name,col,typID,id,qual,levelreq,enchant,ench1,ench2,un1,un2,un3,un4,un5,un6,un7,un8,un9,style,un10,bound,charge,un11=ZO_LinkHandler_ParseLink(link)		
+	id = tonumber(id)
+	name = zo_strformat(SI_TOOLTIP_ITEM_NAME, name)
+	return id,name,enchant,qual,levelreq,typID,ench1,ench2,col,un1,un2,un3,un4,un5,un6,un7,un8,un9,style,un10,bound,charge,un11
+end
+
+function TUI_Builds:GetCurrentEquipment ()
+	local items = {}
+	local itemsId = 0
+	for i = EQUIP_SLOT_MIN_VALUE + 1, EQUIP_SLOT_MAX_VALUE, 1 do
+		local slot = TUI_Config.ItemData.slots[i];
+		if slot and GetItemInstanceId(BAG_WORN, i) then
+			itemsId = itemsId + 1
+			local itemLink = GetItemLink(BAG_WORN, i)
+			local id,name,enchant,qual,levelreq,typID,ench1,ench2,col,un1,un2,un3,un4,un5,un6,un7,un8,un9,style,un10,bound,charge,un11 = self:GetItemDataFromLink(itemLink)
+			items[itemsId] = { code = id, slot = i, link = itemLink }
+		end
+	end
+	return items
+end
+
+function TUI_Builds:ShowMyBuild ()
+	self.DynamicScrollPageBuilds:SetHidden(true)
+
+	local el1 = self.DynamicScrollPageBuildShare:GetNamedChild("Content")
+
+	-- Reset the build data
+	ShareBuild_Name:SetText("")
+	ShareBuild_Description:SetText("")
+	el1:GetNamedChild("RaceTexture"):SetTexture(GetRaceTexture(GetUnitRaceId("player")))
+	el1:GetNamedChild("RaceLabel"):SetColor(TUI_Config.colors.gold:UnpackRGBA())
+	el1:GetNamedChild("RaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
+	el1:GetNamedChild("ClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
+	el1:GetNamedChild("ClassLabel"):SetColor(TUI_Config.colors.gold:UnpackRGBA())
+	el1:GetNamedChild("ClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
 
 	--[[
-	if button == 1 or GetUnitName("player") == self:GetNamedChild("Label"):GetText() then
-		-- ChiudiAddRemoveFriend() -- Blocca il menu a tendina
-		AddRemoveControl:SetHidden(false)
-		AddRemoveControlAddFriend:SetEnabled(false)
-		AddRemoveControlAddFriendLabel_AddFriend:SetColor(0.5, 0.5, 0.5, 1)
-		AddRemoveControlRemoveFriend:SetEnabled(false)
-		AddRemoveControlRemoveFriendLabel_RemoveFriend:SetColor(0.5, 0.5, 0.5, 1)
-		AddRemoveControlInviaMail:SetEnabled(false)
-		AddRemoveControlInviaMailLabel_SendMailFriend:SetColor(0.5, 0.5, 0.5, 1)
-		AddRemoveControlBisbiglia:SetEnabled(false)
-		AddRemoveControlBisbigliaLabel_WhisperFriend:SetColor(0.5, 0.5, 0.5, 1)
-
-		AddRemoveControlLabel_NomeAdd:SetText(self:GetNamedChild("Label"):GetText()) -- Aggiunge il nome PG
-		AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(self:GetNamedChild("Label_UserID"):GetText()) -- Aggiunge UserID alla voce dettagli
-
-		AddRemoveControl:ClearAnchors()
-		local mouseX, mouseY = GetUIMousePosition()
-		AddRemoveControl:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, mouseX, mouseY)
-
-		AddRemoveControlLabel_CallPage:SetText(BackPage)
-
-	else
-		AddRemoveControl:SetHidden(false)
-
-		if IsFriend(self:GetNamedChild("Label"):GetText()) then
-			AddRemoveControlAddFriend:SetEnabled(false)
-			AddRemoveControlRemoveFriend:SetEnabled(true)
-			AddRemoveControlAddFriendLabel_AddFriend:SetColor(0.5, 0.5, 0.5, 1)
-			AddRemoveControlRemoveFriendLabel_RemoveFriend:SetColor(1, 1, 1, 1)
-		else
-			AddRemoveControlAddFriend:SetEnabled(true)
-			AddRemoveControlRemoveFriend:SetEnabled(false)
-			AddRemoveControlAddFriendLabel_AddFriend:SetColor(1, 1, 1, 1)
-			AddRemoveControlRemoveFriendLabel_RemoveFriend:SetColor(0.5, 0.5, 0.5, 1)
-		end
-
-		AddRemoveControlLabel_NomeAdd:SetText(self:GetNamedChild("Label"):GetText()) -- Aggiunge il nome PG
-		AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(self:GetNamedChild("Label_UserID"):GetText()) -- Aggiunge UserID alla voce dettagli
-
-		AddRemoveControl:ClearAnchors()
-		local mouseX, mouseY = GetUIMousePosition()
-		AddRemoveControl:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, mouseX, mouseY)
-
-		AddRemoveControlLabel_CallPage:SetText(BackPage)
-
+	if activeWeapon == ACTIVE_WEAPON_PAIR_MAIN then
+		firstWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_MAIN_HAND)
+		secondWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_OFF_HAND)
+	elseif activeWeapon == ACTIVE_WEAPON_PAIR_BACKUP then
+		firstWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_BACKUP_MAIN)
+		secondWeapon = GetItemWeaponType(BAG_WORN, EQUIP_SLOT_BACKUP_OFF)
 	end
 	]]--
+
+	-- Reset the equip slots
+	for i = EQUIP_SLOT_MIN_VALUE + 1, EQUIP_SLOT_MAX_VALUE, 1 do
+		self:SetupEquipSlot(el1, i, ZO_Character_GetEmptyEquipSlotTexture(i), "")
+		--[[if TUI_Config.ItemData.slots[i] and GetItemInstanceId(BAG_WORN, i) then
+			local link = GetItemLink(BAG_WORN, i)
+			local name = GetItemLinkName(link)
+			local icon = GetItemLinkInfo(link)
+			-- Id64ToString(GetItemUniqueId(BAG_WORN, i))
+			el1:GetNamedChild("SlotsSlot" .. i):GetNamedChild("Label"):SetText(name.." = "..icon)
+		end]]--
+	end
+
+	-- Load the items in the slots
+	local items = self:GetCurrentEquipment()
+	for i = 1, #items do
+		--local item = GetItemSetData(items[i].code)
+		local slot = TUI_Config.ItemData.slots[items[i].slot]
+		if slot ~= nil then
+			local icon = GetItemLinkInfo(items[i].link)
+			--[[local hasSet, name, bonuses = GetItemLinkSetInfo(items[i].link)
+			if not hasSet then
+				name = items[i].link --"[no set] " .. GetItemLinkName(items[i].link)
+			end]]--
+			if icon == nil or icon == "" then
+				icon = ZO_Character_GetEmptyEquipSlotTexture(items[i].slot)
+			end
+			self:SetupEquipSlot(el1, items[i].slot, icon, items[i].link)
+		end
+	end
+
+	self.DynamicScrollPageBuildShare:SetHidden(false)
+end
+
+function TUI_Builds:Share ()
+	if ShareBuild_Name:GetText() == "" then
+		ZO_Dialogs_ShowDialog("TUIT_DIALOG_SHAREBUILD_NAME", nil, nil, false)
+	elseif #TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created >= self.MaxBuilds then
+		ZO_Dialogs_ShowDialog("TUIT_DIALOG_SHAREBUILD_MAXBUILDS", nil, nil, false)
+	else
+		local buildId = 1 + #TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created
+		TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created[buildId] = self:GetCurrentEquipment()
+		ReloadUI()
+	end
 end

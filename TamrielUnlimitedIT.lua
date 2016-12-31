@@ -2003,6 +2003,12 @@ end
 function BackToBuilds()
 	TamrielUnlimitedIT.Builds:CloseDetails()
 end
+function ShowMyBuild()
+	TamrielUnlimitedIT.Builds:ShowMyBuild()
+end
+function ShareBuild()
+	TamrielUnlimitedIT.Builds:Share()
+end
 
 -- SALVATAGGIO DATI-VARIABILI
 
