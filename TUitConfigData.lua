@@ -73,6 +73,32 @@ TUI_Config = {
             texture = "templar.dds",
         }
     },
+    Roles = {
+        [1] = {
+            name = "Tank",
+            texture = "tank.dds"
+        },
+        [2] = {
+            name = "Dps",
+            texture = "dps.dds"
+        },
+        [3] = {
+            name = "Healer",
+            texture = "healer.dds"
+        },
+        [4] = {
+            name = "Tank/Dps",
+            texture = "tank-dps.dds"
+        },
+        [5] = {
+            name = "Tank/Healer",
+            texture = "tank-healer.dds"
+        },
+        [6] = {
+            name = "Dps/Healer",
+            texture = "dps.dds"
+        },
+    },
     ItemData = {
         slots = {
             [EQUIP_SLOT_MAIN_HAND] = { name = "Mano Principale" },

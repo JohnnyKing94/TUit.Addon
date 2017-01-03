@@ -449,10 +449,7 @@ function TamrielUnlimitedIT.CreateScene()
 
 		-- Create the module Builds
 		if TamrielUnlimitedIT.Builds ~= nil then
-			d("Builds:CreateScene()")
 			TamrielUnlimitedIT.Builds:CreateScene()
-		else
-			d("Builds not initialized")
 		end
 
 		-- Registrazione scene in gruppo
@@ -1997,8 +1994,11 @@ end
 function SortBuildsByClass ()
     TamrielUnlimitedIT.Builds:SortBuilds("class")
 end
+function SortBuildsByRole ()
+    TamrielUnlimitedIT.Builds:SortBuilds("role")
+end
 function OpenBuildDetails(self, backPage)
-	TamrielUnlimitedIT.Builds:ShowDetails(self:GetNamedChild("Label_BuildID"):GetText(), backPage)
+	TamrielUnlimitedIT.Builds:ShowDetails(self:GetNamedChild("Label_BuildID"):GetText())
 end
 function BackToBuilds()
 	TamrielUnlimitedIT.Builds:CloseDetails()

@@ -243,6 +243,16 @@ function GetConfigClassInfo(classId)
 	end
 	return nil
 end
+function GetConfigRoleInfo(roleId)
+	if TUI_Config and TUI_Config.Roles then
+		for i = 1, #TUI_Config.Roles do
+			if i == roleId then
+				return TUI_Config.Roles[i]
+			end
+		end
+	end
+	return nil
+end
 function GetRaceTexture(raceId)
 	local raceInfo = GetConfigRaceInfo(raceId)
 	if raceInfo ~= nil then
@@ -254,6 +264,13 @@ function GetClassTexture(classId)
 	local classInfo = GetConfigClassInfo(classId)
 	if classInfo ~= nil then
 		return (classInfo.texture ~= "" and "TamrielUnlimitedIT/Textures/Class/" .. classInfo.texture or "")
+	end
+	return ""
+end
+function GetRoleTexture(roleId)
+	local roleInfo = GetConfigRoleInfo(roleId)
+	if roleInfo ~= nil and roleInfo.texture ~= nil then
+		return "TamrielUnlimitedIT/Textures/Role/" .. roleInfo.texture
 	end
 	return ""
 end
