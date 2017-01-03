@@ -413,9 +413,9 @@ function TamrielUnlimitedIT.CreateScene()
 			{
 				categoryName = SI_TUI_BUILDS, -- Titolo vicino ai bottoni
 				descriptor = "TuiBuilds",
-				normal = "EsoUI/art/mainmenu/menubar_voip_up.dds",
-				pressed = "EsoUI/art/mainmenu/menubar_voip_down.dds",
-				highlight = "EsoUI/art/mainmenu/menubar_voip_over.dds",
+				normal = "EsoUI/art/mainmenu/menubar_inventory_up.dds",
+				pressed = "EsoUI/art/mainmenu/menubar_inventory_down.dds",
+				highlight = "EsoUI/art/mainmenu/menubar_inventory_over.dds",
 			},
 			{
 				categoryName = SI_TUI_GILDE, -- Titolo vicino ai bottoni
@@ -2008,6 +2008,9 @@ function ShowMyBuild()
 end
 function ShareBuild()
 	TamrielUnlimitedIT.Builds:Share()
+end
+function RateBuild()
+	TamrielUnlimitedIT.Builds:RateBuild()
 end
 
 -- SALVATAGGIO DATI-VARIABILI

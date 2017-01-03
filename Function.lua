@@ -56,7 +56,6 @@ end
 
 --DATE
 function TimestampToDate(ts)
-
 	s = ts%86400
 	ts = math.floor(ts/ 86400)
 	h = math.floor(s/3600)
@@ -69,7 +68,6 @@ function TimestampToDate(ts)
 	e = math.floor(dd*1000/30601)
 	f = dd-e*30-math.floor(e*601/1000)
 	arr={}
-  
 	if e < 14 then
 		arr.anno=c-4716
 		arr.mese=e-1
@@ -77,7 +75,6 @@ function TimestampToDate(ts)
 		arr.ora=h
 		arr.minuto=m
 		arr.secondo=s
-
 	else  
 		arr.anno=c-4715
 		arr.mese=e-13
@@ -86,11 +83,9 @@ function TimestampToDate(ts)
 		arr.minuto=m
 		arr.secondo=s
 	end
-
 	return arr
 end
 function DateToTimestamp(dat)
-
 	s=dat.secondo
 	mi= dat.minuto
 	h=dat.ora
@@ -101,12 +96,9 @@ function DateToTimestamp(dat)
 		y =y- 1
 		m =m+ 12 
 	end
-	
 	return (365*y +  math.floor(y/4) -  math.floor(y/100) +  math.floor(y/400) +  math.floor((3*(m+1))/5) + 30*m + dd - 719561) *  86400 + 3600 * h + 60 * mi + s
-	
 end
 function days_in_month(month, year)
-
 	if(month == 2 ) then
 		if(year % 4 ==0) then
 			if(year % 100 ==0) then
@@ -128,31 +120,22 @@ function days_in_month(month, year)
 			return 30
 		end
 	end
-	
 end
 function day_of_the_week_by_date(dat)
-
 	gg=dat.giorno
 	mm=dat.mese
 	yy=dat.anno
-	
 	t={0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
     if(mm<=2) then
 		yy=yy-1
 	end
-	
     return ((((yy + math.floor(yy/4) - math.floor(yy/100) +math.floor(yy/400) + t[mm] + gg) % 7)+6)%7)+1;
-	
-	
 end
 function day_of_the_week_by_numeber(n)
-	
     return Week[n%7]
-	
 end
 -- 1 = ita | 2 = eng
 function n_day_week_from_initials(initials,lang)
-	
 	for i=1,#Week do
 		if(Week[i][lang]==initials ) then
 			return i
@@ -182,10 +165,8 @@ function isValidDate(dat)
 	elseif(dat.giorno<0 or dat.giorno> days_in_month(dat.mese,dat.anno)) then
 		return false
 	end
-	
 	return true
 end
-
 function AddDay(dat,n)
 	if isValidDate(dat) then 
 		dat.giorno=dat.giorno+n
@@ -217,8 +198,36 @@ function AddYear(dat,n)
 		end
 	end 
 end
+function StringToDate(date_str)
+	local _,_,y,m,d=string.find(date_str, "(%d+)-(%d+)-(%d+)")
+	return tonumber(y),tonumber(m),tonumber(d)
+end
+function StringToDateTime(date_str)
+	local _,_,y,m,d,hh,mm=string.find(date_str, "(%d+)-(%d+)-(%d+) (%d+):(%d+)")
+	return tonumber(y),tonumber(m),tonumber(d),tonumber(hh),tonumber(mm)
+end
+function StringToDateTimeSeconds(date_str)
+	local _,_,y,m,d,hh,mm,ss=string.find(date_str, "(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)")
+	return tonumber(y),tonumber(m),tonumber(d),tonumber(hh),tonumber(mm),tonumber(ss)
+end
+function GetMonthName(month)
+	local months = { "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre" }
+	return months[tonumber(month)]
+end
+function GetMonthNameAbbr(month)
+	local months = { "Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic" }
+	return months[tonumber(month)]
+end
 
 -- GAME
+function SetToolTip(ctrl, text)
+	ctrl:SetHandler("OnMouseEnter", function(self)
+		ZO_Tooltips_ShowTextTooltip(self, TOP, text)
+	end)
+	ctrl:SetHandler("OnMouseExit", function(self)
+		ZO_Tooltips_HideTextTooltip()
+	end)
+end
 function GetConfigRaceInfo(raceId)
 	if TUI_Config ~= nil then
 		if TUI_Config.Races ~= nil then
@@ -321,9 +330,19 @@ function MakeItemSetLink( id, flags )
 	local style = ITEMSTYLE_NONE;
 
 	if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.allianceStyle)) then
-		style = ItemBrowser.allianceStyle;
+		local allianceStyles = {
+			[ALLIANCE_NONE]                = ITEMSTYLE_NONE,
+			[ALLIANCE_ALDMERI_DOMINION]    = ITEMSTYLE_ALLIANCE_ALDMERI,
+			[ALLIANCE_EBONHEART_PACT]      = ITEMSTYLE_ALLIANCE_EBONHEART,
+			[ALLIANCE_DAGGERFALL_COVENANT] = ITEMSTYLE_ALLIANCE_DAGGERFALL,
+		};
+		style = allianceStyles[GetUnitAlliance("player")];
 	elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.multiStyle)) then
-		style = ItemBrowser.multiStyle;
+		local multiStyle = GetUnitRaceId("player");
+		if multiStyle == 10 then
+			multiStyle = ITEMSTYLE_RACIAL_IMPERIAL
+		end
+		style = multiStyle;
 	end
 
 	local itemLink = string.format("|H1:item:%d:%d:50:0:0:0:0:0:0:0:0:0:0:0:0:%d:%d:0:0:%d:0|h|h", id, quality, style, crafted, health);
@@ -344,13 +363,13 @@ end
 function GetItemSetDataVar(idSet)
 	if ItemsDataVar ~= nil then
 		for i = 1, #ItemsDataVar do
-			if ItemsDataVar[i].id == idSet then
+			if ItemsDataVar[i].code == idSet then
 				return ItemsDataVar[i]
 			end
 		end
 	end
 	return {
-		id = 0,
+		code = 0,
 		name = "",
 		flag = 0x01,
 		zone = {},
@@ -359,7 +378,7 @@ function GetItemSetDataVar(idSet)
 end
 function GetItemSetData( idSet )
 	local dataVar = GetItemSetDataVar(idSet)
-	local id = dataVar.id;
+	local id = dataVar.code;
 	local flags = tonumber(dataVar.flag, 16);
 
 	local itemLink = MakeItemSetLink(id, flags);
@@ -389,14 +408,8 @@ function GetItemSetData( idSet )
 			type = "Misto"
 		else
 			armorType = GetItemLinkArmorType(itemLink);
-			type = GetString("SI_ARMORTYPE", armorType)
-			--[[local armorColors = {
-				[ARMORTYPE_NONE]   = ZO_DEFAULT_TEXT,
-				[ARMORTYPE_HEAVY]  = ItemBrowser.colors.health,
-				[ARMORTYPE_LIGHT]  = ItemBrowser.colors.magicka,
-				[ARMORTYPE_MEDIUM] = ItemBrowser.colors.stamina,
-			};
-			type = LocalizeString("<<C:1>>", GetString("SI_ARMORTYPE", armorType));]]--
+			--type = GetString("SI_ARMORTYPE", armorType)
+			type = LocalizeString("<<C:1>>", GetString("SI_ARMORTYPE", armorType));
 		end
 	end
 

@@ -114,6 +114,18 @@ end
 function TUI_Builds:InitializeScreenDetails(container)
 	self.DynamicScrollPageBuildDetails = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuildDetails", container, "DynamicScrollPageBuildDetails", 0)
 	self.DynamicScrollPageBuildDetails:SetHidden(true)
+
+	self.RateDropdown = ZO_ComboBox:New(GetControl(self.DynamicScrollPageBuildDetails:GetNamedChild("Content"), "RateDropdown"))
+	self.RateDropdown:SetSortsItems(false)
+	self.RateDropdownSelected = 0
+	local function OnRateChanged(comboBox, name, entry)
+		self.RateDropdownSelected = entry.id
+	end
+	for i = 1, 10, 1 do
+		self.RateDropdown:AddItem({ name = i, callback = OnRateChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
+	end
+	self.RateDropdown:UpdateItems()
+	self.RateDropdown:SelectFirstItem()
 end
 
 function TUI_Builds:InitializeScreenShare(container)
@@ -176,6 +188,16 @@ function TUI_Builds:CreateScene ()
 	self:SearchBuilds("")
 end
 
+function TUI_Builds:GetFormattedDateAbbr(date)
+	local y,m,d,hh,mm = StringToDateTime(date)
+	return d .. " " .. string.upper(GetMonthNameAbbr(m)) .. " " .. y
+end
+
+function TUI_Builds:GetFormattedDate(date)
+	local y,m,d,hh,mm = StringToDateTime(date)
+	return d .. " " .. GetMonthName(m) .. " " .. y
+end
+
 function TUI_Builds:FillBuildsList ()
 	self.DynamicScrollPageBuilds:SetDimensions(900, 20 * #self.Builds + 50)
 	self.DynamicScrollPageBuilds:GetNamedChild("Tabella"):SetDimensions(900, 20 * #self.Builds + 50)
@@ -198,15 +220,6 @@ function TUI_Builds:FillBuildsList ()
 
 	local i = 1
 
-	local function SetToolTip(ctrl, text)
-		ctrl:SetHandler("OnMouseEnter", function(self)
-			ZO_Tooltips_ShowTextTooltip(self, TOP, text)
-		end)
-		ctrl:SetHandler("OnMouseExit", function(self)
-			ZO_Tooltips_HideTextTooltip()
-		end)
-	end
-
 	if #self.Builds > 0 then
 		while i <= #self.Builds do
 			local v1 = el1:GetNamedChild("Dynamic_print_BuildsRow" .. i)
@@ -221,7 +234,7 @@ function TUI_Builds:FillBuildsList ()
 			v1:SetDimensions(900, 40)
 			v1:SetHidden(false)
 			v1:SetAnchor(TOPLEFT, pre, BOTTOMLEFT, 0, 0)
-			v1:GetNamedChild("Colonna0Label"):SetText(self.Builds[i].date)
+			v1:GetNamedChild("Colonna0Label"):SetText(self:GetFormattedDateAbbr(self.Builds[i].date))
 			v1:GetNamedChild("Colonna1Label"):SetText(TUI_Builds.GetBuildTarget(self.Builds[i].target))
 			v1:GetNamedChild("Colonna2Label"):SetText(self.Builds[i].owner)
 			v1:GetNamedChild("Colonna3NameButtonLabel"):SetText(self.Builds[i].name)
@@ -254,7 +267,7 @@ function TUI_Builds:FillBuildsList ()
 			else
 				v1:GetNamedChild("Colonna6RoleTexture"):SetHidden(true)
 			end
-			
+
 			self:SetRatingTextures(v1, "Colonna7", self.Builds[i].rating)
 
 			pre = v1
@@ -380,6 +393,7 @@ function TUI_Builds:ShowDetails (buildId)
 
 	if build ~= nil then
 		
+		self.currentBuild = build
 		self.DynamicScrollPageBuilds:SetHidden(true)
 
 		local el1 = self.DynamicScrollPageBuildDetails:GetNamedChild("Content")
@@ -387,8 +401,7 @@ function TUI_Builds:ShowDetails (buildId)
 		-- Load the build data
 		el1:GetNamedChild("Name"):SetText(build.name)
 		self:SetRatingTextures(el1, "Rating", build.rating)
-		el1:GetNamedChild("Author"):SetText("Condivisa da: " .. build.owner)
-		el1:GetNamedChild("Date"):SetText("Caricata il: " .. build.date)
+		el1:GetNamedChild("Author"):SetText("Condivisa da |c885533" .. build.owner .. "|r il |c885533" .. self:GetFormattedDate(build.date) .. "|r")
 		if build.description then
 			el1:GetNamedChild("Description"):SetText(build.description)
 			el1:GetNamedChild("Description"):SetHidden(false)
@@ -410,20 +423,49 @@ function TUI_Builds:ShowDetails (buildId)
 		-- Load the items in the slots
 		if build.items ~= nil then
 			for i = 1, #build.items do
-				local item = GetItemSetData(build.items[i].code)
+				--[[local item = GetItemSetData(build.items[i].code)
 				if item ~= nil then
-					local text = ""
 					local slot = TUI_Config.ItemData.slots[build.items[i].slot]
 					if slot ~= nil then
-						local text = string.format( "|cBA5AC4%s|r |cC4855A[%s]|r   |c5A99C4%s|r", item.name, item.itemType, item.source )
-						self:SetupEquipSlot(el1, build.items[i].slot, ZO_Character_GetEmptyEquipSlotTexture(build.items[i].slot), text);
+						--local text = string.format( "|cBA5AC4%s|r |cC4855A[%s]|r   |c5A99C4%s|r", item.name, item.itemType, item.source )
+						local text = item.name
+						local icon = GetItemLinkInfo(item.itemLink)
+						if icon == nil or icon == "" then
+							icon = ZO_Character_GetEmptyEquipSlotTexture(build.items[i].slot)
+						end
+						self:SetupEquipSlot(el1, build.items[i].slot, icon, text);
 					end
+				end]]--
+				local slot = TUI_Config.ItemData.slots[build.items[i].slot]
+				if slot ~= nil then
+					--local text = string.format( "|cBA5AC4%s|r |cC4855A[%s]|r   |c5A99C4%s|r", item.name, item.itemType, item.source )
+					local text = build.items[i].link
+					local icon = GetItemLinkInfo(build.items[i].link)
+					if icon == nil or icon == "" then
+						icon = ZO_Character_GetEmptyEquipSlotTexture(build.items[i].slot)
+					end
+					self:SetupEquipSlot(el1, build.items[i].slot, icon, text);
 				end
+			end
+		end
+
+		self.RateDropdown:SelectFirstItem()
+		for key, value in pairs(TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated) do
+			if key == tostring(buildId) then
+				self.RateDropdown:SetSelectedItem(value.rating)
+				break
 			end
 		end
 
 		self.DynamicScrollPageBuildDetails:SetHidden(false)
 
+	end
+end
+
+function TUI_Builds:RateBuild()
+	if self.currentBuild then
+		TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(self.currentBuild.id)] = { rating = self.RateDropdownSelected }
+		ReloadUI()
 	end
 end
 
@@ -458,9 +500,11 @@ function TUI_Builds:ShowMyBuild ()
 	ShareBuild_Name:SetText("")
 	ShareBuild_Description:SetText("")
 	el1:GetNamedChild("RaceTexture"):SetTexture(GetRaceTexture(GetUnitRaceId("player")))
-	el1:GetNamedChild("RaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
+	SetToolTip(el1:GetNamedChild("RaceTexture"), zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
+	--el1:GetNamedChild("RaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
 	el1:GetNamedChild("ClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
-	el1:GetNamedChild("ClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
+	SetToolTip(el1:GetNamedChild("ClassTexture"), zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
+	--el1:GetNamedChild("ClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
 	
 	self.ShareTargetDropdown:SelectFirstItem()
 	self.ShareRoleDropdown:SelectFirstItem()
