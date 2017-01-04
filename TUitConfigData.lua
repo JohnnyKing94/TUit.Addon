@@ -229,5 +229,8 @@ TUI_Config = {
         lightbrown      = ZO_ColorDef:New("C4855A"),
 		teal            = ZO_ColorDef:New("66CCCC"),
 		pink            = ZO_ColorDef:New("FF99CC"),
+        white           = ZO_ColorDef:New("FFFFFF"),
+        green           = ZO_ColorDef:New("39E600"),
+        red             = ZO_ColorDef:New("CC0000"),
 	},
 }

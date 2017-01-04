@@ -19,16 +19,16 @@
 					<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
 					<Dimensions x="130" y="50" />
 				</Label-->
-				<Label name="$(parent)LabelWarningApp" mouseEnabled="true" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
+				<Label name="$(parent)LabelWarningApp" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
-					<Dimensions x="600" y="40" />
+					<Dimensions y="40" />
 				</Label>
 				<Button name="$(parent)ShareBuild_btn" alpha="1" inherits="ZO_DefaultButton">
 					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT"  relativeTo="$(parent)" />
 					<Dimensions x="250" y="40" />
 					<OnMouseDown>ShowMyBuild()</OnMouseDown>
 					<Controls>
-						<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="CONDIVIDI LA TUA BUILD">
+						<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Condividi la tua Build">
 							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 							<Dimensions x="220" y="40" />
 						</Label>
@@ -379,55 +379,136 @@
 					<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
 					<Dimensions x="900" y="50" />
 				</Label>
+				<Label font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
+					<Dimensions y="40" />
+				</Label>
 				<Control name="$(parent)Content">
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
 					<Dimensions x="900" y="0" />
 					<Controls>
 						<Control name="$(parent)Rating">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetY="-40"/>
-							<!--Dimensions x="400" y="32" /-->
+							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="50" offsetY="10"/>
+							<Dimensions x="240" y="83"/>
 							<Controls>
-								<Label name="$(parent)RatingLabel" font="ZoFontWinT2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="VALUTAZIONE MEDIA">
-									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
-									<Dimensions y="32" />
+								<Label name="$(parent)RatingLabel" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="VALUTAZIONE MEDIA">
+									<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
 								</Label>
 								<Texture name="$(parent)Rating1">
-									<Dimensions x="32" y="32" />
-									<Anchor point="TOPLEFT" relativeTo="$(parent)RatingLabel" relativePoint="TOPRIGHT" offsetX="20" />
+									<Dimensions x="48" y="48" />
+									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetY="35" />
 								</Texture>
 								<Texture name="$(parent)Rating2">
-									<Dimensions x="32" y="32" />
+									<Dimensions x="48" y="48" />
 									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating1" relativePoint="TOPRIGHT" />
 								</Texture>
 								<Texture name="$(parent)Rating3">
-									<Dimensions x="32" y="32" />
+									<Dimensions x="48" y="48" />
 									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating2" relativePoint="TOPRIGHT" />
 								</Texture>
 								<Texture name="$(parent)Rating4">
-									<Dimensions x="32" y="32" />
+									<Dimensions x="48" y="48" />
 									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating3" relativePoint="TOPRIGHT" />
 								</Texture>
 								<Texture name="$(parent)Rating5">
-									<Dimensions x="32" y="32" />
+									<Dimensions x="48" y="48" />
 									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating4" relativePoint="TOPRIGHT" />
 								</Texture>
 							</Controls>
 						</Control>
-						<Label name="$(parent)Name" height="10" font="ZoFontWinH1" inheritAlpha="false" alpha="1" color="66CCCC" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetY="25"/>
-							<Dimensions x="850" y="35" />
+						<Control name="$(parent)Rate">
+							<Anchor point="TOPRIGHT" relativeTo="$(parent)" relativePoint="TOPRIGHT" offsetX="-50" offsetY="10"/>
+							<Dimensions x="240" y="83"/>
+							<Controls>
+								<Label name="$(parent)RatingLabel" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="VALUTA QUESTA BUILD">
+									<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
+								</Label>
+								<Texture name="$(parent)Rating1" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
+									<Dimensions x="48" y="48" />
+									<Anchor point="TOPLEFT" relativeTo="$(parent)RatingLabel" relativePoint="TOPLEFT" offsetY="35" />
+									<OnMouseEnter>
+										OnMouseEnterBuildRate(self)
+									</OnMouseEnter>
+									<OnMouseExit>
+										OnMouseExitBuildRate(self)
+									</OnMouseExit>
+									<OnMouseDown>
+										OnMouseDownBuildRate(self)
+									</OnMouseDown>
+								</Texture>
+								<Texture name="$(parent)Rating2" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
+									<Dimensions x="48" y="48" />
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating1" relativePoint="TOPRIGHT" />
+									<OnMouseEnter>
+										OnMouseEnterBuildRate(self)
+									</OnMouseEnter>
+									<OnMouseExit>
+										OnMouseExitBuildRate(self)
+									</OnMouseExit>
+									<OnMouseDown>
+										OnMouseDownBuildRate(self)
+									</OnMouseDown>
+								</Texture>
+								<Texture name="$(parent)Rating3" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
+									<Dimensions x="48" y="48" />
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating2" relativePoint="TOPRIGHT" />
+									<OnMouseEnter>
+										OnMouseEnterBuildRate(self)
+									</OnMouseEnter>
+									<OnMouseExit>
+										OnMouseExitBuildRate(self)
+									</OnMouseExit>
+									<OnMouseDown>
+										OnMouseDownBuildRate(self)
+									</OnMouseDown>
+								</Texture>
+								<Texture name="$(parent)Rating4" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
+									<Dimensions x="48" y="48" />
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating3" relativePoint="TOPRIGHT" />
+									<OnMouseEnter>
+										OnMouseEnterBuildRate(self)
+									</OnMouseEnter>
+									<OnMouseExit>
+										OnMouseExitBuildRate(self)
+									</OnMouseExit>
+									<OnMouseDown>
+										OnMouseDownBuildRate(self)
+									</OnMouseDown>
+								</Texture>
+								<Texture name="$(parent)Rating5" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
+									<Dimensions x="48" y="48" />
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating4" relativePoint="TOPRIGHT" />
+									<OnMouseEnter>
+										OnMouseEnterBuildRate(self)
+									</OnMouseEnter>
+									<OnMouseExit>
+										OnMouseExitBuildRate(self)
+									</OnMouseExit>
+									<OnMouseDown>
+										OnMouseDownBuildRate(self)
+									</OnMouseDown>
+								</Texture>
+							</Controls>
+						</Control>
+						<Label name="$(parent)Name" font="ZoFontWinH1" inheritAlpha="false" alpha="1" color="66CCCC" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetY="120"/>
+							<Dimensions y="35" />
+						</Label>
+						<Label name="$(parent)Author" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="BOTTOM" horizontalAlignment="LEFT">
+							<Anchor point="BOTTOMLEFT" relativeTo="$(parent)Name" relativePoint="BOTTOMRIGHT" offsetX="50"/>
+							<Dimensions y="35" />
 						</Label>
 						<Label name="$(parent)Description" font="ZoFontWinT2" inheritAlpha="false" alpha="1" color="E6E6E6" wrapMode="TRUNCATE" verticalAlignment="TOPLEFT" horizontalAlignment="LEFT">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)Name" relativePoint="BOTTOMLEFT"/>
-							<Dimensions x="850" y="40" />
+							<Anchor point="TOPLEFT" relativeTo="$(parent)Name" relativePoint="BOTTOMLEFT" offsetY="15"/>
+							<Dimensions x="850" />
 						</Label>
-						<Label name="$(parent)Author" height="10" font="ZoFontWinT2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)Description" relativePoint="BOTTOMLEFT" offsetY="5"/>
-							<Dimensions x="850" y="35" />
+						<Label name="$(parent)TargetLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)Description" relativePoint="BOTTOMLEFT" offsetY="30" />
+							<Dimensions x="100" y="48" />
 						</Label>
 						<Texture name="$(parent)RaceTexture">
 							<Dimensions x="48" y="48" />
-							<Anchor point="TOPLEFT" relativeTo="$(parent)Author" relativePoint="BOTTOMLEFT" offsetY="20" />
+							<Anchor point="TOPLEFT" relativeTo="$(parent)TargetLabel" relativePoint="TOPRIGHT" offsetX="50" />
 						</Texture>
 						<Label name="$(parent)RaceLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="LEFT" relativeTo="$(parent)RaceTexture" relativePoint="RIGHT" offsetX="10"/>
@@ -450,12 +531,16 @@
 							<Dimensions x="100" y="48" />
 						</Label>
 						<Control name="$(parent)Slots">
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)RaceTexture" offsetY="20" />
-							<Dimensions x="900" y="0" />
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)TargetLabel" offsetY="30" />
+							<Dimensions x="900" />
 							<Controls>
+								<Label name="$(parent)SlotsArmor" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="ARMATURA">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
+									<Dimensions x="300" y="48" />
+								</Label>
 								<!-- EQUIP_SLOT_HEAD -->
 								<Control name="$(parent)Slot0">
-									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
+									<Anchor point="TOPLEFT" relativeTo="$(parent)SlotsArmor" relativePoint="BOTTOMLEFT" offsetY="5"/>
 									<Dimensions x="300" y="48" />
 									<Controls>
 										<Texture name="$(parent)Texture">
@@ -464,7 +549,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -479,7 +564,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -494,7 +579,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -509,7 +594,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -524,7 +609,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -539,7 +624,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -554,13 +639,17 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
+								<Label name="$(parent)SlotsJewels" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="GIOIELLI">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)SlotsArmor" relativePoint="TOPRIGHT"/>
+									<Dimensions x="300" y="48" />
+								</Label>
 								<!-- EQUIP_SLOT_NECK -->
 								<Control name="$(parent)Slot1">
-									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot0" relativePoint="TOPRIGHT"/>
+									<Anchor point="TOPLEFT" relativeTo="$(parent)SlotsJewels" relativePoint="BOTTOMLEFT" offsetY="10"/>
 									<Dimensions x="300" y="48" />
 									<Controls>
 										<Texture name="$(parent)Texture">
@@ -569,7 +658,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -584,7 +673,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -599,13 +688,17 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
+								<Label name="$(parent)SlotsWeapons" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="ARMI">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)SlotsJewels" relativePoint="TOPRIGHT"/>
+									<Dimensions x="300" y="48" />
+								</Label>
 								<!-- EQUIP_SLOT_MAIN_HAND -->
 								<Control name="$(parent)Slot4">
-									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot1" relativePoint="TOPRIGHT"/>
+									<Anchor point="TOPLEFT" relativeTo="$(parent)SlotsWeapons" relativePoint="BOTTOMLEFT" offsetY="5"/>
 									<Dimensions x="300" y="48" />
 									<Controls>
 										<Texture name="$(parent)Texture">
@@ -614,7 +707,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -629,7 +722,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -644,7 +737,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -659,56 +752,28 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
 							</Controls>
 						</Control>
 						<Button name="$(parent)Riga5" alpha="1" inherits="ZO_DefaultButton">
-							<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="-40"/>
-							<Dimensions x="180" y="35" />
+							<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="-50"/>
+							<Dimensions x="250" y="35" />
 							<OnMouseDown>
 								BackToBuilds()
 							</OnMouseDown>
 							<Controls>
-								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ritorna">
+								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ritorna alla lista">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
-									<Dimensions x="115" y="35" />
+									<Dimensions y="35" />
 								</Label> 
 								<Label name="$(parent)Label_BackPage"  hidden="true" text="TuiBuilds">
 									<Anchor point="CENTER" relativeTo="$(parent)Label_BuildDetails" relativePoint="CENTER" offsetY="0"/>
 								</Label> 
 							</Controls>
 						</Button>
-						<Label name="$(parent)RateLabel" font="ZoFontWinT2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Quanto valuti questa build?">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)Riga5" relativePoint="BOTTOMLEFT" offsetY="50"/>
-							<Dimensions x="180" y="48" />
-						</Label>
-						<Control name="$(parent)RateDropdown" inherits="ZO_ComboBox">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)RateLabel" relativePoint="BOTTOMLEFT" />
-							<Dimensions x="180" y="40"/>
-						</Control>
-						<Button name="$(parent)ButtonRate" alpha="1" inherits="ZO_DefaultButton">
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)RateDropdown" offsetY="10"/>
-							<Dimensions x="180" y="35" />
-							<OnMouseDown>
-								RateBuild()
-							</OnMouseDown>
-							<Controls>
-								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Invia">
-									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
-									<Dimensions x="115" y="35" />
-								</Label> 
-								<Label name="$(parent)Label_BackPage"  hidden="true" text="TuiBuilds">
-									<Anchor point="CENTER" relativeTo="$(parent)Label_BuildDetails" relativePoint="CENTER" offsetY="0"/>
-								</Label> 
-							</Controls>
-						</Button>
-						<Label name="$(parent)Target" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)Rating" relativePoint="BOTTOMLEFT" offsetY="30"/>
-							<Dimensions x="180" y="24" />
-						</Label>
 					</Controls>
 				</Control>
 			</Controls>
@@ -718,22 +783,26 @@
 		<!-- BUILD SHARE -->
 		<Control name="DynamicScrollPageBuildShare" virtual="true">
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
-			<Dimensions x="900" y="0" />
+			<Dimensions x="900" />
 			<Controls>
-				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="CONDIVIDI LA TUA BUILD">
+				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Condividi Build">
 					<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
 					<Dimensions x="900" y="50" />
 				</Label>
+				<Label font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
+					<Dimensions y="40" />
+				</Label>
 				<Control name="$(parent)Content">
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
-					<Dimensions x="900" y="0" />
+					<Dimensions x="900" />
 					<Controls>
-						<Label name="$(parent)Name" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Titolo">
+						<Label name="$(parent)Name" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Dai un nome a questa build:">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="0"/>
 							<Dimensions x="850" y="35" />
 						</Label>
 						<Control name="$(parent)Name_control"  >
-							<Dimensions x="600" y="30" />
+							<Dimensions x="600" y="40" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Name"/>
 							<Controls>
 								<Backdrop name="$(parent)TextBG" centerColor="000000" edgeColor="AAAAAA">
@@ -741,17 +810,17 @@
 									<Edge edgeSize="2" />
 								</Backdrop>
 								<EditBox name="ShareBuild_Name" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="100"  editEnabled="true" multiLine="false" newLineEnabled="false"   >
-									<Dimensions x="596" y="22" />
+									<Dimensions x="596" y="32" />
 									<Anchor point="CENTER" relativePoint="CENTER" relativeTo="$(parent)"  />
 								</EditBox>
 							</Controls>
 						</Control>
-						<Label name="$(parent)Description" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Descrizione">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)Name" relativePoint="BOTTOMLEFT" offsetY="30"/>
+						<Label name="$(parent)Description" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Scrivi una breve descrizione (MAX 500 caratteri):">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)Name_control" relativePoint="BOTTOMLEFT" offsetY="20"/>
 							<Dimensions x="850" y="35" />
 						</Label>
 						<Control name="$(parent)Description_control"  >
-							<Dimensions x="600" y="52" />
+							<Dimensions x="600" y="100" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Description"/>
 							<Controls>
 								<Backdrop name="$(parent)TextBG" centerColor="000000" edgeColor="AAAAAA">
@@ -759,50 +828,71 @@
 									<Edge edgeSize="2" />
 								</Backdrop>
 								<EditBox name="ShareBuild_Description" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="500"  editEnabled="true" multiLine="true" newLineEnabled="false"   >
-									<Dimensions x="596" y="44" />
+									<Dimensions x="596" y="96" />
 									<Anchor point="CENTER" relativePoint="CENTER" relativeTo="$(parent)"  />
 								</EditBox>
 							</Controls>
 						</Control>
-						<Texture name="$(parent)RaceTexture" mouseEnabled="true">
-							<Dimensions x="48" y="48" />
+						<Label name="$(parent)TargetLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assegna un target a questa build:">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)Description_control" relativePoint="BOTTOMLEFT" offsetY="20" />
-						</Texture>
-						<!--Label name="$(parent)RaceLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
-							<Anchor point="LEFT" relativeTo="$(parent)RaceTexture" relativePoint="RIGHT" offsetX="10"/>
-							<Dimensions x="100" y="48" />
-						</Label-->
-						<Texture name="$(parent)ClassTexture" mouseEnabled="true">
-							<Dimensions x="48" y="48" />
-							<Anchor point="TOPLEFT" relativeTo="$(parent)RaceTexture" relativePoint="TOPRIGHT" offsetX="5" />
-						</Texture>
-						<!--Label name="$(parent)ClassLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
-							<Anchor point="LEFT" relativeTo="$(parent)ClassTexture" relativePoint="RIGHT" offsetX="10"/>
-							<Dimensions x="100" y="48" />
-						</Label-->
-						<Label name="$(parent)TargetLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Target">
-							<Anchor point="LEFT" relativeTo="$(parent)ClassTexture" relativePoint="RIGHT" offsetX="50" />
-							<Dimensions x="60" y="24" />
+							<Dimensions y="24" />
 						</Label>
 						<Control name="$(parent)TargetDropdown" inherits="ZO_ComboBox">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)TargetLabel" relativePoint="TOPRIGHT" />
+							<Anchor point="TOPLEFT" relativeTo="$(parent)TargetLabel" relativePoint="TOPRIGHT" offsetX="10"/>
 							<Dimensions x="150" />
 						</Control>
-						<Label name="$(parent)RoleLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Role">
+						<Label name="$(parent)RoleLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assegna un ruolo a questa build:">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)TargetDropdown" relativePoint="TOPRIGHT" offsetX="35" />
-							<Dimensions x="50" y="24" />
 						</Label>
 						<Control name="$(parent)RoleDropdown" inherits="ZO_ComboBox">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)RoleLabel" relativePoint="TOPRIGHT" />
+							<Anchor point="TOPLEFT" relativeTo="$(parent)RoleLabel" relativePoint="TOPRIGHT" offsetX="10"/>
 							<Dimensions x="150" />
 						</Control>
-						<Control name="$(parent)Slots">
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)RaceTexture" offsetY="20" />
-							<Dimensions x="900" y="0" />
+						<Control name="$(parent)RaceClass">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)TargetLabel" relativePoint="BOTTOMLEFT" offsetY="30" />
+							<Dimensions x="900" y="48"/>
 							<Controls>
+								<Control name="$(parent)Race">
+									<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" offsetX="-80" />
+									<Dimensions x="150" y="48"/>
+									<Controls>
+										<Texture name="$(parent)Texture" mouseEnabled="true">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="LEFT" relativeTo="$(parent)Texture" relativePoint="RIGHT" offsetX="10"/>
+											<Dimensions x="100" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+								<Control name="$(parent)Class">
+									<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" offsetX="80" />
+									<Dimensions x="150" y="48"/>
+									<Controls>
+										<Texture name="$(parent)Texture" mouseEnabled="true">
+											<Dimensions x="48" y="48" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+										</Texture>
+										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
+											<Anchor point="LEFT" relativeTo="$(parent)Texture" relativePoint="RIGHT" offsetX="10"/>
+											<Dimensions x="100" y="48" />
+										</Label>
+									</Controls>
+								</Control>
+							</Controls>
+						</Control>
+						<Control name="$(parent)Slots">
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)RaceClass" offsetY="30" />
+							<Dimensions x="900" y="390"/>
+							<Controls>
+								<Label name="$(parent)SlotsArmor" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="ARMATURA">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
+									<Dimensions x="300" y="48" />
+								</Label>
 								<!-- EQUIP_SLOT_HEAD -->
 								<Control name="$(parent)Slot0">
-									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
+									<Anchor point="TOPLEFT" relativeTo="$(parent)SlotsArmor" relativePoint="BOTTOMLEFT" offsetY="5"/>
 									<Dimensions x="300" y="48" />
 									<Controls>
 										<Texture name="$(parent)Texture">
@@ -811,7 +901,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -826,7 +916,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -841,7 +931,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -856,7 +946,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -871,7 +961,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -886,7 +976,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -901,13 +991,17 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
+								<Label name="$(parent)SlotsJewels" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="GIOIELLI">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)SlotsArmor" relativePoint="TOPRIGHT"/>
+									<Dimensions x="300" y="48" />
+								</Label>
 								<!-- EQUIP_SLOT_NECK -->
 								<Control name="$(parent)Slot1">
-									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot0" relativePoint="TOPRIGHT"/>
+									<Anchor point="TOPLEFT" relativeTo="$(parent)SlotsJewels" relativePoint="BOTTOMLEFT" offsetY="5"/>
 									<Dimensions x="300" y="48" />
 									<Controls>
 										<Texture name="$(parent)Texture">
@@ -916,7 +1010,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -931,7 +1025,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -946,13 +1040,17 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
+								<Label name="$(parent)SlotsWeapons" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="ARMI">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)SlotsJewels" relativePoint="TOPRIGHT"/>
+									<Dimensions x="300" y="48" />
+								</Label>
 								<!-- EQUIP_SLOT_MAIN_HAND -->
 								<Control name="$(parent)Slot4">
-									<Anchor point="TOPLEFT" relativeTo="$(parent)Slot1" relativePoint="TOPRIGHT"/>
+									<Anchor point="TOPLEFT" relativeTo="$(parent)SlotsWeapons" relativePoint="BOTTOMLEFT" offsetY="5"/>
 									<Dimensions x="300" y="48" />
 									<Controls>
 										<Texture name="$(parent)Texture">
@@ -961,7 +1059,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -976,7 +1074,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -991,7 +1089,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -1006,39 +1104,44 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="230" y="48" />
+											<Dimensions x="220" y="48" />
 										</Label>
 									</Controls>
 								</Control>
 							</Controls>
 						</Control>
 						<Button name="$(parent)Riga5" alpha="1" inherits="ZO_DefaultButton">
-							<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" offsetX="0" offsetY="0" relativeTo="$(parent)" />
-							<Dimensions x="180" y="35" />
+							<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="-50"/>
+							<Dimensions x="250" y="35" />
 							<OnMouseDown>
 								BackToBuilds()
 							</OnMouseDown>
 							<Controls>
-								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ritorna">
+								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ritorna alla lista">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
-									<Dimensions x="115" y="35" />
+									<Dimensions y="35" />
 								</Label> 
 								<Label name="$(parent)Label_BackPage"  hidden="true" text="TuiBuilds">
 									<Anchor point="CENTER" relativeTo="$(parent)Label_BuildDetails" relativePoint="CENTER" offsetY="0"/>
 								</Label> 
 							</Controls>
 						</Button>
-						<Button name="$(parent)ShareBuild_btn" alpha="1" inherits="ZO_DefaultButton">
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT"  relativeTo="$(parent)Riga5" offsetY="40" />
-							<Dimensions x="180" y="35" />
-							<OnMouseDown>ShareBuild()</OnMouseDown>
+						<Control>
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT"  relativeTo="$(parent)Slots" offsetY="50" />
+							<Dimensions x="900" y="40" />
 							<Controls>
-								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Condividi">
-									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
-									<Dimensions x="115" y="35" />
-								</Label>
+								<Button name="$(parent)ShareBuild_btn" alpha="1" inherits="ZO_DefaultButton">
+									<Anchor point="TOP" relativePoint="TOP"  relativeTo="$(parent)"/>
+									<Dimensions x="280" y="40" />
+									<OnMouseDown>ShareBuild()</OnMouseDown>
+									<Controls>
+										<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Condividi questa build">
+											<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
+										</Label>
+									</Controls>
+								</Button>
 							</Controls>
-						</Button>
+						</Control>
 					</Controls>
 				</Control>
 			</Controls>

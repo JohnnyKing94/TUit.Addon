@@ -6,6 +6,7 @@ TUI_Builds.MaxBuilds = 10
 TUI_Builds.LAM = LibStub("LibAddonMenu-2.0")
 
 local TUI_Builds_Target = { "PVE", "PVP", "PVP/PVE" }
+local BUILD_MIN_PIECES = 3
 
 ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NAME"] = 
 {
@@ -15,7 +16,25 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NAME"] =
 	},
 	mainText = 
 	{
-		text = "Assegna un Titolo alla build",
+		text = "Assegna un Titolo alla build.",
+	},
+	buttons =
+	{
+		[1] =
+		{
+			text = SI_OK
+		}
+	}
+}
+ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NUMBERPIECES"] = 
+{
+	title =
+	{
+		text = "Condividi Build",
+	},
+	mainText = 
+	{
+		text = "Non puoi condividere una Build che abbia meno di " .. BUILD_MIN_PIECES .. " pezzi.",
 	},
 	buttons =
 	{
@@ -33,7 +52,7 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_MAXBUILDS"] =
 	},
 	mainText = 
 	{
-		text = "Hai raggiunto il numero massimo di build condivisibili",
+		text = "Hai raggiunto il numero massimo di build condivisibili.",
 	},
 	buttons =
 	{
@@ -115,7 +134,7 @@ function TUI_Builds:InitializeScreenDetails(container)
 	self.DynamicScrollPageBuildDetails = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuildDetails", container, "DynamicScrollPageBuildDetails", 0)
 	self.DynamicScrollPageBuildDetails:SetHidden(true)
 
-	self.RateDropdown = ZO_ComboBox:New(GetControl(self.DynamicScrollPageBuildDetails:GetNamedChild("Content"), "RateDropdown"))
+	--[[self.RateDropdown = ZO_ComboBox:New(GetControl(self.DynamicScrollPageBuildDetails:GetNamedChild("Content"), "RateDropdown"))
 	self.RateDropdown:SetSortsItems(false)
 	self.RateDropdownSelected = 0
 	local function OnRateChanged(comboBox, name, entry)
@@ -125,7 +144,7 @@ function TUI_Builds:InitializeScreenDetails(container)
 		self.RateDropdown:AddItem({ name = i, callback = OnRateChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
 	end
 	self.RateDropdown:UpdateItems()
-	self.RateDropdown:SelectFirstItem()
+	self.RateDropdown:SelectFirstItem()]]--
 end
 
 function TUI_Builds:InitializeScreenShare(container)
@@ -378,10 +397,12 @@ function TUI_Builds:SetupEquipSlot(elementUI, equipSlot, texture, label)
 			slot:GetNamedChild("Texture"):SetTexture(texture)
 		end
 		if label == nil or label == "" then
-			slot:GetNamedChild("Label"):SetText("")
-			slot:GetNamedChild("Texture"):SetAlpha(0.5)
+			slot:GetNamedChild("Label"):SetText("Nessun oggetto in questo slot")
+			slot:GetNamedChild("Label"):SetColor(TUI_Config.colors.red:UnpackRGBA())
+			slot:GetNamedChild("Texture"):SetAlpha(0.4)
 		else
 			slot:GetNamedChild("Texture"):SetAlpha(1)
+			slot:GetNamedChild("Label"):SetColor(TUI_Config.colors.white:UnpackRGBA())
 			slot:GetNamedChild("Label"):SetText(label)
 		end
 	end
@@ -393,7 +414,8 @@ function TUI_Builds:ShowDetails (buildId)
 
 	if build ~= nil then
 		
-		self.currentBuild = build
+		self.currentBuild = deepcopy(build)
+		self.currentBuild.myRating = 0
 		self.DynamicScrollPageBuilds:SetHidden(true)
 
 		local el1 = self.DynamicScrollPageBuildDetails:GetNamedChild("Content")
@@ -408,6 +430,7 @@ function TUI_Builds:ShowDetails (buildId)
 		else
 			el1:GetNamedChild("Description"):SetHidden(true)
 		end
+		el1:GetNamedChild("TargetLabel"):SetText(TUI_Builds_Target[build.target])
 		el1:GetNamedChild("RaceTexture"):SetTexture(GetRaceTexture(build.race))
 		el1:GetNamedChild("RaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, build.race)))
 		el1:GetNamedChild("ClassTexture"):SetTexture(GetClassTexture(build.class))
@@ -449,22 +472,47 @@ function TUI_Builds:ShowDetails (buildId)
 			end
 		end
 
-		self.RateDropdown:SelectFirstItem()
+		--self.RateDropdown:SelectFirstItem()
 		for key, value in pairs(TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated) do
 			if key == tostring(buildId) then
-				self.RateDropdown:SetSelectedItem(value.rating)
+				--self.RateDropdown:SetSelectedItem(value.rating)
+				self.currentBuild.myRating = value.rating
 				break
 			end
 		end
+		self:SetMyRating()
 
 		self.DynamicScrollPageBuildDetails:SetHidden(false)
 
 	end
 end
 
-function TUI_Builds:RateBuild()
+function TUI_Builds:SetMyRating()
+	local el = self.DynamicScrollPageBuildDetails:GetNamedChild("Content")
+	local label = el:GetNamedChild("RateRatingLabel")
+	if self.currentBuild.myRating > 0 then
+		label:SetText("CAMBIA LA TUA VALUTAZIONE")
+		label:SetColor(TUI_Config.colors.white:UnpackRGBA())
+	else
+		label:SetText("VALUTA QUESTA BUILD")
+		label:SetColor(TUI_Config.colors.green:UnpackRGBA())
+	end
+	label:ClearAnchors()
+	label:SetAnchor(TOP, el:GetNamedChild("Rate"), TOP, 0, 0)
+	local rating = self.currentBuild.myRating / 2
+	for i = 1, 5, 1 do
+		local tex = "star-empty.dds"
+		if rating > 0 and i <= rating then
+			tex = "star-full.dds"
+		end
+		el:GetNamedChild("RateRating" .. i):SetTexture("TamrielUnlimitedIT/Textures/" .. tex)
+	end
+end
+
+function TUI_Builds:RateBuild(rating)
 	if self.currentBuild then
-		TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(self.currentBuild.id)] = { rating = self.RateDropdownSelected }
+		--TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(self.currentBuild.id)] = { rating = self.RateDropdownSelected }
+		TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(self.currentBuild.id)] = { rating = rating }
 		ReloadUI()
 	end
 end
@@ -499,12 +547,12 @@ function TUI_Builds:ShowMyBuild ()
 	-- Reset the build data
 	ShareBuild_Name:SetText("")
 	ShareBuild_Description:SetText("")
-	el1:GetNamedChild("RaceTexture"):SetTexture(GetRaceTexture(GetUnitRaceId("player")))
-	SetToolTip(el1:GetNamedChild("RaceTexture"), zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
-	--el1:GetNamedChild("RaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
-	el1:GetNamedChild("ClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
-	SetToolTip(el1:GetNamedChild("ClassTexture"), zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
-	--el1:GetNamedChild("ClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
+	el1:GetNamedChild("RaceClassRaceTexture"):SetTexture(GetRaceTexture(GetUnitRaceId("player")))
+	SetToolTip(el1:GetNamedChild("RaceClassRaceTexture"), zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
+	el1:GetNamedChild("RaceClassRaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
+	el1:GetNamedChild("RaceClassClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
+	SetToolTip(el1:GetNamedChild("RaceClassClassTexture"), zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
+	el1:GetNamedChild("RaceClassClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
 	
 	self.ShareTargetDropdown:SelectFirstItem()
 	self.ShareRoleDropdown:SelectFirstItem()
@@ -533,10 +581,13 @@ end
 
 function TUI_Builds:Share ()
 	local name = zo_strtrim(ShareBuild_Name:GetText())
+	local numberPieces = 0
 	if name == "" then
 		ZO_Dialogs_ShowDialog("TUIT_DIALOG_SHAREBUILD_NAME", nil, nil, false)
 	elseif #TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created >= self.MaxBuilds then
 		ZO_Dialogs_ShowDialog("TUIT_DIALOG_SHAREBUILD_MAXBUILDS", nil, nil, false)
+	elseif numberPieces < BUILD_MIN_PIECES then
+		ZO_Dialogs_ShowDialog("TUIT_DIALOG_SHAREBUILD_NUMBERPIECES", nil, nil, false)
 	else
 		local buildId = 1 + #TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created
 		TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created[buildId] = {

@@ -2009,8 +2009,26 @@ end
 function ShareBuild()
 	TamrielUnlimitedIT.Builds:Share()
 end
-function RateBuild()
+--[[function RateBuild()
 	TamrielUnlimitedIT.Builds:RateBuild()
+end]]--
+function OnMouseEnterBuildRate(self)
+	local rating = tonumber(self:GetName():sub(self:GetName():len()))
+	local el = TamrielUnlimitedIT.Builds.DynamicScrollPageBuildDetails
+	for i = 1, 5, 1 do
+		local tex = "star-empty.dds"
+		if i <= rating then
+			tex = "star-full.dds"
+		end
+		el:GetNamedChild("ContentRateRating" .. i):SetTexture("TamrielUnlimitedIT/Textures/" .. tex)
+	end
+end
+function OnMouseExitBuildRate(self)
+	TamrielUnlimitedIT.Builds:SetMyRating()
+end
+function OnMouseDownBuildRate(self)
+	local rating = tonumber(self:GetName():sub(self:GetName():len()))
+	TamrielUnlimitedIT.Builds:RateBuild(rating * 2)
 end
 
 -- SALVATAGGIO DATI-VARIABILI
