@@ -79,6 +79,9 @@ function TUI_Builds:Initialize ()
 	if SharedBuildDataVar == nil then
 		SharedBuildDataVar = {}
 	end
+	if TUI_Config == nil then
+		TUI_Config = {}
+	end
 	if TamrielUnlimitedIT.savedVariablesGlobal.Builds == nil then
 		TamrielUnlimitedIT.savedVariablesGlobal.Builds = { Created = {}, Evaluated = {} }
 	else
