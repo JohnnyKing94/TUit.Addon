@@ -564,7 +564,7 @@
 										</Texture>
 										<Label name="$(parent)Label" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPLEFT" offsetX="70"/>
-											<Dimensions x="220" y="48" />
+											<Dimensions x="200" y="48" />
 										</Label>
 									</Controls>
 								</Control>
@@ -805,12 +805,11 @@
 							<Dimensions x="600" y="40" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Name"/>
 							<Controls>
-								<Backdrop name="$(parent)TextBG" centerColor="000000" edgeColor="AAAAAA">
+								<Backdrop name="$(parent)TextBG" inherits="ZO_DefaultBackdrop">
 									<AnchorFill />
-									<Edge edgeSize="2" />
 								</Backdrop>
 								<EditBox name="ShareBuild_Name" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="100"  editEnabled="true" multiLine="false" newLineEnabled="false"   >
-									<Dimensions x="596" y="32" />
+									<Dimensions x="590" y="32" />
 									<Anchor point="CENTER" relativePoint="CENTER" relativeTo="$(parent)"  />
 								</EditBox>
 							</Controls>
@@ -823,12 +822,11 @@
 							<Dimensions x="600" y="100" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Description"/>
 							<Controls>
-								<Backdrop name="$(parent)TextBG" centerColor="000000" edgeColor="AAAAAA">
+								<Backdrop name="$(parent)TextBG" inherits="ZO_DefaultBackdrop">
 									<AnchorFill />
-									<Edge edgeSize="2" />
 								</Backdrop>
 								<EditBox name="ShareBuild_Description" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="500"  editEnabled="true" multiLine="true" newLineEnabled="false"   >
-									<Dimensions x="596" y="96" />
+									<Dimensions x="590" y="96" />
 									<Anchor point="CENTER" relativePoint="CENTER" relativeTo="$(parent)"  />
 								</EditBox>
 							</Controls>

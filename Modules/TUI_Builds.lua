@@ -62,6 +62,31 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_MAXBUILDS"] =
 		}
 	}
 }
+ESO_Dialogs["TUIT_DIALOG_CONFIRM_RATE"] = 
+{
+	title =
+	{
+		text = "Valuta Build",
+	},
+	mainText = 
+	{
+		text = "Confermare la valutazione?",
+	},
+	buttons =
+	{
+		[1] =
+		{
+			text = SI_OK,
+            callback = function(dialog)
+                            TUI_Builds:ConfirmRateBuild(dialog.data.rating)
+                        end,
+		},
+		[2] =
+		{
+			text = SI_DIALOG_CANCEL
+		}
+	}
+}
 
 function TUI_Builds:Get(buildId)
 	if self.Builds ~= nil then
@@ -139,18 +164,6 @@ end
 function TUI_Builds:InitializeScreenDetails(container)
 	self.DynamicScrollPageBuildDetails = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuildDetails", container, "DynamicScrollPageBuildDetails", 0)
 	self.DynamicScrollPageBuildDetails:SetHidden(true)
-
-	--[[self.RateDropdown = ZO_ComboBox:New(GetControl(self.DynamicScrollPageBuildDetails:GetNamedChild("Content"), "RateDropdown"))
-	self.RateDropdown:SetSortsItems(false)
-	self.RateDropdownSelected = 0
-	local function OnRateChanged(comboBox, name, entry)
-		self.RateDropdownSelected = entry.id
-	end
-	for i = 1, 10, 1 do
-		self.RateDropdown:AddItem({ name = i, callback = OnRateChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
-	end
-	self.RateDropdown:UpdateItems()
-	self.RateDropdown:SelectFirstItem()]]--
 end
 
 function TUI_Builds:InitializeScreenShare(container)
@@ -184,7 +197,7 @@ end
 
 function TUI_Builds:CreateScene ()
 	-- Creazione stringhe
-	ZO_CreateStringId("SI_TUI_BUILDS", "Builds")
+	ZO_CreateStringId("SI_TUI_BUILDS", "Builds Condivise")
 
 	TUI_SCENE_BUILDS = ZO_Scene:New("TuiBuilds", SCENE_MANAGER)
 
@@ -378,7 +391,6 @@ function TUI_Builds:CloseDetails ()
 	self.DynamicScrollPageBuildDetails:SetHidden(true)
 	self.DynamicScrollPageBuildShare:SetHidden(true)
 	self.DynamicScrollPageBuilds:SetHidden(false)
-	--ReloadUI()
 end
 
 function TUI_Builds:SetRatingTextures(elementUI, ratingRootName, rating)
@@ -452,19 +464,6 @@ function TUI_Builds:ShowDetails (buildId)
 		-- Load the items in the slots
 		if build.items ~= nil then
 			for i = 1, #build.items do
-				--[[local item = GetItemSetData(build.items[i].code)
-				if item ~= nil then
-					local slot = TUI_Config.ItemData.slots[build.items[i].slot]
-					if slot ~= nil then
-						--local text = string.format( "|cBA5AC4%s|r |cC4855A[%s]|r   |c5A99C4%s|r", item.name, item.itemType, item.source )
-						local text = item.name
-						local icon = GetItemLinkInfo(item.itemLink)
-						if icon == nil or icon == "" then
-							icon = ZO_Character_GetEmptyEquipSlotTexture(build.items[i].slot)
-						end
-						self:SetupEquipSlot(el1, build.items[i].slot, icon, text);
-					end
-				end]]--
 				local slot = TUI_Config.ItemData.slots[build.items[i].slot]
 				if slot ~= nil then
 					--local text = string.format( "|cBA5AC4%s|r |cC4855A[%s]|r   |c5A99C4%s|r", item.name, item.itemType, item.source )
@@ -478,10 +477,8 @@ function TUI_Builds:ShowDetails (buildId)
 			end
 		end
 
-		--self.RateDropdown:SelectFirstItem()
 		for key, value in pairs(TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated) do
 			if key == tostring(buildId) then
-				--self.RateDropdown:SetSelectedItem(value.rating)
 				self.currentBuild.myRating = value.rating
 				break
 			end
@@ -517,10 +514,13 @@ end
 
 function TUI_Builds:RateBuild(rating)
 	if self.currentBuild then
-		--TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(self.currentBuild.id)] = { rating = self.RateDropdownSelected }
-		TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(self.currentBuild.id)] = { rating = rating }
-		ReloadUI()
+		ZO_Dialogs_ShowDialog("TUIT_DIALOG_CONFIRM_RATE", { rating = rating }, nil, false)
 	end
+end
+
+function TUI_Builds:ConfirmRateBuild(rating)
+	TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(self.currentBuild.id)] = { rating = rating }
+	ReloadUI()
 end
 
 function TUI_Builds:GetItemDataFromLink(link)

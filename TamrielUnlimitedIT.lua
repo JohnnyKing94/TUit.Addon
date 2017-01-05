@@ -183,16 +183,6 @@ function TamrielUnlimitedIT:InitializeScene()
 	-- Create modules
 	TamrielUnlimitedIT.Builds = TUI_Builds
 	TamrielUnlimitedIT.Builds:Initialize()
-	if TamrielUnlimitedIT.Builds ~= nil then
-		if TamrielUnlimitedIT.Builds.Builds ~= nil then
-			d("Builds count: " .. #TamrielUnlimitedIT.Builds.Builds)
-			--TamrielUnlimitedIT.Builds:InitializeScene()
-		else
-			d("TUI_Builds.Builds is nil")
-		end
-	else
-		d("TUI_Builds.Create failed")
-	end
 
 	TamrielUnlimitedIT.CreateScene()
 end
@@ -207,7 +197,7 @@ function TamrielUnlimitedIT.CreateScene()
 	ZO_CreateStringId("SI_TUI_CONVALIDA", "Convalida")
 	ZO_CreateStringId("SI_TUI_CONTRIBUTORI", "Contributori")
 	ZO_CreateStringId("SI_TUI_DETTAGLI_UTENTE", "Dettagli Utente")
-	ZO_CreateStringId("SI_TUI_BUILDS", "Builds Condivise")
+	ZO_CreateStringId("SI_TUI_BUILDS", "Builds")
 	ZO_CreateStringId("SI_BINDING_NAME_TUI_SHOW_PANEL", "Apri TamrielUnlimitedIT")
 
 	-- Creazione Array dati per icona nel menu
