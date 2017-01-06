@@ -223,6 +223,8 @@ function TUI_Builds:CreateScene ()
 	TUI_SCENE_BUILDS:AddFragment(TUI_MENU_BAR)
 
 	-- Fill the builds list
+	self.Sort = "date"
+	self.SortDir = 1
 	self:SearchBuilds("")
 end
 
@@ -426,6 +428,24 @@ function TUI_Builds:SetupEquipSlot(elementUI, equipSlot, texture, label)
 	end
 end
 
+function TUI_Builds:PreviewSlot(self, slot)
+	local itemLink = nil
+	if slot ~= nil and TUI_Builds.currentBuild and TUI_Builds.currentBuild.items then
+		for i = 1, #TUI_Builds.currentBuild.items do
+			if slot == TUI_Builds.currentBuild.items[i].slot then
+				itemLink = TUI_Builds.currentBuild.items[i].link
+				break
+			end
+		end
+	end
+	if itemLink then
+		InitializeTooltip(ItemPreviewTooltip, self, RIGHT, -30, 0, LEFT)
+		ItemPreviewTooltip:SetLink(itemLink)
+	else
+		ClearTooltip(ItemPreviewTooltip)
+	end
+end
+
 function TUI_Builds:ShowDetails (buildId)
 
 	local build = self:Get(buildId)
@@ -448,13 +468,14 @@ function TUI_Builds:ShowDetails (buildId)
 		else
 			el1:GetNamedChild("Description"):SetHidden(true)
 		end
-		el1:GetNamedChild("TargetLabel"):SetText(TUI_Builds_Target[build.target])
-		el1:GetNamedChild("RaceTexture"):SetTexture(GetRaceTexture(build.race))
-		el1:GetNamedChild("RaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, build.race)))
-		el1:GetNamedChild("ClassTexture"):SetTexture(GetClassTexture(build.class))
-		el1:GetNamedChild("ClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, build.class)))
-		el1:GetNamedChild("RoleTexture"):SetTexture(GetRoleTexture(build.role))
-		el1:GetNamedChild("RoleLabel"):SetText(GetConfigRoleInfo(build.role).name)
+		el1:GetNamedChild("PG_InfoTargetTexture"):SetTexture(GetRoleTexture(1))
+		el1:GetNamedChild("PG_InfoTargetLabel"):SetText(TUI_Builds_Target[build.target])
+		el1:GetNamedChild("PG_InfoRaceTexture"):SetTexture(GetRaceTexture(build.race))
+		el1:GetNamedChild("PG_InfoRaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, build.race)))
+		el1:GetNamedChild("PG_InfoClassTexture"):SetTexture(GetClassTexture(build.class))
+		el1:GetNamedChild("PG_InfoClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, build.class)))
+		el1:GetNamedChild("PG_InfoRoleTexture"):SetTexture(GetRoleTexture(build.role))
+		el1:GetNamedChild("PG_InfoRoleLabel"):SetText(GetConfigRoleInfo(build.role).name)
 
 		-- Reset the equip slots
 		for i = EQUIP_SLOT_MIN_VALUE + 1, EQUIP_SLOT_MAX_VALUE, 1 do
@@ -493,22 +514,32 @@ end
 function TUI_Builds:SetMyRating()
 	local el = self.DynamicScrollPageBuildDetails:GetNamedChild("Content")
 	local label = el:GetNamedChild("RateRatingLabel")
-	if self.currentBuild.myRating > 0 then
-		label:SetText("CAMBIA LA TUA VALUTAZIONE")
-		label:SetColor(TUI_Config.colors.white:UnpackRGBA())
+	local showRate = true
+	if self.currentBuild.owner:lower() == GetDisplayName():lower() then
+		showRate = false
+		label:SetText("QUESTA E' UNA TUA BUILD")
+		label:SetColor(TUI_Config.colors.red:UnpackRGBA())
 	else
-		label:SetText("VALUTA QUESTA BUILD")
-		label:SetColor(TUI_Config.colors.green:UnpackRGBA())
-	end
-	label:ClearAnchors()
-	label:SetAnchor(TOP, el:GetNamedChild("Rate"), TOP, 0, 0)
-	local rating = self.currentBuild.myRating / 2
-	for i = 1, 5, 1 do
-		local tex = "star-empty.dds"
-		if rating > 0 and i <= rating then
-			tex = "star-full.dds"
+		if self.currentBuild.myRating > 0 then
+			label:SetText("CAMBIA LA TUA VALUTAZIONE")
+			label:SetColor(TUI_Config.colors.white:UnpackRGBA())
+		else
+			label:SetText("VALUTA QUESTA BUILD")
+			label:SetColor(TUI_Config.colors.green:UnpackRGBA())
 		end
-		el:GetNamedChild("RateRating" .. i):SetTexture("TamrielUnlimitedIT/Textures/" .. tex)
+		label:ClearAnchors()
+		label:SetAnchor(TOP, el:GetNamedChild("Rate"), TOP, 0, 0)
+		local rating = self.currentBuild.myRating / 2
+		for i = 1, 5, 1 do
+			local tex = "star-empty.dds"
+			if rating > 0 and i <= rating then
+				tex = "star-full.dds"
+			end
+			el:GetNamedChild("RateRating" .. i):SetTexture("TamrielUnlimitedIT/Textures/" .. tex)
+		end
+	end
+	for i = 1, 5, 1 do
+		el:GetNamedChild("RateRating" .. i):SetHidden(not showRate)
 	end
 end
 
@@ -548,17 +579,21 @@ end
 function TUI_Builds:ShowMyBuild ()
 	self.DynamicScrollPageBuilds:SetHidden(true)
 
+	local items = self:GetCurrentEquipment()
+	self.currentBuild = { id = 0, owner = GetDisplayName(), items = items }
+	self.currentBuild.myRating = 0
+
 	local el1 = self.DynamicScrollPageBuildShare:GetNamedChild("Content")
 
 	-- Reset the build data
 	ShareBuild_Name:SetText("")
 	ShareBuild_Description:SetText("")
-	el1:GetNamedChild("RaceClassRaceTexture"):SetTexture(GetRaceTexture(GetUnitRaceId("player")))
-	SetToolTip(el1:GetNamedChild("RaceClassRaceTexture"), zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
-	el1:GetNamedChild("RaceClassRaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
-	el1:GetNamedChild("RaceClassClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
-	SetToolTip(el1:GetNamedChild("RaceClassClassTexture"), zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
-	el1:GetNamedChild("RaceClassClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
+	el1:GetNamedChild("PG_InfoRaceTexture"):SetTexture(GetRaceTexture(GetUnitRaceId("player")))
+	SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
+	el1:GetNamedChild("PG_InfoRaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
+	el1:GetNamedChild("PG_InfoClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
+	SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
+	el1:GetNamedChild("PG_InfoClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
 	
 	self.ShareTargetDropdown:SelectFirstItem()
 	self.ShareRoleDropdown:SelectFirstItem()
@@ -569,7 +604,6 @@ function TUI_Builds:ShowMyBuild ()
 	end
 
 	-- Load the items in the slots
-	local items = self:GetCurrentEquipment()
 	for i = 1, #items do
 		--local item = GetItemSetData(items[i].code)
 		local slot = TUI_Config.ItemData.slots[items[i].slot]

@@ -2020,6 +2020,12 @@ function OnMouseDownBuildRate(self)
 	local rating = tonumber(self:GetName():sub(self:GetName():len()))
 	TamrielUnlimitedIT.Builds:RateBuild(rating * 2)
 end
+function OnMouseEnterSlot(self, slot)
+	TamrielUnlimitedIT.Builds:PreviewSlot(self, slot)
+end
+function OnMouseExitSlot()
+	TamrielUnlimitedIT.Builds:PreviewSlot(nil)
+end
 
 -- SALVATAGGIO DATI-VARIABILI
 

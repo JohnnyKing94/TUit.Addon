@@ -94,6 +94,12 @@
 		 
       </Controls>
     </TopLevelControl>
+
+	<TopLevelControl name="ItemPreviewTooltipTopLevel" inherits="TooltipTopLevel">
+		<Controls>
+			<Tooltip name="ItemPreviewTooltip" inherits="ZO_ItemIconTooltip" />
+		</Controls>
+	</TopLevelControl>
 	
 	<TopLevelControl name="UtentiPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
 		<Dimensions x="920" y="640" />
