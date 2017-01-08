@@ -403,9 +403,9 @@ function TamrielUnlimitedIT.CreateScene()
 			{
 				categoryName = SI_TUI_BUILDS, -- Titolo vicino ai bottoni
 				descriptor = "TuiBuilds",
-				normal = "EsoUI/art/mainmenu/menubar_inventory_up.dds",
-				pressed = "EsoUI/art/mainmenu/menubar_inventory_down.dds",
-				highlight = "EsoUI/art/mainmenu/menubar_inventory_over.dds",
+				normal = "EsoUI/art/mainmenu/menubar_skills_up.dds",
+				pressed = "EsoUI/art/mainmenu/menubar_skills_down.dds",
+				highlight = "EsoUI/art/mainmenu/menubar_skills_over.dds",
 			},
 			{
 				categoryName = SI_TUI_GILDE, -- Titolo vicino ai bottoni

@@ -224,7 +224,7 @@ TUI_Config = {
 		magicka         = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_POWER, POWERTYPE_MAGICKA)),
 		stamina         = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_POWER, POWERTYPE_STAMINA)),
 		violet          = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_ITEM_QUALITY_COLORS, ITEM_QUALITY_ARTIFACT)),
-		gold            = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_ITEM_QUALITY_COLORS, ITEM_QUALITY_LEGENDARY)),
+		legendary       = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_ITEM_QUALITY_COLORS, ITEM_QUALITY_LEGENDARY)),
 		brown           = ZO_ColorDef:New("885533"),
         lightbrown      = ZO_ColorDef:New("C4855A"),
 		teal            = ZO_ColorDef:New("66CCCC"),
@@ -232,5 +232,6 @@ TUI_Config = {
         white           = ZO_ColorDef:New("FFFFFF"),
         green           = ZO_ColorDef:New("39E600"),
         red             = ZO_ColorDef:New("CC0000"),
+        gold            = ZO_ColorDef:New("EECA2A"),
 	},
 }
