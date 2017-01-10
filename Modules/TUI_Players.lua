@@ -49,9 +49,9 @@ function TUI_Players:CreateScene(TUI_MENU_BAR)
 	TUI_SCENE_UTENTI:AddFragment(TUI_UTENTI_TITLE_FRAGMENT)
 
 	-- Aggiunta codice XML alla Scena
-	UtentiPanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
+	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
-	TUI_UTENTI_WINDOW = ZO_FadeSceneFragment:New(UtentiPanelMainMenu)
+	TUI_UTENTI_WINDOW = ZO_FadeSceneFragment:New(self.control)
 	TUI_SCENE_UTENTI:AddFragment(TUI_UTENTI_WINDOW)
 
 	TUI_SCENE_UTENTI:AddFragment(TUI_MENU_BAR)

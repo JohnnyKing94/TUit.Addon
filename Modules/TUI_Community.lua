@@ -28,10 +28,10 @@ function TUI_Community:CreateScene(TUI_MENU_BAR)
 	-- Settaggio del titolo
 	TUI_COMMUNITY_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_COMMUNITY_TITLE) -- The title at the left of the scene is the "global one" but we can change it
 	TUI_SCENE_COMMUNITY:AddFragment(TUI_COMMUNITY_TITLE_FRAGMENT)
+	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
 	-- Aggiunta codice XML alla Scena
-	CommunityPanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
-	TUI_COMMUNITY_WINDOW = ZO_FadeSceneFragment:New(CommunityPanelMainMenu)
+	TUI_COMMUNITY_WINDOW = ZO_FadeSceneFragment:New(self.control)
 	TUI_SCENE_COMMUNITY:AddFragment(TUI_COMMUNITY_WINDOW)
 
 	TUI_SCENE_COMMUNITY:AddFragment(TUI_MENU_BAR)

@@ -130,11 +130,8 @@ function TamrielUnlimitedIT:InitializeScene()
 	TamrielUnlimitedIT.Validator:Initialize()
 
 	-- Contributori
-	TamrielUnlimitedIT.Contributori = CreateControlFromVirtual("DynamicLabel_stampataContributori", ContributoriPanelMainMenu, "DynamicTextContributori", 0)
-	TamrielUnlimitedIT.Contributori:SetAnchor(TOP, ContributoriPanelMainMenu, TOP, 0, 0)
-	TamrielUnlimitedIT.Contributori:SetHidden(false)
-	local sc = DynamicLabel_stampataContributori0ContainerScrollChild
-	local el1 = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelContributori", sc, "DynamicScrollPageContributori", 0)
+	TamrielUnlimitedIT.Contributors = TUI_Contributors:New(ContributoriPanelMainMenu)
+	TamrielUnlimitedIT.Contributors:Initialize()
 
 	-- DettagliUtente
 	TamrielUnlimitedIT.DettagliUtente = CreateControlFromVirtual("DynamicLabel_stampataDettagliUtente", DettagliUtentePanelMainMenu, "DynamicTextDettagliUtente", 0)
@@ -144,7 +141,7 @@ function TamrielUnlimitedIT:InitializeScene()
 	TamrielUnlimitedIT.DynamicScrollPageDettagliUtente = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelDettagliUtente", sc, "DynamicScrollPageDettagliUtente", 0)
 
 	-- Builds
-	TamrielUnlimitedIT.Builds = TUI_Builds
+	TamrielUnlimitedIT.Builds = TUI_Builds:New(BuildsPanelMainMenu)
 	TamrielUnlimitedIT.Builds:Initialize()
 
 	TamrielUnlimitedIT.CreateScene()
@@ -203,7 +200,7 @@ function TamrielUnlimitedIT.CreateScene()
 			end)
 	end
 
-	-- Scene creation - Gilde
+	-- Scene creation - Guilds
 	if TamrielUnlimitedIT.Guilds ~= nil then
 		local TUI_SCENE_GILDE = TamrielUnlimitedIT.Guilds:CreateScene(TUI_MENU_BAR)
 		TUI_SCENE_GILDE:RegisterCallback("StateChange", function (oldState, newState)
@@ -213,42 +210,25 @@ function TamrielUnlimitedIT.CreateScene()
 			end)
 	end
 
-	-- Scene creation - EVENTI
+	-- Scene creation - Events
 	if TamrielUnlimitedIT.Events ~= nil then
 		TamrielUnlimitedIT.Events:CreateScene(TUI_MENU_BAR)
 	end
 
-	-- Scene creation - COMMUNITY
+	-- Scene creation - Community
 	if TamrielUnlimitedIT.Community ~= nil then
 		TamrielUnlimitedIT.Community:CreateScene(TUI_MENU_BAR)
 	end
 
-	-- Scene creation - CONVALIDA
+	-- Scene creation - Validator
 	if TamrielUnlimitedIT.Validator ~= nil then
 		TamrielUnlimitedIT.Validator:CreateScene(TUI_MENU_BAR)
 	end
 
-	-- Scene creation - CONTRIBUTORI
-	TUI_SCENE_CONTRIBUTORI = ZO_Scene:New("TuiContributori", SCENE_MANAGER)
-
-	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUI_SCENE_CONTRIBUTORI:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_CONTRIBUTORI:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_CONTRIBUTORI:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_CONTRIBUTORI:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_CONTRIBUTORI:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_CONTRIBUTORI:AddFragment(TOP_BAR_FRAGMENT)
-
-	-- Settaggio del titolo
-	TUI_CONTRIBUTORI_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_CONTRIBUTORI) -- The title at the left of the scene is the "global one" but we can change it
-	TUI_SCENE_CONTRIBUTORI:AddFragment(TUI_CONTRIBUTORI_TITLE_FRAGMENT)
-
-	-- Aggiunta codice XML alla Scena
-	ContributoriPanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
-	TUI_CONTRIBUTORI_WINDOW = ZO_FadeSceneFragment:New(ContributoriPanelMainMenu)
-	TUI_SCENE_CONTRIBUTORI:AddFragment(TUI_CONTRIBUTORI_WINDOW)
-
-	TUI_SCENE_CONTRIBUTORI:AddFragment(TUI_MENU_BAR)
+	-- Scene creation - Contributors
+	if TamrielUnlimitedIT.Contributors ~= nil then
+		TamrielUnlimitedIT.Contributors:CreateScene(TUI_MENU_BAR)
+	end
 
 	-- Scene creation - DETTAGLI_UTENTE
 	TUI_SCENE_DETTAGLI_UTENTE = ZO_Scene:New("TuiDettagliUtente", SCENE_MANAGER)

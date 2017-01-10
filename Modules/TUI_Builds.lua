@@ -1,9 +1,14 @@
-TUI_Builds = {}
-TUI_Builds.Builds = {}
-TUI_Builds.Filter = ""
-TUI_Builds.Sort = "id"
-TUI_Builds.MaxBuilds = 10
-TUI_Builds.LAM = LibStub("LibAddonMenu-2.0")
+TUI_Builds = ZO_Object:Subclass()
+
+function TUI_Builds:New(control)
+    local myInstance = ZO_Object.New(self)
+    myInstance.control = control
+	myInstance.Builds = {}
+	myInstance.Filter = ""
+	myInstance.Sort = "id"
+	myInstance.MaxBuilds = 10
+    return myInstance
+end
 
 local TUI_Builds_Target =
 {
@@ -123,10 +128,10 @@ function TUI_Builds:Initialize ()
 		end
 	end
     -- Initialize UI for Builds screen
-    self.BuildsUI = CreateControlFromVirtual("DynamicLabel_screenBuilds", BuildsPanelMainMenu, "DynamicTextBuilds", 0)
-	self.BuildsUI:SetAnchor(TOP, BuildsPanelMainMenu, TOP, 0, 0)
-	self.BuildsUI:SetHidden(false)
-	local container = DynamicLabel_screenBuilds0ContainerScrollChild
+    self.Panel = CreateControlFromVirtual("DynamicLabel_screenBuilds", self.control, "DynamicTextBuilds", 0)
+	self.Panel:SetAnchor(TOP, self.control, TOP, 0, 0)
+	self.Panel:SetHidden(false)
+	local container = self.Panel:GetNamedChild("ContainerScrollChild")
 	self:InitializeScreenList(container)
 	self:InitializeScreenDetails(container)
 	self:InitializeScreenShare(container)
@@ -135,8 +140,9 @@ end
 function TUI_Builds:InitializeScreenList(container)
 	self.DynamicScrollPageBuilds = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuilds", container, "DynamicScrollPageBuilds", 0)
 
+	local me = self
 	SearchBuild_edit:SetHandler("OnEnter", function (self, key, ctrl, alt, shift, command)
-			TUI_Builds:SearchBuilds(SearchBuild_edit:GetText())
+			me:SearchBuilds(SearchBuild_edit:GetText())
 		end)
 	
 	self.FilterTargetDropdown = ZO_ComboBox:New(GetControl(self.DynamicScrollPageBuilds, "TargetDropdown"))
@@ -214,11 +220,10 @@ function TUI_Builds:CreateScene (TUI_MENU_BAR)
 	-- Settaggio del titolo
 	TUI_BUILDS_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_BUILDS_TITLE)
 	TUI_SCENE_BUILDS:AddFragment(TUI_BUILDS_TITLE_FRAGMENT)
+	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
 	-- Aggiunta codice XML alla Scena
-	BuildsPanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
-
-	TUI_BUILDS_WINDOW = ZO_FadeSceneFragment:New(BuildsPanelMainMenu)
+	TUI_BUILDS_WINDOW = ZO_FadeSceneFragment:New(self.control)
 	TUI_SCENE_BUILDS:AddFragment(TUI_BUILDS_WINDOW)
 
 	TUI_SCENE_BUILDS:AddFragment(TUI_MENU_BAR)
@@ -342,24 +347,26 @@ function TUI_Builds:SearchBuilds (searchText)
 		searchTextInsensitive = string.lower(searchText)
 	end
 	local i = 1
-    for key, value in pairs(SharedBuildDataVar) do
-		local addToBuilds = true
-		if searchTextInsensitive ~= "" and not (string.find(string.lower(value.owner), searchTextInsensitive) or string.find(string.lower(value.name), searchTextInsensitive)) then
-			addToBuilds = false
+	if SharedBuildDataVar ~= nil then
+		for key, value in pairs(SharedBuildDataVar) do
+			local addToBuilds = true
+			if searchTextInsensitive ~= "" and not (string.find(string.lower(value.owner), searchTextInsensitive) or string.find(string.lower(value.name), searchTextInsensitive)) then
+				addToBuilds = false
+			end
+			if self.FilterTargetDropdownSelected ~= 0 and value.target ~= self.FilterTargetDropdownSelected then
+				addToBuilds = false
+			end
+			if self.FilterRoleDropdownSelected ~= 0 and value.role ~= self.FilterRoleDropdownSelected then
+				addToBuilds = false
+			end
+			if addToBuilds then
+				self.Builds[i] = deepcopy(value)
+				self.Builds[i].id = key
+				i = i + 1
+			end
 		end
-		if self.FilterTargetDropdownSelected ~= 0 and value.target ~= self.FilterTargetDropdownSelected then
-			addToBuilds = false
-		end
-		if self.FilterRoleDropdownSelected ~= 0 and value.role ~= self.FilterRoleDropdownSelected then
-			addToBuilds = false
-		end
-		if addToBuilds then
-			self.Builds[i] = deepcopy(value)
-			self.Builds[i].id = key
-			i = i + 1
-		end
-    end
-	self.SortBuilds(self.Sort)
+	end
+	self:SortBuilds(self.Sort)
 end
 
 function TUI_Builds.GetBuildTarget (target)
@@ -394,7 +401,7 @@ function TUI_Builds:SortBuilds (field)
 			self.Builds = sortDesc
 		end
 	end
-    TUI_Builds:FillBuildsList()
+    self:FillBuildsList()
 end
 
 function TUI_Builds:CloseDetails ()

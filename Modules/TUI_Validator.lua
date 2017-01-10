@@ -28,10 +28,10 @@ function TUI_Validator:CreateScene(TUI_MENU_BAR)
 	-- Settaggio del titolo
 	TUI_CONVALIDA_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_CONVALIDA_TITLE) -- The title at the left of the scene is the "global one" but we can change it
 	TUI_SCENE_CONVALIDA:AddFragment(TUI_CONVALIDA_TITLE_FRAGMENT)
+	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
 	-- Aggiunta codice XML alla Scena
-	ConvalidaPanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
-	TUI_CONVALIDA_WINDOW = ZO_FadeSceneFragment:New(ConvalidaPanelMainMenu)
+	TUI_CONVALIDA_WINDOW = ZO_FadeSceneFragment:New(self.control)
 	TUI_SCENE_CONVALIDA:AddFragment(TUI_CONVALIDA_WINDOW)
 
 	TUI_SCENE_CONVALIDA:AddFragment(TUI_MENU_BAR)

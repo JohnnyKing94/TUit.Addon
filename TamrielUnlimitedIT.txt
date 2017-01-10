@@ -24,6 +24,7 @@ Modules/TUI_Guilds.lua
 Modules/TUI_Events.lua
 Modules/TUI_Community.lua
 Modules/TUI_Validator.lua
+Modules/TUI_Contributors.lua
 Pages/_1Utenti.xml
 Pages/_2Gilde.xml
 Pages/_3Eventi.xml
