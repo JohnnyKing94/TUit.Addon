@@ -200,11 +200,8 @@ function TUI_Builds:InitializeScreenShare(container)
 	self.ShareRoleDropdown:UpdateItems()
 end
 
-function TUI_Builds:CreateScene ()
-	-- Creazione stringhe
-	ZO_CreateStringId("SI_TUI_BUILDS", "Builds Condivise")
-
-	TUI_SCENE_BUILDS = ZO_Scene:New("TuiBuilds", SCENE_MANAGER)
+function TUI_Builds:CreateScene (TUI_MENU_BAR)
+	local TUI_SCENE_BUILDS = ZO_Scene:New("TuiBuilds", SCENE_MANAGER)
 
 	-- Assign background and UI components
 	-- TUI_SCENE_BUILDS:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
@@ -215,7 +212,7 @@ function TUI_Builds:CreateScene ()
 	TUI_SCENE_BUILDS:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
-	TUI_BUILDS_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_BUILDS)
+	TUI_BUILDS_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_BUILDS_TITLE)
 	TUI_SCENE_BUILDS:AddFragment(TUI_BUILDS_TITLE_FRAGMENT)
 
 	-- Aggiunta codice XML alla Scena
@@ -224,13 +221,14 @@ function TUI_Builds:CreateScene ()
 	TUI_BUILDS_WINDOW = ZO_FadeSceneFragment:New(BuildsPanelMainMenu)
 	TUI_SCENE_BUILDS:AddFragment(TUI_BUILDS_WINDOW)
 
-	TUI_MENU_BAR = ZO_FadeSceneFragment:New(ZO_MainMenuCategoryBar)
 	TUI_SCENE_BUILDS:AddFragment(TUI_MENU_BAR)
 
 	-- Fill the builds list
 	self.Sort = "date"
 	self.SortDir = 1
 	self:SearchBuilds("")
+
+	return TUI_SCENE_BUILDS
 end
 
 function TUI_Builds:GetFormattedDateAbbr(date)
@@ -572,7 +570,7 @@ end
 
 function TUI_Builds:ConfirmRateBuild(rating)
 	TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(self.currentBuild.id)] = { rating = rating }
-	ReloadUI()
+	TamrielUnlimitedIT.ReloadUIFn()
 end
 
 function TUI_Builds:GetItemDataFromLink(link)
@@ -661,6 +659,6 @@ function TUI_Builds:Share ()
 			game_version = GetESOVersionString():gsub("eso.live.", ""),
 			items = items
 		}
-		ReloadUI()
+		TamrielUnlimitedIT.ReloadUIFn()
 	end
 end

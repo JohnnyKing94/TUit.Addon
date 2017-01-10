@@ -13,12 +13,10 @@
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900" y="160" />
 			<Controls>
-				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Community">
+				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="">
 						<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
 						<Dimensions x="900" y="50" />
 				</Label>
-				
-
 			
 				<Control name="$(parent)Tabella">
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />

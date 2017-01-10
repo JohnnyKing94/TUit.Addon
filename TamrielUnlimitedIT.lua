@@ -38,7 +38,6 @@ end
 function TamrielUnlimitedIT.OnAddOnLoaded(event, addonName)
 	TamrielUnlimitedIT.InitializeSavedVars()
 	if TUitDataVar ~= nil then
-	
 		TamrielUnlimitedIT.TUitDataVar = deepcopy(TUitDataVar)
 		
 		if TUitDataVar.PlayersData ~= nil then
@@ -56,15 +55,17 @@ function TamrielUnlimitedIT.OnAddOnLoaded(event, addonName)
 				TUitDataVar.GuildEP = CreateGuildArray(TUitDataVar.Guilds.EP)
 			end
 		end
-		if TUitDataVar.Events ~= nil then
+		--[[if TUitDataVar.Events ~= nil then
 			TamrielUnlimitedIT.EventTemp = deepcopy(TUitDataVar.Events)
-		end
+		end]]--
 	
 		if next(TamrielUnlimitedIT.TUitDataVar) ~= nil then
 			if addonName == TamrielUnlimitedIT.name then
 				TamrielUnlimitedIT:InitializeScene()
 			end
 		end
+	else
+		TamrielUnlimitedIT.TUitDataVar = {}
 	end
 end
 function TamrielUnlimitedIT.PlayerNotification()
@@ -108,62 +109,25 @@ function TamrielUnlimitedIT:InitializeScene()
 	self.Hidden = true;
 	self.InPausa = IsReticleHidden();
 
-	TamrielUnlimitedIT.PlayerTemp = {}
-	LoadArrayPlayerTemp()
-
-
 	-- Utenti
-	TamrielUnlimitedIT.Utenti = CreateControlFromVirtual("DynamicLabel_stampataUtenti", UtentiPanelMainMenu, "DynamicTextUtenti", 0)
-	TamrielUnlimitedIT.Utenti:SetAnchor(TOP, UtentiPanelMainMenu, TOP, 0, 0)
-	TamrielUnlimitedIT.Utenti:SetHidden(false)
-	local sc = DynamicLabel_stampataUtenti0ContainerScrollChild
-	TamrielUnlimitedIT.DynamicScrollPagePlayer = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelUtenti", sc, "DynamicScrollPageUtenti", 0)
-	if TamrielUnlimitedIT.PlayerTemp ~= nil then
-		if #TamrielUnlimitedIT.PlayerTemp ~= 0 then
-			SortCP()
-		else
-			LoadNoPlayer()
-		end
-	else
-		LoadNoPlayer()
-	end
-
-	Search_edit:SetHandler("OnEnter", function (self, key, ctrl, alt, shift, command)
-			CercaPlayer(Search_edit:GetText())
-		end)
+	TamrielUnlimitedIT.Players = TUI_Players:New(UtentiPanelMainMenu)
+	TamrielUnlimitedIT.Players:Initialize()
 
 	-- Gilde
-	TamrielUnlimitedIT.Guilds = CreateControlFromVirtual("DynamicLabel_stampataGilde", GildePanelMainMenu, "DynamicTextGilde", 0)
-	TamrielUnlimitedIT.Guilds:SetAnchor(TOP, GildePanelMainMenu, TOP, 0, 0)
-	TamrielUnlimitedIT.Guilds:SetHidden(false)
-	local sc = DynamicLabel_stampataGilde0ContainerScrollChild
-	TamrielUnlimitedIT.DynamicScrollPageGilde = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelGilde", sc, "DynamicScrollPageGilde", 0)
-	LoadGilde()
+	TamrielUnlimitedIT.Guilds = TUI_Guilds:New(GildePanelMainMenu)
+	TamrielUnlimitedIT.Guilds:Initialize()
 
 	-- Eventi
-	TamrielUnlimitedIT.Events = CreateControlFromVirtual("DynamicLabel_stampataEventi", EventiPanelMainMenu, "DynamicTextEventi", 0)
-	TamrielUnlimitedIT.Events:SetAnchor(TOP, EventiPanelMainMenu, TOP, 0, 0)
-	TamrielUnlimitedIT.Events:SetHidden(false)
-	local sc = DynamicLabel_stampataEventi0ContainerScrollChild
-	TamrielUnlimitedIT.DynamicScrollPageEventi = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelEventi", sc, "DynamicScrollPageEventi", 0)
-	TamrielUnlimitedIT.DynamicScrollPageEventiMessage = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelEventiMessage", sc, "EventMessage", 0)
-	LoadEventi()
+	TamrielUnlimitedIT.Events = TUI_Events:New(EventiPanelMainMenu)
+	TamrielUnlimitedIT.Events:Initialize()
 
 	-- Community
-	TamrielUnlimitedIT.Community = CreateControlFromVirtual("DynamicLabel_stampataCommunity", CommunityPanelMainMenu, "DynamicTextCommunity", 0)
-	TamrielUnlimitedIT.Community:SetAnchor(TOP, CommunityPanelMainMenu, TOP, 0, 0)
-	TamrielUnlimitedIT.Community:SetHidden(false)
-	local sc = DynamicLabel_stampataCommunity0ContainerScrollChild
-	local el1 = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelCommunity", sc, "DynamicScrollPageCommunity", 0)
+	TamrielUnlimitedIT.Community = TUI_Community:New(CommunityPanelMainMenu)
+	TamrielUnlimitedIT.Community:Initialize()
 
 	-- Convalida
-	TamrielUnlimitedIT.Convalida = CreateControlFromVirtual("DynamicLabel_stampataConvalida", ConvalidaPanelMainMenu, "DynamicTextConvalida", 0)
-	TamrielUnlimitedIT.Convalida:SetAnchor(TOP, ConvalidaPanelMainMenu, TOP, 0, 0)
-	TamrielUnlimitedIT.Convalida:SetHidden(false)
-	local sc = DynamicLabel_stampataConvalida0ContainerScrollChild
-	TamrielUnlimitedIT.DynamicScrollPageConvalida = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelConvalida", sc, "DynamicScrollPageConvalida", 0)
-	LoadConvalida()
-
+	TamrielUnlimitedIT.Validator = TUI_Validator:New(ConvalidaPanelMainMenu)
+	TamrielUnlimitedIT.Validator:Initialize()
 
 	-- Contributori
 	TamrielUnlimitedIT.Contributori = CreateControlFromVirtual("DynamicLabel_stampataContributori", ContributoriPanelMainMenu, "DynamicTextContributori", 0)
@@ -179,8 +143,7 @@ function TamrielUnlimitedIT:InitializeScene()
 	local sc = DynamicLabel_stampataDettagliUtente0ContainerScrollChild
 	TamrielUnlimitedIT.DynamicScrollPageDettagliUtente = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelDettagliUtente", sc, "DynamicScrollPageDettagliUtente", 0)
 
-	-- Module Builds
-	-- Create modules
+	-- Builds
 	TamrielUnlimitedIT.Builds = TUI_Builds
 	TamrielUnlimitedIT.Builds:Initialize()
 
@@ -191,13 +154,19 @@ function TamrielUnlimitedIT.CreateScene()
 	-- Creazione stringhe
 	ZO_CreateStringId("SI_TUI_NOME_ADDON", "Tamriel Unlimited IT")
 	ZO_CreateStringId("SI_TUI_UTENTI", "Utenti")
+	ZO_CreateStringId("SI_TUI_UTENTI_TITLE", "Utenti Registrati")
 	ZO_CreateStringId("SI_TUI_GILDE", "Gilde")
+	ZO_CreateStringId("SI_TUI_GILDE_TITLE", "Gilde Registrate")
 	ZO_CreateStringId("SI_TUI_EVENTI", "Eventi")
+	ZO_CreateStringId("SI_TUI_EVENTI_TITLE", "Eventi in corso")
 	ZO_CreateStringId("SI_TUI_COMMUNITY", "Community")
+	ZO_CreateStringId("SI_TUI_COMMUNITY_TITLE", "Segui il Progetto")
 	ZO_CreateStringId("SI_TUI_CONVALIDA", "Convalida")
+	ZO_CreateStringId("SI_TUI_CONVALIDA_TITLE", "Convalida il tuo Account")
 	ZO_CreateStringId("SI_TUI_CONTRIBUTORI", "Contributori")
 	ZO_CreateStringId("SI_TUI_DETTAGLI_UTENTE", "Dettagli Utente")
 	ZO_CreateStringId("SI_TUI_BUILDS", "Builds")
+	ZO_CreateStringId("SI_TUI_BUILDS_TITLE", "Build Condivise")
 	ZO_CreateStringId("SI_BINDING_NAME_TUI_SHOW_PANEL", "Apri TamrielUnlimitedIT")
 
 	-- Creazione Array dati per icona nel menu
@@ -222,132 +191,44 @@ function TamrielUnlimitedIT.CreateScene()
 		end
 	}
 
-	-- Creazione Scena Principale - Utenti
-	TUI_SCENE_UTENTI = ZO_Scene:New("TuiUtenti", SCENE_MANAGER)
-
-	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUI_SCENE_UTENTI:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_UTENTI:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_UTENTI:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_UTENTI:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_UTENTI:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_UTENTI:AddFragment(TOP_BAR_FRAGMENT)
-
-	-- Settaggio del titolo
-	TUI_UTENTI_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_UTENTI)
-	TUI_SCENE_UTENTI:AddFragment(TUI_UTENTI_TITLE_FRAGMENT)
-
-	-- Aggiunta codice XML alla Scena
-	UtentiPanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
-
-	TUI_UTENTI_WINDOW = ZO_FadeSceneFragment:New(UtentiPanelMainMenu)
-	TUI_SCENE_UTENTI:AddFragment(TUI_UTENTI_WINDOW)
-
 	TUI_MENU_BAR = ZO_FadeSceneFragment:New(ZO_MainMenuCategoryBar)
-	TUI_SCENE_UTENTI:AddFragment(TUI_MENU_BAR)
+	
+	-- Scene creation - Players
+	if TamrielUnlimitedIT.Players ~= nil then
+		local TUI_SCENE_UTENTI = TamrielUnlimitedIT.Players:CreateScene(TUI_MENU_BAR)
+		TUI_SCENE_UTENTI:RegisterCallback("StateChange", function (oldState, newState)
+				if newState == SCENE_FRAGMENT_HIDDEN then
+					ChiudiAddRemoveFriend()
+				end
+			end)
+	end
 
-	TUI_SCENE_UTENTI:RegisterCallback("StateChange", function (oldState, newState)
-			if newState == SCENE_FRAGMENT_HIDDEN then
-				ChiudiAddRemoveFriend()
-			end
-		end)
+	-- Scene creation - Gilde
+	if TamrielUnlimitedIT.Guilds ~= nil then
+		local TUI_SCENE_GILDE = TamrielUnlimitedIT.Guilds:CreateScene(TUI_MENU_BAR)
+		TUI_SCENE_GILDE:RegisterCallback("StateChange", function (oldState, newState)
+				if newState == SCENE_FRAGMENT_HIDDEN then
+					ChiudiAddRemoveFriend()
+				end
+			end)
+	end
 
-	-- Creazione Scena - Gilde
-	TUI_SCENE_GILDE = ZO_Scene:New("TuiGilde", SCENE_MANAGER)
+	-- Scene creation - EVENTI
+	if TamrielUnlimitedIT.Events ~= nil then
+		TamrielUnlimitedIT.Events:CreateScene(TUI_MENU_BAR)
+	end
 
-	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUI_SCENE_GILDE:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_GILDE:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_GILDE:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_GILDE:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_GILDE:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_GILDE:AddFragment(TOP_BAR_FRAGMENT)
+	-- Scene creation - COMMUNITY
+	if TamrielUnlimitedIT.Community ~= nil then
+		TamrielUnlimitedIT.Community:CreateScene(TUI_MENU_BAR)
+	end
 
-	-- Settaggio del titolo
-	TUI_GILDE_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_GILDE) -- The title at the left of the scene is the "global one" but we can change it
-	TUI_SCENE_GILDE:AddFragment(TUI_GILDE_TITLE_FRAGMENT)
-	GildePanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
+	-- Scene creation - CONVALIDA
+	if TamrielUnlimitedIT.Validator ~= nil then
+		TamrielUnlimitedIT.Validator:CreateScene(TUI_MENU_BAR)
+	end
 
-	-- Aggiunta codice XML alla Scena
-	TUI_GILDE_WINDOW = ZO_FadeSceneFragment:New(GildePanelMainMenu)
-	TUI_SCENE_GILDE:AddFragment(TUI_GILDE_WINDOW)
-
-	TUI_SCENE_GILDE:AddFragment(TUI_MENU_BAR)
-
-	TUI_SCENE_GILDE:RegisterCallback("StateChange", function (oldState, newState)
-			if newState == SCENE_FRAGMENT_HIDDEN then
-				ChiudiAddRemoveFriend()
-			end
-		end)
-
-
-	-- Creazione Scena - EVENTI
-	TUI_SCENE_EVENTI = ZO_Scene:New("TuiEventi", SCENE_MANAGER)
-
-	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUI_SCENE_EVENTI:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_EVENTI:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_EVENTI:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_EVENTI:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_EVENTI:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_EVENTI:AddFragment(TOP_BAR_FRAGMENT)
-
-	-- Settaggio del titolo
-	TUI_EVENTI_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_EVENTI) -- The title at the left of the scene is the "global one" but we can change it
-	TUI_SCENE_EVENTI:AddFragment(TUI_EVENTI_TITLE_FRAGMENT)
-
-	-- Aggiunta codice XML alla Scena
-	EventiPanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
-	TUI_EVENTI_WINDOW = ZO_FadeSceneFragment:New(EventiPanelMainMenu)
-	TUI_SCENE_EVENTI:AddFragment(TUI_EVENTI_WINDOW)
-
-	TUI_SCENE_EVENTI:AddFragment(TUI_MENU_BAR)
-
-	-- Creazione Scena - COMMUNITY
-	TUI_SCENE_COMMUNITY = ZO_Scene:New("TuiCommunity", SCENE_MANAGER)
-
-	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUI_SCENE_COMMUNITY:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_COMMUNITY:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_COMMUNITY:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_COMMUNITY:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_COMMUNITY:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_COMMUNITY:AddFragment(TOP_BAR_FRAGMENT)
-
-	-- Settaggio del titolo
-	TUI_COMMUNITY_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_COMMUNITY) -- The title at the left of the scene is the "global one" but we can change it
-	TUI_SCENE_COMMUNITY:AddFragment(TUI_COMMUNITY_TITLE_FRAGMENT)
-
-	-- Aggiunta codice XML alla Scena
-	CommunityPanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
-	TUI_COMMUNITY_WINDOW = ZO_FadeSceneFragment:New(CommunityPanelMainMenu)
-	TUI_SCENE_COMMUNITY:AddFragment(TUI_COMMUNITY_WINDOW)
-
-	TUI_SCENE_COMMUNITY:AddFragment(TUI_MENU_BAR)
-
-	-- Creazione Scena - CONVALIDA
-	TUI_SCENE_CONVALIDA = ZO_Scene:New("TuiConvalida", SCENE_MANAGER)
-
-	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUI_SCENE_CONVALIDA:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_CONVALIDA:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_CONVALIDA:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_CONVALIDA:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_CONVALIDA:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_CONVALIDA:AddFragment(TOP_BAR_FRAGMENT)
-
-	-- Settaggio del titolo
-	TUI_CONVALIDA_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_CONVALIDA) -- The title at the left of the scene is the "global one" but we can change it
-	TUI_SCENE_CONVALIDA:AddFragment(TUI_CONVALIDA_TITLE_FRAGMENT)
-
-	-- Aggiunta codice XML alla Scena
-	ConvalidaPanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
-	TUI_CONVALIDA_WINDOW = ZO_FadeSceneFragment:New(ConvalidaPanelMainMenu)
-	TUI_SCENE_CONVALIDA:AddFragment(TUI_CONVALIDA_WINDOW)
-
-	TUI_SCENE_CONVALIDA:AddFragment(TUI_MENU_BAR)
-
-	-- Creazione Scena - CONTRIBUTORI
+	-- Scene creation - CONTRIBUTORI
 	TUI_SCENE_CONTRIBUTORI = ZO_Scene:New("TuiContributori", SCENE_MANAGER)
 
 	-- Assegnazione Background e "componenti" grafici da visualizzare
@@ -369,7 +250,7 @@ function TamrielUnlimitedIT.CreateScene()
 
 	TUI_SCENE_CONTRIBUTORI:AddFragment(TUI_MENU_BAR)
 
-	-- Creazione Scena - DETTAGLI_UTENTE
+	-- Scene creation - DETTAGLI_UTENTE
 	TUI_SCENE_DETTAGLI_UTENTE = ZO_Scene:New("TuiDettagliUtente", SCENE_MANAGER)
 
 	-- Assegnazione Background e "componenti" grafici da visualizzare
@@ -390,6 +271,11 @@ function TamrielUnlimitedIT.CreateScene()
 	TUI_SCENE_DETTAGLI_UTENTE:AddFragment(TUI_DETTAGLI_UTENTE_WINDOW)
 
 	TUI_SCENE_DETTAGLI_UTENTE:AddFragment(TUI_MENU_BAR)
+
+	-- Scene creation - Builds
+	if TamrielUnlimitedIT.Builds ~= nil then
+		TamrielUnlimitedIT.Builds:CreateScene(TUI_MENU_BAR)
+	end
 
 	do
 		local iconData = {
@@ -436,11 +322,6 @@ function TamrielUnlimitedIT.CreateScene()
 				highlight = "EsoUI/art/guild/guildheraldry_indexicon_finalize_over.dds",
 			},
 		}
-
-		-- Create the module Builds
-		if TamrielUnlimitedIT.Builds ~= nil then
-			TamrielUnlimitedIT.Builds:CreateScene()
-		end
 
 		-- Registrazione scene in gruppo
 		SCENE_MANAGER:AddSceneGroup("TuiSceneGroup", ZO_SceneGroup:New("TuiUtenti", "TuiGilde", "TuiEventi", "TuiCommunity", "TuiConvalida", "TuiContributori", "TuiDettagliUtente", "TuiBuilds"))
@@ -545,242 +426,55 @@ function TamrielUnlimitedIT.CreateScene()
 				return false
 			end)
 
+		BuildsPanelMainMenu:SetKeyboardEnabled(true)
+		BuildsPanelMainMenu:SetHandler("OnKeyDown", function (self, key, ctrl, alt, shift, command)
+				if (ListaKeyBinding[key] ~= nil) then
+					SCENE_MANAGER:ShowBaseScene()
+					ChiudiAddRemoveFriend()
+				end
+				return false
+			end)
+
 		SCENE_MANAGER:RegisterCallback("SceneStateChanged", function (scene, oldState, newState)
 				if (inTable(MieTabNotBackToMainPage, scene.name) and newState == SCENE_FRAGMENT_SHOWING) then
 					TamrielUnlimitedIT.BackToMainPage = false
 				end
-
 				if not inTable(MieTab, scene.name) and newState == SCENE_FRAGMENT_SHOWING then
 					ZO_MainMenuCategoryBarButton1:SetMouseEnabled(true)
 					ZO_MenuBar_ClearSelection(TamrielUnlimitedIT.categoryBar)
-
 				end
+				--[[if scene.name == "TuiEventi" and newState == SCENE_FRAGMENT_SHOWING then
+					TamrielUnlimitedIT.Events:LoadEventsList()
+				end]]--
 			end)
-		
 	end
 end
 
+-- PLAYERS LIST
 
-
-
--- LISTA PLAYER
-
-function ClearArrayPlayerTemp()
-	for k in pairs(TamrielUnlimitedIT.PlayerTemp) do
-		TamrielUnlimitedIT.PlayerTemp[k] = nil
-	end
+function SearchPlayer(searchText)
+	TamrielUnlimitedIT.Players:SearchPlayer(searchText)
 end
-function LoadArrayPlayerTemp()
-	ClearArrayPlayerTemp()
-	TamrielUnlimitedIT.PlayerTemp = deepcopy(TUitDataVar.Player)
-end
-function LoadArrayPlayerTemp_NamePattern(Pattern)
-
-	if Pattern == "" then
-		LoadArrayPlayerTemp()
-	else
-		ClearArrayPlayerTemp()
-		local c = 1
-		for i = 1, #TUitDataVar.Player do
-			if string.find(TUitDataVar.Player[i]["pg_name"], Pattern) ~= nil then
-				TamrielUnlimitedIT.PlayerTemp[c] = deepcopy(TUitDataVar.Player[i])
-				c = c + 1
-			end
-		end
-
-	end
-
-end
-function CercaPlayer(Pattern)
-	LoadArrayPlayerTemp_NamePattern(Pattern)
-	SortCP()
-end
-function LoadPlayeList()
-	ChiudiAddRemoveFriend()
-
-	TamrielUnlimitedIT.DynamicScrollPagePlayer:SetDimensions(900, 20 * #TamrielUnlimitedIT.PlayerTemp + 50)
-	TamrielUnlimitedIT.DynamicScrollPagePlayer:GetNamedChild("Tabella"):SetDimensions(900, 20 * #TamrielUnlimitedIT.PlayerTemp + 50)
-
-	local el1 = TamrielUnlimitedIT.DynamicScrollPagePlayer:GetNamedChild("Tabella")
-	local pre = el1:GetNamedChild("stampa_Row0")
-	local searchcontrol = TamrielUnlimitedIT.DynamicScrollPagePlayer:GetNamedChild("Search_control")
-	local searchbtn = TamrielUnlimitedIT.DynamicScrollPagePlayer:GetNamedChild("Search_btn")
-	
-	pre:GetNamedChild("NOPG"):SetHidden(true)
-	searchcontrol:SetHidden(false)
-	searchbtn:SetHidden(false)
-	pre:GetNamedChild("Colonna0"):SetHidden(false)
-	pre:GetNamedChild("Colonna1"):SetHidden(false)
-	pre:GetNamedChild("Colonna2"):SetHidden(false)
-	pre:GetNamedChild("Colonna3"):SetHidden(false)
-	pre:GetNamedChild("Colonna4"):SetHidden(false)
-	pre:GetNamedChild("Colonna5"):SetHidden(false)
-	pre:GetNamedChild("Colonna6"):SetHidden(false)
-
-	local i = 1
-	while i <= #TamrielUnlimitedIT.PlayerTemp do
-		local v1 = el1:GetNamedChild("Dynamic_stampa_Row" .. i)
-		if v1 == nil then
-			v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Row", el1, "DynamicRow", i)
-		end
-
-		v1:SetDimensions(900, 20)
-		v1:SetHidden(false)
-		v1:SetAnchor(TOPLEFT, pre, BOTTOMLEFT, 0, 0)
-		v1:GetNamedChild("Colonna0Label"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["lev"])
-		v1:GetNamedChild("Colonna1Label"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["CP"])
-		v1:GetNamedChild("Colonna2Label"):SetText(GetString("SI_GENDER", TamrielUnlimitedIT.PlayerTemp[i]["sex"]) .. "(RL: " .. (TamrielUnlimitedIT.PlayerTemp[i]["real_sex"] > 0 and string.sub(GetString("SI_GENDER", TamrielUnlimitedIT.PlayerTemp[i]["real_sex"]), 1, 1) or "-") .. ")")
-		v1:GetNamedChild("Colonna3bttn_friendLabel"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["pg_name"])
-		v1:GetNamedChild("Colonna3bttn_friendLabel"):SetColor(0, 186, 255, 1)
-		v1:GetNamedChild("Colonna3bttn_friendLabel_UserID"):SetText(TamrielUnlimitedIT.PlayerTemp[i]["userid"])
-		v1:GetNamedChild("Colonna4Label"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(TamrielUnlimitedIT.PlayerTemp[i]["sex"], TamrielUnlimitedIT.PlayerTemp[i]["race"])))
-		v1:GetNamedChild("Colonna5Label"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(TamrielUnlimitedIT.PlayerTemp[i]["sex"], TamrielUnlimitedIT.PlayerTemp[i]["class"])))
-		v1:GetNamedChild("Colonna6Label"):SetText(zo_strformat(GetString("SI_ALLIANCE", TamrielUnlimitedIT.PlayerTemp[i]["alli"])))
-
-		if TamrielUnlimitedIT.PlayerTemp[i]["alli"] == 2 then
-			v1:GetNamedChild("Colonna6Label"):SetColor(0.647, 0.141, 0.101, 1)
-		elseif TamrielUnlimitedIT.PlayerTemp[i]["alli"] == 1 then
-			v1:GetNamedChild("Colonna6Label"):SetColor(0.686, 0.596, 0.223, 1)
-		else
-			v1:GetNamedChild("Colonna6Label"):SetColor(0.156, 0.352, 0.631, 1)
-		end
-
-		pre = v1
-		i = i + 1
-	end
-
-
-	local ii = i
-	while ii <= #TUitDataVar.Player do
-		local v1 = el1:GetNamedChild("Dynamic_stampa_Row" .. ii)
-		if v1 ~= nil then
-			v1:SetDimensions(0, 0)
-			v1:SetHidden(true)
-		end
-		ii = ii + 1
-	end
-end
-function LoadNoPlayer()
-	
-	local el1 = TamrielUnlimitedIT.DynamicScrollPagePlayer:GetNamedChild("Tabella")
-	local pre = el1:GetNamedChild("stampa_Row0")
-	local searchcontrol = TamrielUnlimitedIT.DynamicScrollPagePlayer:GetNamedChild("Search_control")
-	local searchbtn = TamrielUnlimitedIT.DynamicScrollPagePlayer:GetNamedChild("Search_btn")
-	
-	pre:GetNamedChild("NOPG"):SetHidden(false)
-	searchcontrol:SetHidden(true)
-	searchbtn:SetHidden(true)
-	pre:GetNamedChild("Colonna0"):SetHidden(true)
-	pre:GetNamedChild("Colonna1"):SetHidden(true)
-	pre:GetNamedChild("Colonna2"):SetHidden(true)
-	pre:GetNamedChild("Colonna3"):SetHidden(true)
-	pre:GetNamedChild("Colonna4"):SetHidden(true)
-	pre:GetNamedChild("Colonna5"):SetHidden(true)
-	pre:GetNamedChild("Colonna6"):SetHidden(true)
-		
-	pre:GetNamedChild("NOPGLabel"):SetText("Non è stato scaricato alcun dato!")
-	
-end
-
--- SORTING
-
 function SortLiv()
-	if TamrielUnlimitedIT.CurrPlayerSort == "LivDesc" then
-		TamrielUnlimitedIT.CurrPlayerSort = "LivAsc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, CheckLivAsc)
-	else
-		TamrielUnlimitedIT.CurrPlayerSort = "LivDesc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, CheckLivDesc)
-	end
-	LoadPlayeList()
+	TamrielUnlimitedIT.Players:Sort("lev")
 end
 function SortCP()
-	if TamrielUnlimitedIT.CurrPlayerSort == "CPDesc" then
-		TamrielUnlimitedIT.CurrPlayerSort = "CPAsc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["CP"] == v2["CP"]) then return CheckLivAsc(v1, v2) end return v1["CP"] <= v2["CP"] end)
-	else
-		TamrielUnlimitedIT.CurrPlayerSort = "CPDesc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["CP"] == v2["CP"]) then return CheckLivDesc(v1, v2) end return v2["CP"] <= v1["CP"] end)
-	end
-	LoadPlayeList()
+	TamrielUnlimitedIT.Players:Sort("CP")
 end
 function SortSesso()
-	if TamrielUnlimitedIT.CurrPlayerSort == "SessoDesc" then
-		TamrielUnlimitedIT.CurrPlayerSort = "SessoAsc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["sex"] == v2["sex"]) then return CheckLivAsc(v1, v2) end return v1["sex"] <= v2["sex"] end)
-	else
-		TamrielUnlimitedIT.CurrPlayerSort = "SessoDesc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["sex"] == v2["sex"]) then return CheckLivDesc(v1, v2) end return v2["sex"] <= v1["sex"] end)
-	end
-	LoadPlayeList()
+	TamrielUnlimitedIT.Players:Sort("sex")
 end
 function SortUser()
-	if TamrielUnlimitedIT.CurrPlayerSort == "UserDesc" then
-		TamrielUnlimitedIT.CurrPlayerSort = "UserAsc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["pg_name"] == v2["pg_name"]) then return CheckLivAsc(v1, v2) end return v1["pg_name"] <= v2["pg_name"] end)
-	else
-		TamrielUnlimitedIT.CurrPlayerSort = "UserDesc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["pg_name"] == v2["pg_name"]) then return CheckLivDesc(v1, v2) end return v2["pg_name"] <= v1["pg_name"] end)
-	end
-	LoadPlayeList()
+	TamrielUnlimitedIT.Players:Sort("pg_name")
 end
 function SortRace()
-	if TamrielUnlimitedIT.CurrPlayerSort == "RaceDesc" then
-		TamrielUnlimitedIT.CurrPlayerSort = "RaceAsc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["race"] == v2["race"]) then return CheckLivAsc(v1, v2) end return v1["race"] <= v2["race"] end)
-	else
-		TamrielUnlimitedIT.CurrPlayerSort = "RaceDesc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["race"] == v2["race"]) then return CheckLivDesc(v1, v2) end return v2["race"] <= v1["race"] end)
-	end
-	LoadPlayeList()
+	TamrielUnlimitedIT.Players:Sort("race")
 end
 function SortClass()
-	if TamrielUnlimitedIT.CurrPlayerSort == "ClassDesc" then
-		TamrielUnlimitedIT.CurrPlayerSort = "ClassAsc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["class"] == v2["class"]) then return CheckLivAsc(v1, v2) end return v1["class"] <= v2["class"] end)
-	else
-		TamrielUnlimitedIT.CurrPlayerSort = "ClassDesc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["class"] == v2["class"]) then return CheckLivDesc(v1, v2) end return v2["class"] <= v1["class"] end)
-	end
-	LoadPlayeList()
+	TamrielUnlimitedIT.Players:Sort("class")
 end
 function SortFazione()
-	if TamrielUnlimitedIT.CurrPlayerSort == "FazioneDesc" then
-		TamrielUnlimitedIT.CurrPlayerSort = "FazioneAsc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["alli"] == v2["alli"]) then return CheckLivAsc(v1, v2) end return v1["alli"] <= v2["alli"] end)
-	else
-		TamrielUnlimitedIT.CurrPlayerSort = "FazioneDesc"
-		quicksort(TamrielUnlimitedIT.PlayerTemp, function (v1, v2) if (v1["alli"] == v2["alli"]) then return CheckLivDesc(v1, v2) end return v2["alli"] <= v1["alli"] end)
-	end
-	LoadPlayeList()
-end
-function CheckLivAsc(v1, v2)
-	-- v1<=v2
-	if string.starts(v1["lev"], "VR") then
-		if string.starts(v2["lev"], "VR") then
-			return tonumber(string.sub(v1["lev"], 3)) <= tonumber(string.sub(v2["lev"], 3))
-		else
-			return false;
-		end
-	elseif string.starts(v2["lev"], "VR") then
-		return true;
-	else
-		return tonumber(v1["lev"]) <= tonumber(v2["lev"])
-	end
-end
-function CheckLivDesc(v1, v2)
-	-- v2<=v1
-	if string.starts(v2["lev"], "VR") then
-		if string.starts(v1["lev"], "VR") then
-			return tonumber(string.sub(v2["lev"], 3)) <= tonumber(string.sub(v1["lev"], 3))
-		else
-			return false;
-		end
-	elseif string.starts(v1["lev"], "VR") then
-		return true;
-	else
-		return tonumber(v2["lev"]) <= tonumber(v1["lev"])
-	end
+	TamrielUnlimitedIT.Players:Sort("alli")
 end
 
 -- CONTROLLI MENU' A TENDINA
@@ -981,978 +675,13 @@ end
 
 
 
--- EVENTI
-
-TamrielUnlimitedIT.CalculateRepeatsEvents = function ()
-
-	local NumeroMaxRipetizioniSeNonSettate = 5
-	ArrTemp = {}
-	local CurrentTimeStamp = GetTimeStamp() + 7200
-
-	for i = 1, #TamrielUnlimitedIT.TUitDataVar.Events do
-
-		if (TamrielUnlimitedIT.TUitDataVar.Events[i]["recurring"] ~= "" and TamrielUnlimitedIT.TUitDataVar.Events[i]["recurring"] ~= nil) then
-			local ArrRepTemp = {}
-			local T1 = explode(";", TamrielUnlimitedIT.TUitDataVar.Events[i]["recurring"])
-			for ii = 1, #T1 do
-				local T2 = explode("=", T1[ii])
-				ArrRepTemp[T2[1]] = T2[2]
-			end
-
-			if (ArrRepTemp["FREQ"] ~= nil) then
-
-				if (ArrRepTemp["FREQ"] == "DAILY") then
-					-- GIORNALIERO
-					if (ArrRepTemp["INTERVAL"] ~= nil) then
-						local interval = tonumber(ArrRepTemp["INTERVAL"])
-
-						if (ArrRepTemp["UNTIL"] ~= nil) then
-							-- DATA TERMINE
-							-- 20150729T220000
-							DatTermine = {}
-							DatTermine.anno = tonumber(string.sub(ArrRepTemp["UNTIL"], 1, 4))
-							DatTermine.mese = tonumber(string.sub(ArrRepTemp["UNTIL"], 5, 6))
-							DatTermine.giorno = tonumber(string.sub(ArrRepTemp["UNTIL"], 7, 8))
-							DatTermine.ora = tonumber(string.sub(ArrRepTemp["UNTIL"], 10, 11))
-							DatTermine.minuto = tonumber(string.sub(ArrRepTemp["UNTIL"], 12, 13))
-							DatTermine.secondo = tonumber(string.sub(ArrRepTemp["UNTIL"], 14, 15))
-
-							DataTermineTS = DateToTimestamp(DatTermine)
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-							while (lastITS < DataTermineTS) do
-
-								tt1 = TimestampToDate(lastITS)
-								AddDay(tt1, interval)
-								lastITS = DateToTimestamp(tt1)
-
-								tt2 = TimestampToDate(lastFTS)
-								AddDay(tt2, interval)
-								lastFTS = DateToTimestamp(tt2)
-
-								if (lastITS < DataTermineTS and lastFTS > CurrentTimeStamp) then
-									-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-								end
-							end
-
-						elseif (ArrRepTemp["COUNT"] ~= nil) then
-
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-							-- NUMERO DI RIPETIZIONI
-							for iii = 1, tonumber(ArrRepTemp["COUNT"]) do
-
-								tt1 = TimestampToDate(lastITS)
-								AddDay(tt1, interval)
-								lastITS = DateToTimestamp(tt1)
-
-								tt2 = TimestampToDate(lastFTS)
-								AddDay(tt2, interval)
-								lastFTS = DateToTimestamp(tt2)
-
-								-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-
-								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-								end
-
-							end
-						else
-
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-							-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
-							local iii = 1
-							while (iii <= NumeroMaxRipetizioniSeNonSettate) do
-
-								tt1 = TimestampToDate(lastITS)
-								AddDay(tt1, interval)
-								lastITS = DateToTimestamp(tt1)
-
-								tt2 = TimestampToDate(lastFTS)
-								AddDay(tt2, interval)
-								lastFTS = DateToTimestamp(tt2)
-
-								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-									iii = iii + 1
-								end
-							end
-						end
-					end
-					--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-				elseif (ArrRepTemp["FREQ"] == "WEEKLY") then
-					-- SETTIMANALE
-					if (ArrRepTemp["INTERVAL"] ~= nil) then
-						local interval = tonumber(ArrRepTemp["INTERVAL"])
-						if (ArrRepTemp["BYDAY"] ~= nil) then
-							ArrRepTemp["BYDAY"] = explode(",", ArrRepTemp["BYDAY"])
-
-							if (ArrRepTemp["UNTIL"] ~= nil) then
-								-- DATA TERMINE
-								-- 20150729T220000
-								DatTermine = {}
-								DatTermine.anno = tonumber(string.sub(ArrRepTemp["UNTIL"], 1, 4))
-								DatTermine.mese = tonumber(string.sub(ArrRepTemp["UNTIL"], 5, 6))
-								DatTermine.giorno = tonumber(string.sub(ArrRepTemp["UNTIL"], 7, 8))
-								DatTermine.ora = tonumber(string.sub(ArrRepTemp["UNTIL"], 10, 11))
-								DatTermine.minuto = tonumber(string.sub(ArrRepTemp["UNTIL"], 12, 13))
-								DatTermine.secondo = tonumber(string.sub(ArrRepTemp["UNTIL"], 14, 15))
-
-								DataTermineTS = DateToTimestamp(DatTermine)
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-								local cc = 1
-								while (lastITS < DataTermineTS) do
-
-									-- inizio evento
-									tt1 = TimestampToDate(lastITS)
-
-									dayCurrent = day_of_the_week_by_date(tt1)
-									dayNext = n_day_week_from_initials(ArrRepTemp["BYDAY"][cc], 2)
-									if (dayCurrent >= dayNext) then
-										dayNext = dayNext + 7
-									end
-									dayNext = dayNext - dayCurrent
-
-									AddDay(tt1, dayNext)
-									lastITS = DateToTimestamp(tt1)
-
-									-- fine evento
-									tt2 = TimestampToDate(lastFTS)
-
-									dayCurrent = day_of_the_week_by_date(tt2)
-									dayNext = n_day_week_from_initials(ArrRepTemp["BYDAY"][cc], 2)
-									if (dayCurrent >= dayNext) then
-										dayNext = dayNext + 7
-									end
-									dayNext = dayNext - dayCurrent
-
-									AddDay(tt2, dayNext)
-									lastFTS = DateToTimestamp(tt2)
-
-									if (lastITS < DataTermineTS and lastFTS > CurrentTimeStamp) then
-										-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-									end
-
-									if (cc >= #ArrRepTemp["BYDAY"]) then
-										cc = 1
-									else
-										cc = cc + 1
-									end
-								end
-
-							elseif (ArrRepTemp["COUNT"] ~= nil) then
-
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-								local cc = 1
-								-- NUMERO DI RIPETIZIONI
-								for iii = 1, tonumber(ArrRepTemp["COUNT"]) do
-
-									-- inizio evento
-									tt1 = TimestampToDate(lastITS)
-
-									dayCurrent = day_of_the_week_by_date(tt1)
-									dayNext = n_day_week_from_initials(ArrRepTemp["BYDAY"][cc], 2)
-
-									if (dayCurrent >= dayNext) then
-										dayNext = dayNext + 7
-									end
-									dayNext = dayNext - dayCurrent
-
-									AddDay(tt1, dayNext)
-									lastITS = DateToTimestamp(tt1)
-
-									-- fine evento
-									tt2 = TimestampToDate(lastFTS)
-
-									dayCurrent = day_of_the_week_by_date(tt2)
-									dayNext = n_day_week_from_initials(ArrRepTemp["BYDAY"][cc], 2)
-
-									if (dayCurrent >= dayNext) then
-										dayNext = dayNext + 7
-									end
-									dayNext = dayNext - dayCurrent
-
-									AddDay(tt2, dayNext)
-									lastFTS = DateToTimestamp(tt2)
-
-									-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-
-									if (lastFTS > CurrentTimeStamp) then
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-									end
-
-									if (cc >= #ArrRepTemp["BYDAY"]) then
-										cc = 1
-									else
-										cc = cc + 1
-									end
-								end
-							else
-
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-								local cc = 1
-
-								-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
-								local iii = 1
-								while (iii <= NumeroMaxRipetizioniSeNonSettate) do
-
-									-- inizio evento
-									tt1 = TimestampToDate(lastITS)
-
-									dayCurrent = day_of_the_week_by_date(tt1)
-									dayNext = n_day_week_from_initials(ArrRepTemp["BYDAY"][cc], 2)
-
-									if (dayCurrent >= dayNext) then
-										dayNext = dayNext + 7
-									end
-									dayNext = dayNext - dayCurrent
-
-									AddDay(tt1, dayNext)
-									lastITS = DateToTimestamp(tt1)
-
-									-- fine evento
-									tt2 = TimestampToDate(lastFTS)
-
-									dayCurrent = day_of_the_week_by_date(tt2)
-									dayNext = n_day_week_from_initials(ArrRepTemp["BYDAY"][cc], 2)
-
-									if (dayCurrent >= dayNext) then
-										dayNext = dayNext + 7
-									end
-									dayNext = dayNext - dayCurrent
-
-									AddDay(tt2, dayNext)
-									lastFTS = DateToTimestamp(tt2)
-
-									if (lastFTS > CurrentTimeStamp) then
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-										iii = iii + 1
-									end
-
-									if (cc >= #ArrRepTemp["BYDAY"]) then
-										cc = 1
-									else
-										cc = cc + 1
-									end
-								end
-							end
-
-						else
-
-							if (ArrRepTemp["UNTIL"] ~= nil) then
-								-- DATA TERMINE
-								-- 20150729T220000
-								DatTermine = {}
-								DatTermine.anno = tonumber(string.sub(ArrRepTemp["UNTIL"], 1, 4))
-								DatTermine.mese = tonumber(string.sub(ArrRepTemp["UNTIL"], 5, 6))
-								DatTermine.giorno = tonumber(string.sub(ArrRepTemp["UNTIL"], 7, 8))
-								DatTermine.ora = tonumber(string.sub(ArrRepTemp["UNTIL"], 10, 11))
-								DatTermine.minuto = tonumber(string.sub(ArrRepTemp["UNTIL"], 12, 13))
-								DatTermine.secondo = tonumber(string.sub(ArrRepTemp["UNTIL"], 14, 15))
-
-								DataTermineTS = DateToTimestamp(DatTermine)
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-								while (lastITS < DataTermineTS) do
-
-									tt1 = TimestampToDate(lastITS)
-									AddDay(tt1, interval * 7)
-									lastITS = DateToTimestamp(tt1)
-
-									tt2 = TimestampToDate(lastFTS)
-									AddDay(tt2, interval * 7)
-									lastFTS = DateToTimestamp(tt2)
-
-									if (lastITS < DataTermineTS and lastFTS > CurrentTimeStamp) then
-										-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-									end
-								end
-
-							elseif (ArrRepTemp["COUNT"] ~= nil) then
-
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-								-- NUMERO DI RIPETIZIONI
-								for iii = 1, tonumber(ArrRepTemp["COUNT"]) do
-
-									tt1 = TimestampToDate(lastITS)
-									AddDay(tt1, interval * 7)
-									lastITS = DateToTimestamp(tt1)
-
-									tt2 = TimestampToDate(lastFTS)
-									AddDay(tt2, interval * 7)
-									lastFTS = DateToTimestamp(tt2)
-
-									-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-
-									if (lastFTS > CurrentTimeStamp) then
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-									end
-								end
-							else
-
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-								-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
-								local iii = 1
-								while (iii <= NumeroMaxRipetizioniSeNonSettate) do
-
-									tt1 = TimestampToDate(lastITS)
-									AddDay(tt1, interval * 7)
-									lastITS = DateToTimestamp(tt1)
-
-									tt2 = TimestampToDate(lastFTS)
-									AddDay(tt2, interval * 7)
-									lastFTS = DateToTimestamp(tt2)
-
-									if (lastFTS > CurrentTimeStamp) then
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-										iii = iii + 1
-									end
-								end
-							end
-						end
-					end
-
-					--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-				elseif (ArrRepTemp["FREQ"] == "MONTHLY") then
-					-- MENSILE
-					if (ArrRepTemp["INTERVAL"] ~= nil) then
-						local interval = tonumber(ArrRepTemp["INTERVAL"])
-						if (ArrRepTemp["UNTIL"] ~= nil) then
-							-- DATA TERMINE
-							-- 20150729T220000
-							DatTermine = {}
-							DatTermine.anno = tonumber(string.sub(ArrRepTemp["UNTIL"], 1, 4))
-							DatTermine.mese = tonumber(string.sub(ArrRepTemp["UNTIL"], 5, 6))
-							DatTermine.giorno = tonumber(string.sub(ArrRepTemp["UNTIL"], 7, 8))
-							DatTermine.ora = tonumber(string.sub(ArrRepTemp["UNTIL"], 10, 11))
-							DatTermine.minuto = tonumber(string.sub(ArrRepTemp["UNTIL"], 12, 13))
-							DatTermine.secondo = tonumber(string.sub(ArrRepTemp["UNTIL"], 14, 15))
-
-							DataTermineTS = DateToTimestamp(DatTermine)
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-							if (DataTermineTS > CurrentTimeStamp) then
-								while (lastITS < DataTermineTS) do
-
-									tt1 = TimestampToDate(lastITS)
-									AddMonth(tt1, interval)
-									lastITS = DateToTimestamp(tt1)
-
-									tt2 = TimestampToDate(lastFTS)
-									AddMonth(tt2, interval)
-									lastFTS = DateToTimestamp(tt2)
-
-									if (lastITS < DataTermineTS and lastFTS > CurrentTimeStamp) then
-										-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-									end
-								end
-							end
-
-						elseif (ArrRepTemp["COUNT"] ~= nil) then
-
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-							-- NUMERO DI RIPETIZIONI
-							for iii = 1, tonumber(ArrRepTemp["COUNT"]) do
-
-								tt1 = TimestampToDate(lastITS)
-								AddMonth(tt1, interval)
-								lastITS = DateToTimestamp(tt1)
-
-								tt2 = TimestampToDate(lastFTS)
-								AddMonth(tt2, interval)
-								lastFTS = DateToTimestamp(tt2)
-
-								-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-
-								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-								end
-							end
-						else
-
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-							-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
-							local iii = 1
-							while (iii <= NumeroMaxRipetizioniSeNonSettate) do
-
-								tt1 = TimestampToDate(lastITS)
-								AddMonth(tt1, interval)
-								lastITS = DateToTimestamp(tt1)
-
-								tt2 = TimestampToDate(lastFTS)
-								AddMonth(tt2, interval)
-								lastFTS = DateToTimestamp(tt2)
-
-								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-									iii = iii + 1
-								end
-							end
-						end
-					end
-
-					--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-				elseif (ArrRepTemp["FREQ"] == "YEARLY") then
-					-- ANNUALE
-					if (ArrRepTemp["INTERVAL"] ~= nil) then
-						local interval = tonumber(ArrRepTemp["INTERVAL"])
-						if (ArrRepTemp["UNTIL"] ~= nil) then
-							-- DATA TERMINE
-							-- 20150729T220000
-							DatTermine = {}
-							DatTermine.anno = tonumber(string.sub(ArrRepTemp["UNTIL"], 1, 4))
-							DatTermine.mese = tonumber(string.sub(ArrRepTemp["UNTIL"], 5, 6))
-							DatTermine.giorno = tonumber(string.sub(ArrRepTemp["UNTIL"], 7, 8))
-							DatTermine.ora = tonumber(string.sub(ArrRepTemp["UNTIL"], 10, 11))
-							DatTermine.minuto = tonumber(string.sub(ArrRepTemp["UNTIL"], 12, 13))
-							DatTermine.secondo = tonumber(string.sub(ArrRepTemp["UNTIL"], 14, 15))
-
-							DataTermineTS = DateToTimestamp(DatTermine)
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-							if (DataTermineTS > CurrentTimeStamp) then
-								while (lastITS < DataTermineTS) do
-
-									tt1 = TimestampToDate(lastITS)
-									AddYear(tt1, interval)
-									lastITS = DateToTimestamp(tt1)
-
-									tt2 = TimestampToDate(lastFTS)
-									AddYear(tt2, interval)
-									lastFTS = DateToTimestamp(tt2)
-
-									if (lastITS < DataTermineTS and lastFTS > CurrentTimeStamp) then
-										-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-									end
-								end
-							end
-
-						elseif (ArrRepTemp["COUNT"] ~= nil) then
-
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-							-- NUMERO DI RIPETIZIONI
-							for iii = 1, tonumber(ArrRepTemp["COUNT"]) do
-
-								tt1 = TimestampToDate(lastITS)
-								AddYear(tt1, interval)
-								lastITS = DateToTimestamp(tt1)
-
-								tt2 = TimestampToDate(lastFTS)
-								AddYear(tt2, interval)
-								lastFTS = DateToTimestamp(tt2)
-
-								-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-
-								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-								end
-							end
-						else
-
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
-
-							-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
-							local iii = 1
-							while (iii <= NumeroMaxRipetizioniSeNonSettate) do
-
-								tt1 = TimestampToDate(lastITS)
-								AddYear(tt1, interval)
-								lastITS = DateToTimestamp(tt1)
-
-								tt2 = TimestampToDate(lastFTS)
-								AddYear(tt2, interval)
-								lastFTS = DateToTimestamp(tt2)
-
-								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
-									iii = iii + 1
-								end
-							end
-						end
-					end
-				end
-			end
-		end
-	end
-
-
-	for i = 1, #ArrTemp do
-		TamrielUnlimitedIT.TUitDataVar.Events[#TamrielUnlimitedIT.TUitDataVar.Events + 1] = ArrTemp[i]
-	end
-
-	-- AddErr(TamrielUnlimitedIT.TUitDataVar.Events)
-	-- zo_loadstring("d(\"test\"")()
-end
-function SortEventi()
-	quicksort(TamrielUnlimitedIT.TUitDataVar.Events, function (v1, v2) return v1[1] <= v2[1] end)
-end
-function LoadEventi()
-	el1 = TamrielUnlimitedIT.DynamicScrollPageEventi
-	eventMessage = TamrielUnlimitedIT.DynamicScrollPageEventiMessage
-	
-	if TamrielUnlimitedIT.EventTemp ~= nil then
-		if #TamrielUnlimitedIT.EventTemp ~= 0 then
-			TamrielUnlimitedIT.CalculateRepeatsEvents()
-			--SortEventi()
-			LoadEventiList()
-		else
-			LoadNoEventi()
-		end
-	else
-		LoadNoEventi()
-	end
-end
-function LoadNoEventi()
-	eventMessage:SetHidden(false)
-	el1:SetHidden(true)
-	eventMessage:GetNamedChild("Label"):SetText("Non è stato scaricato alcun dato!")
-end
-function LoadEventiList()
-
-	local AltezzaComponente = 120
-	
-	eventMessage:SetHidden(true)
-	el1:SetHidden(false)
-	
-	local pre = el1:GetNamedChild("Label")
-
-	local CurrentTimeStamp = GetTimeStamp() + 7200
-
-	local counterControl = 1
-
-	for i = 1, #TamrielUnlimitedIT.TUitDataVar.Events do
-
-		-- minore della fine
-		if (CurrentTimeStamp < TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]) then
-
-			local v1 = el1:GetNamedChild("Dynamic_stampa_Evento" .. counterControl)
-			if v1 == nil then
-				v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Evento", el1, "DynamicEvento", counterControl)
-			end
-
-			v1:SetDimensions(710, AltezzaComponente)
-			v1:SetHidden(false)
-			v1:SetAnchor(TOP, pre, BOTTOM, 0, 10)
-
-			DInizio = TimestampToDate(TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"] + 3600)
-			DFine = TimestampToDate(TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"] + 3600)
-
-			local OrariTxt = DInizio.ora .. ":"
-			if (DInizio.minuto < 10) then
-				OrariTxt = OrariTxt .. "0"
-			end
-			OrariTxt = OrariTxt .. DInizio.minuto .. " - " .. DFine.ora .. ":"
-			if (DFine.minuto < 10) then
-				OrariTxt = OrariTxt .. "0"
-			end
-			OrariTxt = OrariTxt .. DFine.minuto
-
-			v1:GetNamedChild("DataLabelGiornoMese"):SetText(DInizio.giorno .. "/" .. DInizio.mese)
-			v1:GetNamedChild("DataLabelOrario"):SetText(OrariTxt)
-			v1:GetNamedChild("TitoloLabel"):SetText(TamrielUnlimitedIT.TUitDataVar.Events[i]["title"])
-			v1:GetNamedChild("TestoRiga1"):SetText(TamrielUnlimitedIT.TUitDataVar.Events[i]["description"])
-
-			pre = v1
-			counterControl = counterControl + 1
-
-			-- minore dell'inizio
-			if (CurrentTimeStamp < TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]) then
-				local diff = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"] - CurrentTimeStamp
-				local DDiff = TimestampToDate(diff)
-				-- Controllo che l'evento è nelle successive 24 ore
-				TamrielUnlimitedIT.ciao = "asd"
-				if (diff < 86400) then
-					-- Controllo che l'evento non inizia in meno di un ora
-					zo_callLater(function ()
-							TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento è appena iniziato!")
-						end, diff * 1000)
-					if (diff > 3600) then
-						zo_callLater(function ()
-								TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra 1 ora!")
-							end, (diff - 3600) * 1000)
-					end
-					if (diff > 600) then
-						zo_callLater(function ()
-								TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra 10 minuti!")
-							end, (diff - 600) * 1000)
-					end
-					if ((diff > 661 and diff < 3600) or (diff > 60 and diff < 600)) then
-						if (DDiff.minuto == 1) then
-							AddPreLoadEvent(TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra " .. DDiff.minuto .. " minuto!"))
-						else
-							AddPreLoadEvent(TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra " .. DDiff.minuto .. " minuti!"))
-						end
-					end
-				end
-			else
-				AddPreLoadEvent(TamrielUnlimitedIT.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "è in corso in questo momento!"))
-			end
-		end
-	end
-
-	TamrielUnlimitedIT.DynamicScrollPageEventi:SetDimensions(900, AltezzaComponente * counterControl)
-
-	local ii = counterControl
-	while ii <= #TamrielUnlimitedIT.TUitDataVar.Events do
-		local v1 = el1:GetNamedChild("Dynamic_stampa_Evento" .. ii)
-		if v1 ~= nil then
-			v1:SetDimensions(0, 0)
-			v1:SetHidden(true)
-		end
-		ii = ii + 1
-	end
-end
-
-TamrielUnlimitedIT.ShowEventMessage = function (Titolo, Corpo)
-	CENTER_SCREEN_ANNOUNCE:AddMessage(EVENT_DISPLAY_ANNOUNCEMENT, CSA_EVENT_COMBINED_TEXT, SOUNDS.OBJECTIVE_COMPLETED, Titolo, Corpo, 'TamrielUnlimitedIT/Textures/calendar.dds', nil, nil, nil, 6000, true)
-end
-
 -- GILDE
 
-function LoadGilde()
-	TamrielUnlimitedIT.GuildTemp = deepcopy(TUitDataVar.Guild)
-	
-	if TamrielUnlimitedIT.GuildTemp ~= nil then
-		if #TamrielUnlimitedIT.GuildTemp ~= 0 then
-			LoadGildeList()
-		else
-			LoadNOGilde()
-		end
-	else
-		LoadNOGilde()
-	end
-end
-function LoadNOGilde()
-	TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("NOGuilds"):SetHidden(false)
-	TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("AD"):SetHidden(true)
-	TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("DC"):SetHidden(true)
-	TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("EP"):SetHidden(true)
-	TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("NOGuildsLabel"):SetText("Non è stato scaricato alcun dato!")
-end
-function LoadGildeList()
-	TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("NOGuilds"):SetHidden(true)
-	TamrielUnlimitedIT.GuildADTemp = deepcopy(TUitDataVar.GuildAD)
-	TamrielUnlimitedIT.GuildDCTemp = deepcopy(TUitDataVar.GuildDC)
-	TamrielUnlimitedIT.GuildEPTemp = deepcopy(TUitDataVar.GuildEP)
-
-	AltezzaComponente = 180
-	PaddingDopo = 20
-
-	DimTotale = 0
-
-	-- ALDMERI DOMINION
-	elAD = TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("AD")
-	elAD:SetHidden(false)
-	preAD = elAD:GetNamedChild("Label")
-	preAD:SetColor(0.686, 0.596, 0.223, 1)
-	if TamrielUnlimitedIT.GuildADTemp ~= nil then
-		if #TamrielUnlimitedIT.GuildADTemp ~= 0 then
-			LoadGildeAD()
-		else
-			LoadNoGuildAD()
-		end
-	else
-		LoadNoGuildAD()
-	end
-
-	-- DAGGERFALL COVENANT
-	elDC = TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("DC")
-	preDC = elDC:GetNamedChild("Label")
-	preDC:SetColor(0.156, 0.352, 0.631, 1)
-	if TamrielUnlimitedIT.GuildDCTemp ~= nil then
-		if #TamrielUnlimitedIT.GuildDCTemp ~= 0 then
-			LoadGildeDC()
-		else
-			LoadNoGuildDC()
-		end
-	else
-		LoadNoGuildDC()
-	end
-
-	-- EBONHEART PACT
-	elEP = TamrielUnlimitedIT.DynamicScrollPageGilde:GetNamedChild("EP")
-	preEP = elEP:GetNamedChild("Label")
-	preEP:SetColor(0.647, 0.141, 0.101, 1)
-	if TamrielUnlimitedIT.GuildEPTemp ~= nil then
-		if #TamrielUnlimitedIT.GuildEPTemp ~= 0 then
-			LoadGildeEP()
-		else
-			LoadNoGuildEP()
-		end
-	else
-		LoadNoGuildEP()
-	end
-
-	-- 280 somma delle altezze dei component prima di quelli dinamici
-	TamrielUnlimitedIT.DynamicScrollPageGilde:SetDimensions(900, DimTotale + 280)
-end
-function LoadNoGuildAD()
-	elAD:GetNamedChild("NoGuildAD"):SetHidden(false)
-	elAD:GetNamedChild("NoGuildADLabel"):SetText("Nessuna gilda negli Aldmeri Dominion")
-end
-function LoadGildeAD()
-	elAD:GetNamedChild("NoGuildAD"):SetHidden(true)
-	DimTotale = DimTotale + (AltezzaComponente * #TamrielUnlimitedIT.GuildADTemp) + preAD:GetHeight() + PaddingDopo
-	elAD:SetDimensions(710, (AltezzaComponente * #TamrielUnlimitedIT.GuildADTemp) + preAD:GetHeight() + PaddingDopo)
-
-	local i = 1
-	while i <= #TamrielUnlimitedIT.GuildADTemp do
-		local v1 = elAD:GetNamedChild("Dynamic_stampa_Gilda_AD" .. i)
-		if v1 == nil then
-			v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Gilda_AD", elAD, "DynamicGilda", i)
-		end
-
-		v1:SetDimensions(710, AltezzaComponente)
-		v1:SetHidden(false)
-		v1:SetAnchor(TOP, preAD, BOTTOM, 0, 10)
-
-		v1:GetNamedChild("TitoloLabel"):SetText(TamrielUnlimitedIT.GuildADTemp[i]["guild_name"])
-		v1:GetNamedChild("TestoEditBox"):SetText(TamrielUnlimitedIT.GuildADTemp[i]["description"])
-		v1:GetNamedChild("LogoTexture"):SetTexture(TamrielUnlimitedIT.GuildADTemp[i]["image"])
-		v1:GetNamedChild("GuildMasterBtnLabel"):SetText(TamrielUnlimitedIT.GuildADTemp[i]["guild_master"])
-		v1:GetNamedChild("GuildMasterBtnLabel_UserID"):SetText(TamrielUnlimitedIT.GuildADTemp[i]["guild_master"])
-
-		preAD = v1
-		i = i + 1
-	end
-
-	local ii = i
-	while ii <= #TamrielUnlimitedIT.GuildADTemp do
-		local v1 = elAD:GetNamedChild("Dynamic_stampa_Gilda_AD" .. ii)
-		if v1 ~= nil then
-			v1:SetDimensions(0, 0)
-			v1:SetHidden(true)
-		end
-		ii = ii + 1
-	end
-end
-function LoadNoGuildDC()
-	elDC:GetNamedChild("NoGuildDC"):SetHidden(false)
-	elDC:GetNamedChild("NoGuildDCLabel"):SetText("Nessuna gilda nei Daggerfall Covenant")
-end
-function LoadGildeDC()
-	elDC:GetNamedChild("NoGuildDC"):SetHidden(true)
-	DimTotale = DimTotale + (AltezzaComponente * #TamrielUnlimitedIT.GuildDCTemp) + preDC:GetHeight() + PaddingDopo
-	elDC:SetDimensions(710, (AltezzaComponente * #TamrielUnlimitedIT.GuildDCTemp) + preDC:GetHeight() + PaddingDopo)
-
-	local i = 1
-	while i <= #TamrielUnlimitedIT.GuildDCTemp do
-		local v1 = elDC:GetNamedChild("Dynamic_stampa_Gilda_DC" .. i)
-		if v1 == nil then
-			v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Gilda_DC", elDC, "DynamicGilda", i)
-		end
-
-		v1:SetDimensions(710, AltezzaComponente)
-		v1:SetHidden(false)
-		v1:SetAnchor(TOP, preDC, BOTTOM, 0, 10)
-
-		v1:GetNamedChild("TitoloLabel"):SetText(TamrielUnlimitedIT.GuildDCTemp[i]["guild_name"])
-		v1:GetNamedChild("TestoEditBox"):SetText(TamrielUnlimitedIT.GuildDCTemp[i]["description"])
-		v1:GetNamedChild("LogoTexture"):SetTexture(TamrielUnlimitedIT.GuildDCTemp[i]["image"])
-		v1:GetNamedChild("GuildMasterBtnLabel"):SetText(TamrielUnlimitedIT.GuildDCTemp[i]["guild_master"])
-		v1:GetNamedChild("GuildMasterBtnLabel_UserID"):SetText(TamrielUnlimitedIT.GuildDCTemp[i]["guild_master"])
-
-		preDC = v1
-		i = i + 1
-	end
-
-	local ii = i
-	while ii <= #TamrielUnlimitedIT.GuildDCTemp do
-		local v1 = elDC:GetNamedChild("Dynamic_stampa_Gilda_DC" .. ii)
-		if v1 ~= nil then
-			v1:SetDimensions(0, 0)
-			v1:SetHidden(true)
-		end
-		ii = ii + 1
-	end
-end
-function LoadNoGuildEP()
-	elEP:GetNamedChild("NoGuildEP"):SetHidden(false)
-	elEP:GetNamedChild("NoGuildEPLabel"):SetText("Nessuna gilda negli Ebonheart Pact")
-end
-function LoadGildeEP()
-	elEP:GetNamedChild("NoGuildEP"):SetHidden(true)
-	DimTotale = DimTotale + (AltezzaComponente * #TamrielUnlimitedIT.GuildEPTemp) + preEP:GetHeight() + PaddingDopo
-	elEP:SetDimensions(710, (AltezzaComponente * #TamrielUnlimitedIT.GuildEPTemp) + preEP:GetHeight() + PaddingDopo)
-
-	local i = 1
-	while i <= #TamrielUnlimitedIT.GuildEPTemp do
-		local v1 = elEP:GetNamedChild("Dynamic_stampa_Gilda_EP" .. i)
-		if v1 == nil then
-			v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Gilda_EP", elEP, "DynamicGilda", i)
-		end
-
-		v1:SetDimensions(710, AltezzaComponente)
-		v1:SetHidden(false)
-		v1:SetAnchor(TOP, preEP, BOTTOM, 0, 10)
-
-		v1:GetNamedChild("TitoloLabel"):SetText(TamrielUnlimitedIT.GuildEPTemp[i]["guild_name"])
-		v1:GetNamedChild("TestoEditBox"):SetText(TamrielUnlimitedIT.GuildEPTemp[i]["description"])
-		v1:GetNamedChild("LogoTexture"):SetTexture(TamrielUnlimitedIT.GuildEPTemp[i]["image"])
-		v1:GetNamedChild("GuildMasterBtnLabel"):SetText(TamrielUnlimitedIT.GuildEPTemp[i]["guild_master"])
-		v1:GetNamedChild("GuildMasterBtnLabel_UserID"):SetText(TamrielUnlimitedIT.GuildEPTemp[i]["guild_master"])
-
-		preEP = v1
-		i = i + 1
-	end
-
-	local ii = i
-	while ii <= #TamrielUnlimitedIT.GuildEPTemp do
-		local v1 = elEP:GetNamedChild("Dynamic_stampa_Gilda_EP" .. ii)
-		if v1 ~= nil then
-			v1:SetDimensions(0, 0)
-			v1:SetHidden(true)
-		end
-		ii = ii + 1
-	end
-end
 
 -- CONVALIDA
-function LoadConvalida()
-	DettagliArray = TamrielUnlimitedIT.TUitDataVar.RefusedValidations
-	if DettagliArray ~= nil then
-		if #DettagliArray ~= 0 then
-			LoadRefusedValidations()
-		else
-			if (TUitDataVar.PlayersData[GetDisplayName()] ~= nil) then
-				AlreadyActivated()
-			else
-				TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(true)
-			end
-		end
-	else
-		if (TUitDataVar.PlayersData[GetDisplayName()] ~= nil) then
-			AlreadyActivated()
-		else
-			TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(true)
-		end
-	end
-end
-function ButtonSend()
-	str = NomeUtenteForum:GetText():gsub("%s+", "")
-	if str ~= "" then
-		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(1, 0.945, 0.109, 1)
-		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Invio in Corso...")
-		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvio"):SetEnabled(false)
-		NomeUtenteForum:SetEditEnabled(false)
-		local delay = 2000
-		local NomeUtForumLocal = NomeUtenteForum:GetText()
-		if TUitDataVar.Admins ~= nil then
-			if #TUitDataVar.Admins ~= 0 then
-				for i = 1, #TUitDataVar.Admins do
-					NomeUtenteForum:SetText("")
-					zo_callLater(function () SendMyMail(TUitDataVar.Admins[i], NomeUtForumLocal) end, delay)
-					delay = delay + 2000
-				end
-				zo_callLater(function ()
-						TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(0.121, 1, 0.054, 1)
-						TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Invio Completato")
-						TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvio"):SetEnabled(true)
-						NomeUtenteForum:SetEditEnabled(true)
-					end, delay)
-			else
-			NomeUtenteForum:SetText("")
-			TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(0.996, 0.062, 0.062, 1)
-			TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Impossibile inviare alcuna mail!\n\rAggiornare i file dati addon dall'app")
-			end
-		else
-			NomeUtenteForum:SetText("")
-			TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(0.996, 0.062, 0.062, 1)
-			TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Impossibile inviare alcuna mail!\n\rAggiornare i file dati addon dall'app")
-		end
-	else
-		NomeUtenteForum:SetText("")
-		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(0.996, 0.062, 0.062, 1)
-		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Inserire un Nome Utente valido")
-	end
-end
-function SendMailConvalida()
-	local DettagliArray = TamrielUnlimitedIT.TUitDataVar.RefusedValidations
-	if DettagliArray ~= nil then
-		if #DettagliArray ~= 0 then
-			TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(false)
-			ButtonSend()
-		else
-			TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(true)
-			ButtonSend()
-		end
-	else
-		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(false)
-		ButtonSend()
-	end
-end
-function SendMyMail(NomeAdmin, NomeForum)
-	RequestOpenMailbox()
-	SendMail(NomeAdmin, "RA_Addon - " .. NomeForum, "Richiesta Attivazione per " .. NomeForum)
-	CloseMailbox()
-end
-function LoadRefusedValidations()
-	local pre = TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("Label")
-	
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(false)
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoRiga1"):SetHidden(true)
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetDimensions(800, (110 + (#DettagliArray*28)))
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgRefusedValidations"):SetDimensions(800, #DettagliArray*50)
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgLabelRefused"):SetText("Attenzione!")
-	if #DettagliArray == 1 then
-		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgTextRefused"):SetText("Hai già realizzato un tentativo, sottocitato, che è fallito nel processo di convalida. Si prega di inserire il Nome Utente corretto del sito e cliccare RIPROVA!")
-	else
-		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgTextRefused"):SetText("Hai già realizzato dei tentativi, sottocitati, che sono falliti nel processo di convalida. Si prega di inserire il Nome Utente corretto del sito e cliccare RIPROVA!")
-	end
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvioLabel_Convalida"):SetText("Riprova")
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTesto"):SetAnchor(TOP, pre, BOTTOM, 0, 80 + #DettagliArray*25)
-	local i = 1
-	for key, value in pairs(DettagliArray) do
-		ForumName = TamrielUnlimitedIT.TUitDataVar.RefusedValidations[i]["ForumName"]
-		Reason = TamrielUnlimitedIT.TUitDataVar.RefusedValidations[i]["Reason"]
-		
-		if (value.ForumName ~= "" and value.Reason == "UnknowUsername" ) then
-			value.Reason = "Il nome utente del sito, " .. value.ForumName .. ", non esiste"
-		end
-		
-		if (value.ForumName == "" and value.Reason == "AccountAlreadyUsed" ) then
-			value.Reason = "L'account " .. GetDisplayName() .. " risulta essere già in uso e convalidato da un altro nome utente"
-		end
-		
-		TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgRefusedValidations"):SetText(TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgRefusedValidations"):GetText() .. "- " .. value.Reason .. "\r\n")
-		i = i + 1
-	end
-end
-function AlreadyActivated()
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(false)
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoRiga1"):SetHidden(true)
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoTextBG"):SetHidden(true)
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvio"):SetHidden(true)
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgAlreadyActivated"):SetColor(0.121, 1, 0.054, 1)
-	TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgAlreadyActivated"):SetText("Il tuo account è gia stato convalidato")
+
+function SendValidationMail()
+	TamrielUnlimitedIT.Events:SendValidationMail()
 end
 
 -- SHARED BUILDS
@@ -1999,9 +728,6 @@ end
 function ShareBuild()
 	TamrielUnlimitedIT.Builds:Share()
 end
---[[function RateBuild()
-	TamrielUnlimitedIT.Builds:RateBuild()
-end]]--
 function OnMouseEnterBuildRate(self)
 	local rating = tonumber(self:GetName():sub(self:GetName():len()))
 	local el = TamrielUnlimitedIT.Builds.DynamicScrollPageBuildDetails

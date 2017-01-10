@@ -13,14 +13,13 @@
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900" y="160" />
 			<Controls>
-				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Convalida il tuo Account">
-						<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
-						<Dimensions x="800" y="50" />
+				<Label name="$(parent)LabelWarningApp" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
+					<Dimensions y="40" />
 				</Label>
-				
 				<Control name="$(parent)ConvalidaMsg">
 					<Dimensions x="800" y="50" />
-					<Anchor point="TOPLEFT" relativePoint="LEFT" relativeTo="$(parent)" />
+					<Anchor point="TOPLEFT" relativeTo="$(parent)LabelWarningApp" relativePoint="BOTTOMLEFT" offsetY="30"/>
 					<Controls>
 						<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
 						<Label name="$(parent)AlreadyActivated" font="ZoFontWinH1" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
@@ -41,14 +40,11 @@
 						</EditBox>
 					</Controls>
 				</Control>
-				
 				<Control name="$(parent)ContTesto">
 					<!-- DA MODIFICARE IN BASE ALL'OGGETTO PRECENDENTE -->
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
 					<Dimensions x="900" y="330" />
 					<Controls>
-
-						
 						<EditBox name="$(parent)Riga1" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="4096" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
 							<Dimensions x="850" y="90" />
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
@@ -57,7 +53,6 @@
 								self:SetText("Per convalidare il tuo account, inserisci nella casella di testo sottostante il Nome Utente del sito e premi INVIA.\r\nIl tuo account verrà convalidato appena possibile. La convalida avviene via mail di gioco ed è spedita agli amministratori TUit. Quindi occorre attendere i tempi di risposta dei server di ZOS (dai 5 ai 20 minuti) e la connessione di un admin in gioco. Grazie della pazienza!")
 							</OnInitialized>
 						</EditBox>
-										
 						<Control name="$(parent)TextBG" >
 							<Dimensions x="310" y="26" />
 							<Anchor point="TOP" relativePoint="BOTTOM" offsetY="10" relativeTo="$(parent)Riga1"  />
@@ -73,10 +68,9 @@
 								</EditBox>
 							</Controls>
 						</Control>
-						
 						<Button name="$(parent)ConvalidaButtonInvio" alpha="1">
 							<Anchor point="TOP" relativePoint="BOTTOM" offsetX="0" offsetY="30" relativeTo="$(parent)TextBG" />
-							<OnMouseDown>SendMailConvalida()</OnMouseDown>
+							<OnMouseDown>SendValidationMail()</OnMouseDown>
 							<Dimensions x="90" y="24" />
 							<Controls>
 								<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
@@ -90,12 +84,10 @@
 							<Anchor point="TOP" relativePoint="BOTTOM" offsetX="0" offsetY="30" relativeTo="$(parent)ConvalidaButtonInvio" />
 							<Dimensions x="900" y="100" />
 						</Label>
-						
 						<Label name="$(parent)Riga2" font="$(BOLD_FONT)|22|soft-shadow-thin" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="Contatti">
 							<Dimensions x="900" y="22"  />
 							<Anchor point="TOPLEFT" relativePoint="BOTOOMLEFT" offsetY="300" relativeTo="$(parent)" />
 						</Label>
-						
 						<Control name="$(parent)Riga3" >
 							<Dimensions y="22" x="900" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" offsetY="15" relativeTo="$(parent)Riga2"/>
@@ -108,7 +100,6 @@
 											<Dimensions x="120" y="22" />
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 										</Label>
-
 										<EditBox name="$(parent)mail" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
 											<Dimensions x="900" y="22" />
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Label" relativePoint="TOPRIGHT" />
@@ -120,12 +111,10 @@
 												self:SetText("support@tamrielunlimited.it")					
 											</OnInitialized>
 										</EditBox>
-										
 									</Controls>
 								</Control>
 							</Controls>
 						</Control>
-						
 						<Control name="$(parent)Riga4" >
 							<Dimensions y="22" x="900" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga3"/>
@@ -138,7 +127,6 @@
 											<Dimensions x="120" y="22" />
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 										</Label>
-
 										<EditBox name="$(parent)mail" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
 											<Dimensions x="900" y="22" />
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Label" relativePoint="TOPRIGHT" />
@@ -150,12 +138,10 @@
 												self:SetText("http://tamrielunlimited.it/contact/")					
 											</OnInitialized>
 										</EditBox>
-										
 									</Controls>
 								</Control>
 							</Controls>
 						</Control>
-						
 						<Control name="$(parent)Riga5" >
 							<Dimensions y="22" x="900" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga4"/>
@@ -168,7 +154,6 @@
 											<Dimensions x="120" y="22" />
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 										</Label>
-
 										<EditBox name="$(parent)mail" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
 											<Dimensions x="900" y="22" />
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Label" relativePoint="TOPRIGHT" />
@@ -180,12 +165,10 @@
 												self:SetText("http://tamrielunlimited.it/addon-tracker/")					
 											</OnInitialized>
 										</EditBox>
-										
 									</Controls>
 								</Control>
 							</Controls>
 						</Control>
-						
 						<Control name="$(parent)Riga6" >
 							<Dimensions y="22" x="900" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga5"/>
@@ -198,7 +181,6 @@
 											<Dimensions x="120" y="22" />
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 										</Label>
-
 										<EditBox name="$(parent)mail" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
 											<Dimensions x="900" y="22" />
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Label" relativePoint="TOPRIGHT" />
@@ -210,15 +192,12 @@
 												self:SetText("http://tamrielunlimited.it/app-tracker/")					
 											</OnInitialized>
 										</EditBox>
-										
 									</Controls>
 								</Control>
 							</Controls>
 						</Control>
-				
 					</Controls>
 				</Control>
-				
 			</Controls>
 		</Control>
 	</Controls>

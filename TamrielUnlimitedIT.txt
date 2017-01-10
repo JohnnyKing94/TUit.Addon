@@ -18,7 +18,12 @@ ItemsData.lua
 TUitConfigData.lua
 TUitData.lua
 SharedBuilds.lua
+Modules/TUI_Players.lua
 Modules/TUI_Builds.lua
+Modules/TUI_Guilds.lua
+Modules/TUI_Events.lua
+Modules/TUI_Community.lua
+Modules/TUI_Validator.lua
 Pages/_1Utenti.xml
 Pages/_2Gilde.xml
 Pages/_3Eventi.xml
