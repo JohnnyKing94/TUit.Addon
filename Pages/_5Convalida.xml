@@ -42,11 +42,11 @@
 				</Control>
 				<Control name="$(parent)ContTesto">
 					<!-- DA MODIFICARE IN BASE ALL'OGGETTO PRECENDENTE -->
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
-					<Dimensions x="900" y="330" />
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)LabelWarningApp" offsetY="30" />
+					<Dimensions x="900" />
 					<Controls>
 						<EditBox name="$(parent)Riga1" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="4096" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
-							<Dimensions x="850" y="90" />
+							<Dimensions x="850" y="120" />
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
 							<OnInitialized>
 								self:SetMultiLine(true)

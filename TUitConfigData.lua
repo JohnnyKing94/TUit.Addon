@@ -96,7 +96,7 @@ TUI_Config = {
         },
         [6] = {
             name = "Dps/Healer",
-            texture = "dps.dds"
+            texture = "dps-healer.dds"
         },
     },
     ItemData = {
