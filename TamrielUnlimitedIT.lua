@@ -693,11 +693,28 @@ end
 function SortBuildsByRole ()
     TamrielUnlimitedIT.Builds:SortBuilds("role")
 end
+local function SetListHighlightHidden(listPart, hidden)
+    if(listPart) then
+        local highlight = listPart:GetNamedChild("Highlight")
+        if(highlight and (highlight:GetType() == CT_TEXTURE)) then
+            if not highlight.animation then
+                highlight.animation = ANIMATION_MANAGER:CreateTimelineFromVirtual("ShowOnMouseOverLabelAnimation", highlight)
+            end
+            if hidden then
+                highlight.animation:PlayBackward()
+            else
+                highlight.animation:PlayForward()
+            end
+        end
+    end
+end
 function OnMouseEnterBuildRow(self)
-	self:GetNamedChild("Background"):SetHidden(false)
+	self:GetNamedChild("Background"):SetHidden(true)
+	SetListHighlightHidden(self, false)
 end
 function OnMouseExitBuildRow(self)
-	self:GetNamedChild("Background"):SetHidden(true)
+	self:GetNamedChild("Background"):SetHidden(false)
+	SetListHighlightHidden(self, true)
 end
 function OpenBuildDetails(self, backPage)
 	TamrielUnlimitedIT.Builds:ShowDetails(self:GetNamedChild("Label_BuildID"):GetText())

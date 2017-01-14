@@ -268,16 +268,19 @@
 					<Dimensions x="0" y="0" />
 					<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 				</Label>
-				<Backdrop name="$(parent)Background" centerColor="000000" edgeColor="AAAAAA" hidden="true">
-				<!--Backdrop name="$(parent)Background" inherits="ZO_DefaultBackdrop" hidden="true"-->
-					<AnchorFill />
-					<Edge edgeSize="1" />
-				</Backdrop>
+                <Texture name="$(parent)Background" textureFile="EsoUI/Art/Miscellaneous/listItem_backdrop.dds">
+                    <AnchorFill />
+                    <TextureCoords left="0" right="1" top="0" bottom=".8125" />
+                </Texture>
+                <Texture name="$(parent)Highlight" textureFile="EsoUI/Art/Miscellaneous/listItem_highlight.dds" alpha="0">
+                    <AnchorFill />
+                    <TextureCoords left="0" right="1" top="0" bottom=".625" />
+                </Texture>
 				<Control name="$(parent)Colonna0">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="5" offsetY="5" />
 					<Dimensions x="80" y="30" />
 					<Controls>
-						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Data">
+						<Label name="$(parent)Label" font="ZoFontGameOutline" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Data">
 							<Dimensions x="80" y="30" />
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 						</Label>
@@ -297,7 +300,7 @@
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna1" />
 					<Dimensions x="120" y="30" />
 					<Controls>
-						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Autore">
+						<Label name="$(parent)Label" font="ZoFontGameOutline" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Autore">
 							<Dimensions x="120" y="30" />
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 						</Label>

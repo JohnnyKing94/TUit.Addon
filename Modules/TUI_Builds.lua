@@ -362,6 +362,14 @@ function TUI_Builds:SearchBuilds (searchText)
 			if addToBuilds then
 				self.Builds[i] = deepcopy(value)
 				self.Builds[i].id = key
+				if self.Builds[i].game_version then
+					-- Format the game version as ##.##.##
+					local version = split_to_array(self.Builds[i].game_version, ".")
+					if #version > 3 then
+						version = { version[1], version[2], version[3] }
+					end
+					self.Builds[i].game_version = table.concat(version, ".")
+				end
 				i = i + 1
 			end
 		end
