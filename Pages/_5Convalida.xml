@@ -45,14 +45,13 @@
 					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)LabelWarningApp" offsetY="30" />
 					<Dimensions x="900" />
 					<Controls>
-						<EditBox name="$(parent)Riga1" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="4096" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
-							<Dimensions x="850" y="120" />
+						<Label name="$(parent)Riga1" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
+							<Dimensions x="850" />
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
 							<OnInitialized>
-								self:SetMultiLine(true)
 								self:SetText("Per convalidare il tuo account, inserisci nella casella di testo sottostante il Nome Utente del sito e premi INVIA.\r\nIl tuo account verrà convalidato appena possibile. La convalida avviene via mail di gioco ed è spedita agli amministratori TUit. Quindi occorre attendere i tempi di risposta dei server di ZOS (dai 5 ai 20 minuti) e la connessione di un admin in gioco. Grazie della pazienza!")
 							</OnInitialized>
-						</EditBox>
+						</Label>
 						<Control name="$(parent)TextBG" >
 							<Dimensions x="310" y="26" />
 							<Anchor point="TOP" relativePoint="BOTTOM" offsetY="10" relativeTo="$(parent)Riga1"  />
@@ -61,7 +60,6 @@
 									<AnchorFill />
 									<Edge edgeSize="2" />
 								</Backdrop>
-								
 								<EditBox name="NomeUtenteForum" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="200" editEnabled="true" multiLine="false" newLineEnabled="false"   >
 									<Dimensions x="300" y="22" />
 									<Anchor point="CENTER" relativePoint="CENTER" relativeTo="$(parent)"  />
@@ -86,7 +84,7 @@
 						</Label>
 						<Label name="$(parent)Riga2" font="$(BOLD_FONT)|22|soft-shadow-thin" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="Contatti">
 							<Dimensions x="900" y="22"  />
-							<Anchor point="TOPLEFT" relativePoint="BOTOOMLEFT" offsetY="300" relativeTo="$(parent)" />
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" offsetY="300" relativeTo="$(parent)" />
 						</Label>
 						<Control name="$(parent)Riga3" >
 							<Dimensions y="22" x="900" />

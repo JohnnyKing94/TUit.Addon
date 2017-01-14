@@ -285,13 +285,13 @@ function TUI_Builds:FillBuildsList ()
 			v1:SetDimensions(900, 40)
 			v1:SetHidden(false)
 			v1:SetAnchor(TOPLEFT, pre, BOTTOMLEFT, 0, 0)
+			v1:GetNamedChild("Label_BuildID"):SetText(self.Builds[i].id)
 			v1:GetNamedChild("Colonna0Label"):SetText(self:GetFormattedDateAbbr(self.Builds[i].date))
 			v1:GetNamedChild("Colonna1Texture"):SetTexture(TUI_Builds.GetBuildTarget(self.Builds[i].target).icon)
 			SetToolTip(v1:GetNamedChild("Colonna1Texture"), TUI_Builds.GetBuildTarget(self.Builds[i].target).name)
 			v1:GetNamedChild("Colonna2Label"):SetText(self.Builds[i].owner)
-			v1:GetNamedChild("Colonna3NameButtonLabel"):SetText(self.Builds[i].name)
-			v1:GetNamedChild("Colonna3NameButtonLabel"):SetColor(0, 186, 255, 1)
-			v1:GetNamedChild("Colonna3NameButtonLabel_BuildID"):SetText(self.Builds[i].id)
+			v1:GetNamedChild("Colonna3Label"):SetText(self.Builds[i].name)
+			v1:GetNamedChild("Colonna3Label"):SetColor(0, 186, 255, 1)
 			if raceTexture ~= "" then
 				local texture = v1:GetNamedChild("Colonna4RaceTexture")
 				texture:SetTexture(raceTexture)
@@ -477,8 +477,10 @@ function TUI_Builds:SetupEquipSlot(elementUI, equipSlot, texture, label)
 		if label == nil or label == "" then
 			slot:GetNamedChild("Label"):SetText("Nessun oggetto in questo slot")
 			slot:GetNamedChild("Label"):SetColor(TUI_Config.colors.red:UnpackRGBA())
+			slot:GetNamedChild("Label"):SetAlpha(0.5)
 			slot:GetNamedChild("Texture"):SetAlpha(0.4)
 		else
+			slot:GetNamedChild("Label"):SetAlpha(1)
 			slot:GetNamedChild("Texture"):SetAlpha(1)
 			slot:GetNamedChild("Label"):SetColor(TUI_Config.colors.white:UnpackRGBA())
 			slot:GetNamedChild("Label"):SetText(label)
@@ -528,12 +530,18 @@ function TUI_Builds:ShowDetails (buildId)
 		end
 		el1:GetNamedChild("PG_InfoTargetTexture"):SetTexture(TUI_Builds_Target[build.target].icon)
 		el1:GetNamedChild("PG_InfoTargetLabel"):SetText(TUI_Builds_Target[build.target].name)
+		SetToolTip(el1:GetNamedChild("PG_InfoTargetTexture"), "Target: " .. el1:GetNamedChild("PG_InfoTargetLabel"):GetText())
 		el1:GetNamedChild("PG_InfoRaceTexture"):SetTexture(GetRaceTexture(build.race))
 		el1:GetNamedChild("PG_InfoRaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, build.race)))
+		SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), "Race: " .. el1:GetNamedChild("PG_InfoRaceLabel"):GetText())
 		el1:GetNamedChild("PG_InfoClassTexture"):SetTexture(GetClassTexture(build.class))
 		el1:GetNamedChild("PG_InfoClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, build.class)))
+		SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), "Class: " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
 		el1:GetNamedChild("PG_InfoRoleTexture"):SetTexture(GetRoleTexture(build.role))
 		el1:GetNamedChild("PG_InfoRoleLabel"):SetText(GetConfigRoleInfo(build.role).name)
+		SetToolTip(el1:GetNamedChild("PG_InfoRoleTexture"), "Role: " .. el1:GetNamedChild("PG_InfoRoleLabel"):GetText())
+		el1:GetNamedChild("PG_InfoVersionLabel"):SetText(build.game_version)
+		SetToolTip(el1:GetNamedChild("PG_InfoVersionTexture"), "Game version: " .. el1:GetNamedChild("PG_InfoVersionLabel"):GetText())
 
 		-- Reset the equip slots
 		for i = EQUIP_SLOT_MIN_VALUE + 1, EQUIP_SLOT_MAX_VALUE, 1 do
@@ -615,11 +623,13 @@ function TUI_Builds:ShowMyBuild ()
 	ShareBuild_Name:SetText("")
 	ShareBuild_Description:SetText("")
 	el1:GetNamedChild("PG_InfoRaceTexture"):SetTexture(GetRaceTexture(GetUnitRaceId("player")))
-	SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
 	el1:GetNamedChild("PG_InfoRaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
+	SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), "Race: " .. el1:GetNamedChild("PG_InfoRaceLabel"):GetText())
 	el1:GetNamedChild("PG_InfoClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
-	SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
 	el1:GetNamedChild("PG_InfoClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
+	SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), "Class: " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
+	el1:GetNamedChild("PG_InfoVersionLabel"):SetText(self:GetGameVersion())
+	SetToolTip(el1:GetNamedChild("PG_InfoVersionTexture"), "Game version: " .. el1:GetNamedChild("PG_InfoVersionLabel"):GetText())
 	
 	self.ShareTargetDropdown:SelectFirstItem()
 	self.ShareRoleDropdown:SelectFirstItem()
@@ -645,6 +655,10 @@ function TUI_Builds:ShowMyBuild ()
 	self.DynamicScrollPageBuildShare:SetHidden(false)
 end
 
+function TUI_Builds:GetGameVersion()
+	return GetESOVersionString():gsub("eso.live.", "")
+end
+
 function TUI_Builds:Share ()
 	local name = zo_strtrim(ShareBuild_Name:GetText())
 	local items = self:GetCurrentEquipment()
@@ -663,7 +677,7 @@ function TUI_Builds:Share ()
 			race = GetUnitRaceId("player"),
 			class = GetUnitClassId("player"),
 			role = self.ShareRoleDropdownSelected,
-			game_version = GetESOVersionString():gsub("eso.live.", ""),
+			game_version = self:GetGameVersion(),
 			items = items
 		}
 		TamrielUnlimitedIT.ReloadUIFn()

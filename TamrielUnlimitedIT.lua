@@ -423,9 +423,6 @@ function TamrielUnlimitedIT.CreateScene()
 					ZO_MainMenuCategoryBarButton1:SetMouseEnabled(true)
 					ZO_MenuBar_ClearSelection(TamrielUnlimitedIT.categoryBar)
 				end
-				--[[if scene.name == "TuiEventi" and newState == SCENE_FRAGMENT_SHOWING then
-					TamrielUnlimitedIT.Events:LoadEventsList()
-				end]]--
 			end)
 	end
 end
@@ -661,7 +658,7 @@ end
 -- CONVALIDA
 
 function SendValidationMail()
-	TamrielUnlimitedIT.Events:SendValidationMail()
+	TamrielUnlimitedIT.Validator:SendValidationMail()
 end
 
 -- SHARED BUILDS
@@ -695,6 +692,12 @@ function SortBuildsByClass ()
 end
 function SortBuildsByRole ()
     TamrielUnlimitedIT.Builds:SortBuilds("role")
+end
+function OnMouseEnterBuildRow(self)
+	self:GetNamedChild("Background"):SetHidden(false)
+end
+function OnMouseExitBuildRow(self)
+	self:GetNamedChild("Background"):SetHidden(true)
 end
 function OpenBuildDetails(self, backPage)
 	TamrielUnlimitedIT.Builds:ShowDetails(self:GetNamedChild("Label_BuildID"):GetText())
