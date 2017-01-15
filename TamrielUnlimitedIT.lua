@@ -357,7 +357,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return false
+				return true
 			end)
 
 		GildePanelMainMenu:SetKeyboardEnabled(true)
@@ -366,7 +366,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return false
+				return true
 			end)
 
 		EventiPanelMainMenu:SetKeyboardEnabled(true)
@@ -375,7 +375,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return false
+				return true
 			end)
 
 
@@ -385,7 +385,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return false
+				return true
 			end)
 
 		ConvalidaPanelMainMenu:SetKeyboardEnabled(true)
@@ -394,7 +394,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return false
+				return true
 			end)
 
 		ContributoriPanelMainMenu:SetKeyboardEnabled(true)
@@ -403,7 +403,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return false
+				return true
 			end)
 
 		BuildsPanelMainMenu:SetKeyboardEnabled(true)
@@ -412,7 +412,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return false
+				return true
 			end)
 
 		SCENE_MANAGER:RegisterCallback("SceneStateChanged", function (scene, oldState, newState)
