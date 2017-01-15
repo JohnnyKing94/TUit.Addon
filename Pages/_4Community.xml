@@ -55,7 +55,7 @@
 												self:SelectAll()
 											</OnMouseUp>
 											<OnInitialized>
-												self:SetText("http://translate.tamrielunlimited.it")					
+												self:SetText("https://translate.tamrielunlimited.it")					
 											</OnInitialized>
 										</EditBox>
 									</Controls>
@@ -220,7 +220,7 @@
 												self:SelectAll()
 											</OnMouseUp>
 											<OnInitialized>
-												self:SetText("http://tamrielunlimited.it/community/topic/49-teamspeak-3-community/")
+												self:SetText("https://tamrielunlimited.it/community/topic/49-teamspeak-3-community/")
 											</OnInitialized>
 										</EditBox>
 									</Controls>
@@ -264,7 +264,7 @@
 												self:SelectAll()
 											</OnMouseUp>
 											<OnInitialized>
-												self:SetText("http://tamrielunlimited.it/form/1-teamspeak-3/")
+												self:SetText("https://tamrielunlimited.it/form/1-teamspeak-3/")
 											</OnInitialized>
 										</EditBox>
 									</Controls>
@@ -279,7 +279,7 @@
 							<Dimensions x="785" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga16" offsetY="10" offsetX="30" />
 							<OnInitialized>
-								self:SetText("La community di Tamriel Unlimited IT mette a disposizione un forum e un calendario per tutti coloro che desiderano avere un luogo di ritrovo per i propri gildani, dove comunicare e scambiarsi guide, articoli, build ed altro. Questa apply vi permetterà inoltre di essere ufficializzati come gilda della nostra community. Pertanto, se lo desiderate potrete apparire nella Lista Gilde dell'Addon se e solo se avrete la spunta della privacy di Gilda su ON nel forum. In aggiunta potrete visualizzare anche i vostri eventi personali qui sul gioco!!!")
+								self:SetText("La community di Tamriel Unlimited IT mette a disposizione un forum e un calendario per tutti coloro che desiderano avere un luogo di ritrovo per i propri gildani, dove comunicare e scambiarsi guide, articoli, build ed altro. Questa apply vi permetterà inoltre di essere sponsorizzati come gilda della nostra community. Pertanto, se lo desiderate potrete apparire nella Lista Gilde dell'Addon se e solo se avrete la spunta della privacy di Gilda su ON nelle impostazioni del vostro portale.")
 							</OnInitialized>
 						</Label>
 						<Control name="$(parent)Riga18" >
@@ -298,7 +298,7 @@
 										self:SelectAll()
 									</OnMouseUp>
 									<OnInitialized>
-										self:SetText("http://tamrielunlimited.it/form/2-apply-di-gilda/")					
+										self:SetText("https://tamrielunlimited.it/guild/roster/1-elder-scrolls-online/?do=add")					
 									</OnInitialized>
 								</EditBox>
 							</Controls>

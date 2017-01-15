@@ -39,7 +39,7 @@
 							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
 							<OnInitialized>
 								self:SetMultiLine(true)
-								self:SetText("NEWS\r\nSe anche tu vuoi far parte della nostra community ed entrare nella lista delle gilde ufficili, dovrai compilare un modulo per l'apply al seguente link.")
+								self:SetText("NEWS\r\nSe anche tu vuoi far parte della nostra community ed entrare nella lista delle gilde sponsorizzate, ti occorrerà compilare questa apply al seguente link.")
 							</OnInitialized>
 						</EditBox>
 						<Control name="$(parent)link" >
@@ -63,7 +63,7 @@
 												self:SelectAll()
 											</OnMouseUp>
 											<OnInitialized>
-												self:SetText("http://tamrielunlimited.it/form/2-apply-di-gilda/")					
+												self:SetText("https://tamrielunlimited.it/guild/roster/1-elder-scrolls-online/?do=add")					
 											</OnInitialized>
 										</EditBox>
 									</Controls>
