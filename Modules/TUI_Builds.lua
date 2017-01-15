@@ -283,8 +283,8 @@ function TUI_Builds:FillBuildsList ()
 	pre:GetNamedChild("Colonna2"):SetHidden(false)
 	pre:GetNamedChild("Colonna3"):SetHidden(false)
 	pre:GetNamedChild("Colonna4"):SetHidden(false)
-	pre:GetNamedChild("Colonna5"):SetHidden(false)
-	pre:GetNamedChild("Colonna6"):SetHidden(false)
+	--pre:GetNamedChild("Colonna5"):SetHidden(false)
+	--pre:GetNamedChild("Colonna6"):SetHidden(false)
 
 	local i = 1
 
@@ -304,8 +304,9 @@ function TUI_Builds:FillBuildsList ()
 			v1:SetAnchor(TOPLEFT, pre, BOTTOMLEFT, 0, 0)
 			v1:GetNamedChild("Label_BuildID"):SetText(self.Builds[i].id)
 			v1:GetNamedChild("Colonna0Label"):SetText(self:GetFormattedDateAbbr(self.Builds[i].date))
-			v1:GetNamedChild("Colonna1Texture"):SetTexture(TUI_Builds.GetBuildTarget(self.Builds[i].target).icon)
-			SetToolTip(v1:GetNamedChild("Colonna1Texture"), TUI_Builds.GetBuildTarget(self.Builds[i].target).name)
+			SetToolTip(v1:GetNamedChild("Colonna1TextureVersion"), "Client ESO: " .. TUI_Builds.GetGameVersion(self.Builds[i].game_version))
+			v1:GetNamedChild("Colonna1TextureTarget"):SetTexture(TUI_Builds.GetBuildTarget(self.Builds[i].target).icon)
+			SetToolTip(v1:GetNamedChild("Colonna1TextureTarget"), "Target: " .. TUI_Builds.GetBuildTarget(self.Builds[i].target).name)
 			v1:GetNamedChild("Colonna2Label"):SetText(self.Builds[i].owner)
 			v1:GetNamedChild("Colonna3Label"):SetText(self.Builds[i].name)
 			v1:GetNamedChild("Colonna3Label"):SetColor(0, 186, 255, 1)
@@ -314,27 +315,27 @@ function TUI_Builds:FillBuildsList ()
 				texture:SetTexture(raceTexture)
 				texture:SetDimensions(24, 24)
 				texture:SetHidden(false)
-				SetToolTip(texture, zo_strformat(SI_RACE_NAME, GetRaceName(2, self.Builds[i].race)))
+				SetToolTip(texture, "Razza: " .. zo_strformat(SI_RACE_NAME, GetRaceName(2, self.Builds[i].race)))
 			else
 				v1:GetNamedChild("Colonna4RaceTexture"):SetHidden(true)
 			end
 			if classTexture ~= "" then
-				local texture = v1:GetNamedChild("Colonna5ClassTexture")
+				local texture = v1:GetNamedChild("Colonna4ClassTexture")
 				texture:SetTexture(classTexture)
 				texture:SetDimensions(24, 24)
 				texture:SetHidden(false)
-				SetToolTip(texture, zo_strformat(SI_CLASS_NAME, GetClassName(2, self.Builds[i].class)))
+				SetToolTip(texture, "Classe: " .. zo_strformat(SI_CLASS_NAME, GetClassName(2, self.Builds[i].class)))
 			else
-				v1:GetNamedChild("Colonna5ClassTexture"):SetHidden(true)
+				v1:GetNamedChild("Colonna4ClassTexture"):SetHidden(true)
 			end
 			if roleTexture ~= "" then
-				local texture = v1:GetNamedChild("Colonna6RoleTexture")
+				local texture = v1:GetNamedChild("Colonna4RoleTexture")
 				texture:SetTexture(roleTexture)
 				texture:SetDimensions(24, 24)
 				texture:SetHidden(false)
-				SetToolTip(texture, GetConfigRoleInfo(self.Builds[i].role).name)
+				SetToolTip(texture, "Ruolo: " .. GetConfigRoleInfo(self.Builds[i].role).name)
 			else
-				v1:GetNamedChild("Colonna6RoleTexture"):SetHidden(true)
+				v1:GetNamedChild("Colonna4RoleTexture"):SetHidden(true)
 			end
 
 			self:SetRatingTextures(v1:GetNamedChild("Colonna7"), self.Builds[i].rating)
@@ -377,9 +378,6 @@ function TUI_Builds:SearchBuilds (searchText)
 				addToBuilds = false
 			end
 			if addToBuilds == true then
-				--[[self.Builds[i] = deepcopy(value)
-				self.Builds[i].id = key
-				self.Builds[i].game_version = self:GetGameVersion(self.Builds[i].game_version)]]--
 				self.Builds[i] =
 				{
 					id = key,
@@ -430,15 +428,6 @@ function TUI_Builds:SortBuilds (field)
 				end
 				return (v1[field] >= v2[field])
 			end)
-		--[[if self.SortDir < 0 then
-			local sortDesc = {}
-			local j = 1
-			for i = #self.Builds, 1, -1 do
-				sortDesc[j] = self.Builds[i]
-				j = j + 1
-			end
-			self.Builds = sortDesc
-		end]]--
 	end
     self:FillBuildsList()
 end
@@ -694,7 +683,7 @@ function TUI_Builds:ShowMyBuild ()
 	self.DynamicScrollPageBuildShare:SetHidden(false)
 end
 
-function TUI_Builds:GetGameVersion(game_version)
+function TUI_Builds.GetGameVersion(game_version)
 	local versionText = ""
 	if game_version then
 		-- Format the game version as ##.##.##

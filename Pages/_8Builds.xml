@@ -64,13 +64,6 @@
 					<Anchor point="TOPLEFT" relativeTo="$(parent)RoleLabel" relativePoint="TOPRIGHT" offsetX="10"/>
 					<Dimensions x="150" y="30" />
 				</Control>
-				<!--Control name="$(parent)SearchMy_control" inherits="ZO_Options_Checkbox">
-					<Anchor point="TOPLEFT" relativeTo="Options_Video_Resolution" relativePoint="BOTTOMLEFT" offsetY="6" />
-					<OnInitialized>
-						self.data = KEYBOARD_OPTIONS:GetSettingsData(SETTING_PANEL_VIDEO, SETTING_TYPE_GRAPHICS, GRAPHICS_SETTING_VSYNC)
-						ZO_OptionsWindow_InitializeControl(self)
-					</OnInitialized>
-				</Control-->
 				<Button name="$(parent)SearchBuild_btn" alpha="1">
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT"  relativeTo="$(parent)RoleDropdown" offsetX="30" offsetY="-5" />
 					<Dimensions x="40" y="40" />
@@ -99,7 +92,7 @@
 								</Control>
 								<Control name="$(parent)Colonna0"  >
 									<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
-									<Dimensions x="80" y="20" />
+									<Dimensions x="100" y="20" />
 									<Controls>
 										<Button name="$(parent)DateSortBtn" alpha="1">
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
@@ -123,7 +116,7 @@
 											<Dimensions x="80" y="20" />
 											<OnMouseDown>SortBuildsByTarget()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Target">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
 													<Dimensions x="80" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 												</Label>
@@ -167,48 +160,14 @@
 								</Control>
 								<Control name="$(parent)Colonna4"  >
 									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna3" />
-									<Dimensions x="80" y="20" />
+									<Dimensions x="100" y="20" />
 									<Controls>
 										<Button name="$(parent)RaceSortBtn" alpha="1">
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 											<Dimensions x="80" y="20" />
 											<OnMouseDown>SortBuildsByRace()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Razza">
-													<Dimensions x="80" y="20" />
-													<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
-												</Label>
-											</Controls>
-										</Button>	
-									</Controls>
-								</Control>
-								<Control name="$(parent)Colonna5"  >
-									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna4" />
-									<Dimensions x="80" y="20" />
-									<Controls>
-										<Button name="$(parent)ClassSortBtn" alpha="1">
-											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-											<Dimensions x="80" y="20" />
-											<OnMouseDown>SortBuildsByClass()</OnMouseDown>
-											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Classe">
-													<Dimensions x="80" y="20" />
-													<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
-												</Label>
-											</Controls>
-										</Button>	
-									</Controls>
-								</Control>
-								<Control name="$(parent)Colonna6"  >
-									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna5" />
-									<Dimensions x="80" y="20" />
-									<Controls>
-										<Button name="$(parent)ClassSortBtn" alpha="1">
-											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-											<Dimensions x="80" y="20" />
-											<OnMouseDown>SortBuildsByRole()</OnMouseDown>
-											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ruolo">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
 													<Dimensions x="80" y="20" />
 													<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
 												</Label>
@@ -217,7 +176,7 @@
 									</Controls>
 								</Control>
 								<Control name="$(parent)Colonna7"  >
-									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna6" />
+									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="10" relativeTo="$(parent)Colonna4" />
 									<Dimensions x="150" y="20" />
 									<Controls>
 										<Button name="$(parent)RatingSortBtn" alpha="1">
@@ -278,9 +237,9 @@
                 </Texture>
 				<Control name="$(parent)Colonna0">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="5" offsetY="5" />
-					<Dimensions x="80" y="30" />
+					<Dimensions x="100" y="30" />
 					<Controls>
-						<Label name="$(parent)Label" font="ZoFontGameOutline" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Data">
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Data">
 							<Dimensions x="80" y="30" />
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 						</Label>
@@ -290,9 +249,13 @@
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna0" />
 					<Dimensions x="80" y="30" />
 					<Controls>
-						<Texture name="$(parent)Texture" mouseEnabled="true">
+						<Texture name="$(parent)TextureVersion" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/version.dds">
 							<Dimensions x="24" y="24" />
-							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
+							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetX="-21" />
+						</Texture>
+						<Texture name="$(parent)TextureTarget" mouseEnabled="true">
+							<Dimensions x="24" y="24" />
+							<Anchor point="LEFT" relativeTo="$(parent)TextureVersion" relativePoint="RIGHT" offsetX="5" />
 						</Texture>
 					</Controls>
 				</Control>
@@ -300,7 +263,7 @@
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna1" />
 					<Dimensions x="120" y="30" />
 					<Controls>
-						<Label name="$(parent)Label" font="ZoFontGameOutline" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Autore">
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Autore">
 							<Dimensions x="120" y="30" />
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 						</Label>
@@ -318,36 +281,25 @@
 				</Control>
 				<Control name="$(parent)Colonna4">
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna3" />
-					<Dimensions x="80" y="30" />
-					<Controls>
-						<Texture name="$(parent)RaceTexture" mouseEnabled="true">
-							<Dimensions x="24" y="24" />
-							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
-						</Texture>
-					</Controls>
-				</Control>
-				<Control name="$(parent)Colonna5">
-					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" offsetY="0" relativeTo="$(parent)Colonna4" />
-					<Dimensions x="80" y="30" />
+					<Dimensions x="100" y="30" />
 					<Controls>
 						<Texture name="$(parent)ClassTexture" mouseEnabled="true">
 							<Dimensions x="24" y="24" />
+							<Anchor point="LEFT" relativeTo="$(parent)RaceTexture" relativePoint="RIGHT" />
 							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
 						</Texture>
-					</Controls>
-				</Control>
-				<Control name="$(parent)Colonna6">
-					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna5" />
-					<Dimensions x="80" y="30" />
-					<Controls>
+						<Texture name="$(parent)RaceTexture" mouseEnabled="true">
+							<Dimensions x="24" y="24" />
+							<Anchor point="RIGHT" relativeTo="$(parent)ClassTexture" relativePoint="LEFT" offsetX="-5" />
+						</Texture>
 						<Texture name="$(parent)RoleTexture" mouseEnabled="true">
 							<Dimensions x="24" y="24" />
-							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
+							<Anchor point="LEFT" relativeTo="$(parent)ClassTexture" relativePoint="RIGHT" offsetX="5" />
 						</Texture>
 					</Controls>
 				</Control>
 				<Control name="$(parent)Colonna7">
-					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="0" relativeTo="$(parent)Colonna6" />
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="10" relativeTo="$(parent)Colonna4" />
 					<Dimensions x="120" y="30" />
 					<Controls>
 						<Label name="$(parent)NoRated" hidden="true" font="ZoFontWinT2" inheritAlpha="false" alpha="1" color="CC0000" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Non ancora valutata">
