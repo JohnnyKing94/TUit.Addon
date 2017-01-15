@@ -362,14 +362,7 @@ function TUI_Builds:SearchBuilds (searchText)
 			if addToBuilds then
 				self.Builds[i] = deepcopy(value)
 				self.Builds[i].id = key
-				if self.Builds[i].game_version then
-					-- Format the game version as ##.##.##
-					local version = split_to_array(self.Builds[i].game_version, ".")
-					if #version > 3 then
-						version = { version[1], version[2], version[3] }
-					end
-					self.Builds[i].game_version = table.concat(version, ".")
-				end
+				self.Builds[i].game_version = self:GetGameVersion(self.Builds[i].game_version)
 				i = i + 1
 			end
 		end
@@ -496,18 +489,18 @@ function TUI_Builds:SetupEquipSlot(elementUI, equipSlot, texture, label)
 	end
 end
 
-function TUI_Builds:PreviewSlot(self, slot)
+function TUI_Builds:PreviewSlot(elementUI, slot)
 	local itemLink = nil
-	if slot ~= nil and TUI_Builds.currentBuild and TUI_Builds.currentBuild.items then
-		for i = 1, #TUI_Builds.currentBuild.items do
-			if slot == TUI_Builds.currentBuild.items[i].slot then
-				itemLink = TUI_Builds.currentBuild.items[i].link
+	if slot ~= nil and self.currentBuild and self.currentBuild.items then
+		for i = 1, #self.currentBuild.items do
+			if slot == self.currentBuild.items[i].slot then
+				itemLink = self.currentBuild.items[i].link
 				break
 			end
 		end
 	end
 	if itemLink then
-		InitializeTooltip(ItemPreviewTooltip, self, RIGHT, -30, 0, LEFT)
+		InitializeTooltip(ItemPreviewTooltip, elementUI, RIGHT, -30, 0, LEFT)
 		ItemPreviewTooltip:SetLink(itemLink)
 	else
 		ClearTooltip(ItemPreviewTooltip)
@@ -636,7 +629,7 @@ function TUI_Builds:ShowMyBuild ()
 	el1:GetNamedChild("PG_InfoClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
 	el1:GetNamedChild("PG_InfoClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
 	SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), "Class: " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
-	el1:GetNamedChild("PG_InfoVersionLabel"):SetText(self:GetGameVersion())
+	el1:GetNamedChild("PG_InfoVersionLabel"):SetText(self:GetGameVersion(GetESOVersionString()))
 	SetToolTip(el1:GetNamedChild("PG_InfoVersionTexture"), "Game version: " .. el1:GetNamedChild("PG_InfoVersionLabel"):GetText())
 	
 	self.ShareTargetDropdown:SelectFirstItem()
@@ -663,8 +656,17 @@ function TUI_Builds:ShowMyBuild ()
 	self.DynamicScrollPageBuildShare:SetHidden(false)
 end
 
-function TUI_Builds:GetGameVersion()
-	return GetESOVersionString():gsub("eso.live.", "")
+function TUI_Builds:GetGameVersion(game_version)
+	local versionText = ""
+	if game_version then
+		-- Format the game version as ##.##.##
+		local version = split_to_array(game_version:gsub("eso.live.", ""), ".")
+		if #version > 3 then
+			version = { version[1], version[2], version[3] }
+		end
+		versionText = table.concat(version, ".")
+	end
+	return versionText
 end
 
 function TUI_Builds:Share ()
