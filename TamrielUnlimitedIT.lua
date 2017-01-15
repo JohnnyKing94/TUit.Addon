@@ -267,18 +267,18 @@ function TamrielUnlimitedIT.CreateScene()
 				highlight = "EsoUI/art/mainmenu/menubar_social_over.dds",
 			},
 			{
-				categoryName = SI_TUI_BUILDS, -- Titolo vicino ai bottoni
-				descriptor = "TuiBuilds",
-				normal = "EsoUI/art/mainmenu/menubar_skills_up.dds",
-				pressed = "EsoUI/art/mainmenu/menubar_skills_down.dds",
-				highlight = "EsoUI/art/mainmenu/menubar_skills_over.dds",
-			},
-			{
 				categoryName = SI_TUI_GILDE, -- Titolo vicino ai bottoni
 				descriptor = "TuiGilde",
 				normal = "EsoUI/art/mainmenu/menubar_guilds_up.dds",
 				pressed = "EsoUI/art/mainmenu/menubar_guilds_down.dds",
 				highlight = "EsoUI/art/mainmenu/menubar_guilds_over.dds",
+			},
+			{
+				categoryName = SI_TUI_BUILDS, -- Titolo vicino ai bottoni
+				descriptor = "TuiBuilds",
+				normal = "EsoUI/art/mainmenu/menubar_skills_up.dds",
+				pressed = "EsoUI/art/mainmenu/menubar_skills_down.dds",
+				highlight = "EsoUI/art/mainmenu/menubar_skills_over.dds",
 			},
 			{
 				categoryName = SI_TUI_EVENTI, -- Titolo vicino ai bottoni
@@ -357,7 +357,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return true
+				return false
 			end)
 
 		GildePanelMainMenu:SetKeyboardEnabled(true)
@@ -366,7 +366,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return true
+				return false
 			end)
 
 		EventiPanelMainMenu:SetKeyboardEnabled(true)
@@ -375,7 +375,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return true
+				return false
 			end)
 
 
@@ -385,7 +385,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return true
+				return false
 			end)
 
 		ConvalidaPanelMainMenu:SetKeyboardEnabled(true)
@@ -394,7 +394,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return true
+				return false
 			end)
 
 		ContributoriPanelMainMenu:SetKeyboardEnabled(true)
@@ -403,7 +403,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return true
+				return false
 			end)
 
 		BuildsPanelMainMenu:SetKeyboardEnabled(true)
@@ -412,7 +412,7 @@ function TamrielUnlimitedIT.CreateScene()
 					SCENE_MANAGER:ShowBaseScene()
 					ChiudiAddRemoveFriend()
 				end
-				return true
+				return false
 			end)
 
 		SCENE_MANAGER:RegisterCallback("SceneStateChanged", function (scene, oldState, newState)
@@ -664,36 +664,47 @@ end
 -- SHARED BUILDS
 
 function SearchBuilds(searchText)
+	do return end
 	TamrielUnlimitedIT.Builds:SearchBuilds(searchText)
 end
 function SortBuildsById ()
+	do return end
     TamrielUnlimitedIT.Builds:SortBuilds("id")
 end
 function SortBuildsByTarget ()
+	do return end
     TamrielUnlimitedIT.Builds:SortBuilds("target")
 end
 function SortBuildsByOwner ()
+	do return end
     TamrielUnlimitedIT.Builds:SortBuilds("owner")
 end
 function SortBuildsByName ()
+	do return end
     TamrielUnlimitedIT.Builds:SortBuilds("name")
 end
 function SortBuildsByRating ()
+	do return end
     TamrielUnlimitedIT.Builds:SortBuilds("rating")
 end
 function SortBuildsByDate ()
+	do return end
     TamrielUnlimitedIT.Builds:SortBuilds("date")
 end
 function SortBuildsByRace ()
+	do return end
     TamrielUnlimitedIT.Builds:SortBuilds("race")
 end
 function SortBuildsByClass ()
+	do return end
     TamrielUnlimitedIT.Builds:SortBuilds("class")
 end
 function SortBuildsByRole ()
+	do return end
     TamrielUnlimitedIT.Builds:SortBuilds("role")
 end
 local function SetListHighlightHidden(listPart, hidden)
+	do return end
     if(listPart) then
         local highlight = listPart:GetNamedChild("Highlight")
         if(highlight and (highlight:GetType() == CT_TEXTURE)) then
@@ -709,26 +720,33 @@ local function SetListHighlightHidden(listPart, hidden)
     end
 end
 function OnMouseEnterBuildRow(self)
+	do return end
 	self:GetNamedChild("Background"):SetHidden(true)
 	SetListHighlightHidden(self, false)
 end
 function OnMouseExitBuildRow(self)
+	do return end
 	self:GetNamedChild("Background"):SetHidden(false)
 	SetListHighlightHidden(self, true)
 end
 function OpenBuildDetails(self, backPage)
+	do return end
 	TamrielUnlimitedIT.Builds:ShowDetails(self:GetNamedChild("Label_BuildID"):GetText())
 end
 function BackToBuilds()
+	do return end
 	TamrielUnlimitedIT.Builds:CloseDetails()
 end
 function ShowMyBuild()
+	do return end
 	TamrielUnlimitedIT.Builds:ShowMyBuild()
 end
 function ShareBuild()
+	do return end
 	TamrielUnlimitedIT.Builds:Share()
 end
 function OnMouseEnterBuildRate(self)
+	do return end
 	local rating = tonumber(self:GetName():sub(self:GetName():len()))
 	local el = TamrielUnlimitedIT.Builds.DynamicScrollPageBuildDetails
 	for i = 1, 5, 1 do
@@ -740,16 +758,20 @@ function OnMouseEnterBuildRate(self)
 	end
 end
 function OnMouseExitBuildRate(self)
+	do return end
 	TamrielUnlimitedIT.Builds:SetMyRating()
 end
 function OnMouseDownBuildRate(self)
+	do return end
 	local rating = tonumber(self:GetName():sub(self:GetName():len()))
 	TamrielUnlimitedIT.Builds:RateBuild(rating * 2)
 end
 function OnMouseEnterSlot(self, slot)
+	do return end
 	TamrielUnlimitedIT.Builds:PreviewSlot(self, slot)
 end
 function OnMouseExitSlot()
+	do return end
 	TamrielUnlimitedIT.Builds:PreviewSlot(nil)
 end
 

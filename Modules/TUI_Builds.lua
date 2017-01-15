@@ -158,9 +158,8 @@ end
 function TUI_Builds:InitializeScreenList(container)
 	self.DynamicScrollPageBuilds = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuilds", container, "DynamicScrollPageBuilds", 0)
 
-	local me = self
-	SearchBuild_edit:SetHandler("OnEnter", function (self, key, ctrl, alt, shift, command)
-			me:SearchBuilds(SearchBuild_edit:GetText())
+	SearchBuild_edit:SetHandler("OnEnter", function (btn, key, ctrl, alt, shift, command)
+			self:SearchBuilds(SearchBuild_edit:GetText())
 		end)
 	
 	self.FilterTargetDropdown = ZO_ComboBox:New(GetControl(self.DynamicScrollPageBuilds, "TargetDropdown"))
@@ -361,14 +360,14 @@ function TUI_Builds:SearchBuilds (searchText)
 	self.Filter = searchText
 	self.Builds = {}
 	local searchTextInsensitive = ""
-	if searchText ~= nil and searchText ~= "" then
+	if searchText then
 		searchTextInsensitive = string.lower(searchText)
 	end
 	local i = 1
 	if SharedBuildDataVar ~= nil then
 		for key, value in pairs(SharedBuildDataVar) do
 			local addToBuilds = true
-			if searchTextInsensitive ~= "" and not (string.find(string.lower(value.owner), searchTextInsensitive) or string.find(string.lower(value.name), searchTextInsensitive)) then
+			if searchTextInsensitive ~= "" and not (string.find(value.owner:lower(), searchTextInsensitive) or string.find(value.name:lower(), searchTextInsensitive)) then
 				addToBuilds = false
 			end
 			if self.FilterTargetDropdownSelected ~= 0 and value.target ~= self.FilterTargetDropdownSelected then
@@ -377,10 +376,25 @@ function TUI_Builds:SearchBuilds (searchText)
 			if self.FilterRoleDropdownSelected ~= 0 and value.role ~= self.FilterRoleDropdownSelected then
 				addToBuilds = false
 			end
-			if addToBuilds then
-				self.Builds[i] = deepcopy(value)
+			if addToBuilds == true then
+				--[[self.Builds[i] = deepcopy(value)
 				self.Builds[i].id = key
-				self.Builds[i].game_version = self:GetGameVersion(self.Builds[i].game_version)
+				self.Builds[i].game_version = self:GetGameVersion(self.Builds[i].game_version)]]--
+				self.Builds[i] =
+				{
+					id = key,
+					owner = value.owner,
+					name = value.name,
+					description = value.description,
+					rating = value.rating,
+					target = value.target,
+					race = value.race,
+					class = value.class,
+					role = value.role,
+					date = value.date,
+					game_version = value.game_version,
+					items = value.items
+				}
 				i = i + 1
 			end
 		end
@@ -406,11 +420,17 @@ function TUI_Builds:SortBuilds (field)
 		end
 		quicksort(self.Builds, function (v1, v2)
 				if v1[field] == v2[field] then
-					return v1.rating == v2.rating and (v1.id <= v2.id) or (v1.rating <= v2.rating)
+					if self.SortDir > 0 then
+						return v1.rating == v2.rating and (v1.id <= v2.id) or (v1.rating <= v2.rating)
+					end
+					return v1.rating == v2.rating and (v1.id >= v2.id) or (v1.rating >= v2.rating)
 				end
-				return (v1[field] <= v2[field])
+				if self.SortDir > 0 then
+					return (v1[field] <= v2[field])
+				end
+				return (v1[field] >= v2[field])
 			end)
-		if self.SortDir < 0 then
+		--[[if self.SortDir < 0 then
 			local sortDesc = {}
 			local j = 1
 			for i = #self.Builds, 1, -1 do
@@ -418,7 +438,7 @@ function TUI_Builds:SortBuilds (field)
 				j = j + 1
 			end
 			self.Builds = sortDesc
-		end
+		end]]--
 	end
     self:FillBuildsList()
 end

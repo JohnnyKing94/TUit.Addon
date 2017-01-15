@@ -25,9 +25,8 @@ function TUI_Players:Initialize()
 		self:LoadNoPlayer()
 	end
 
-    local me = self
-	SearchPlayer_edit:SetHandler("OnEnter", function (self, key, ctrl, alt, shift, command)
-			me:SearchPlayer(SearchPlayer_edit:GetText())
+	SearchPlayer_edit:SetHandler("OnEnter", function (btn, key, ctrl, alt, shift, command)
+			self:SearchPlayer(SearchPlayer_edit:GetText())
 		end)
 	self:LoadArrayPlayerTemp()
 end
