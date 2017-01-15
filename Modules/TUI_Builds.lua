@@ -359,11 +359,11 @@ end
 
 function TUI_Builds:SearchBuilds (searchText)
 	self.Filter = searchText
-	self.Builds = {}
 	local searchTextInsensitive = ""
 	if searchText then
 		searchTextInsensitive = string.lower(searchText)
 	end
+	local builds = {}
 	local i = 1
 	if SharedBuildDataVar ~= nil then
 		for key, value in pairs(SharedBuildDataVar) do
@@ -378,13 +378,14 @@ function TUI_Builds:SearchBuilds (searchText)
 				addToBuilds = false
 			end
 			if addToBuilds == true then
-				self.Builds[i] deepcopy(value)
-				self.Builds[i]id = key
-				self.Builds[i].game_version = TUI_Builds.GetGameVersion(value.game_version)
+				builds[i] = deepcopy(value)
+				builds[i].id = key
+				builds[i].game_version = TUI_Builds.GetGameVersion(value.game_version)
 				i = i + 1
 			end
 		end
 	end
+	self.Builds = builds
 	self:SortBuilds(self.Sort)
 end
 
