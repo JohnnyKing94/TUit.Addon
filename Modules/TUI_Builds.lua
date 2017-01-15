@@ -36,6 +36,24 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NAME"] =
 		}
 	}
 }
+ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NAME_EXISTS"] = 
+{
+	title =
+	{
+		text = "Condividi Build",
+	},
+	mainText = 
+	{
+		text = "Hai già usato questo nome per un'altra build.",
+	},
+	buttons =
+	{
+		[1] =
+		{
+			text = SI_OK
+		}
+	}
+}
 ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NUMBERPIECES"] = 
 {
 	title =
@@ -669,11 +687,25 @@ function TUI_Builds:GetGameVersion(game_version)
 	return versionText
 end
 
+function TUI_Builds:NameExists(name)
+	if TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created ~= nil then
+		local nameInsensitive = name:lower()
+		for key, value in pairs(TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created) do
+			if value.name:lower() == nameInsensitive then
+				return true
+			end
+		end
+	end
+	return false
+end
+
 function TUI_Builds:Share ()
 	local name = zo_strtrim(ShareBuild_Name:GetText())
 	local items = self:GetCurrentEquipment()
 	if name == "" then
 		ZO_Dialogs_ShowDialog("TUIT_DIALOG_SHAREBUILD_NAME", nil, nil, false)
+	elseif self:NameExists(name) then
+		ZO_Dialogs_ShowDialog("TUIT_DIALOG_SHAREBUILD_NAME_EXISTS", nil, nil, false)
 	elseif #TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created >= self.MaxBuilds then
 		ZO_Dialogs_ShowDialog("TUIT_DIALOG_SHAREBUILD_MAXBUILDS", nil, nil, false)
 	elseif #items < BUILD_MIN_PIECES then
@@ -681,13 +713,13 @@ function TUI_Builds:Share ()
 	else
 		local buildId = 1 + #TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created
 		TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created[buildId] = {
-			name = ShareBuild_Name:GetText(),
+			name = name,
 			description = zo_strtrim(ShareBuild_Description:GetText()),
 			target = self.ShareTargetDropdownSelected,
 			race = GetUnitRaceId("player"),
 			class = GetUnitClassId("player"),
 			role = self.ShareRoleDropdownSelected,
-			game_version = self:GetGameVersion(),
+			game_version = self:GetGameVersion(GetESOVersionString()),
 			items = items
 		}
 		TamrielUnlimitedIT.ReloadUIFn()
