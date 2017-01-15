@@ -378,21 +378,9 @@ function TUI_Builds:SearchBuilds (searchText)
 				addToBuilds = false
 			end
 			if addToBuilds == true then
-				self.Builds[i] =
-				{
-					id = key,
-					owner = value.owner,
-					name = value.name,
-					description = value.description,
-					rating = value.rating,
-					target = value.target,
-					race = value.race,
-					class = value.class,
-					role = value.role,
-					date = value.date,
-					game_version = value.game_version,
-					items = value.items
-				}
+				self.Builds[i] deepcopy(value)
+				self.Builds[i]id = key
+				self.Builds[i].game_version = TUI_Builds.GetGameVersion(value.game_version)
 				i = i + 1
 			end
 		end
@@ -656,7 +644,7 @@ function TUI_Builds:ShowMyBuild ()
 	el1:GetNamedChild("PG_InfoClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
 	el1:GetNamedChild("PG_InfoClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
 	SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), "Classe: " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
-	el1:GetNamedChild("PG_InfoVersionLabel"):SetText(self:GetGameVersion(GetESOVersionString()))
+	el1:GetNamedChild("PG_InfoVersionLabel"):SetText(TUI_Builds.GetGameVersion(GetESOVersionString()))
 	SetToolTip(el1:GetNamedChild("PG_InfoVersionTexture"), "Versione ESO: " .. el1:GetNamedChild("PG_InfoVersionLabel"):GetText())
 	
 	self.ShareTargetDropdown:SelectFirstItem()
@@ -728,7 +716,7 @@ function TUI_Builds:Share ()
 			race = GetUnitRaceId("player"),
 			class = GetUnitClassId("player"),
 			role = self.ShareRoleDropdownSelected,
-			game_version = self:GetGameVersion(GetESOVersionString()),
+			game_version = TUI_Builds.GetGameVersion(GetESOVersionString()),
 			items = items
 		}
 		TamrielUnlimitedIT.ReloadUIFn()
