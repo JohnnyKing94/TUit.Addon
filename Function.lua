@@ -23,6 +23,19 @@ function deepcopy(orig)
     end
     return copy
 end
+function shallowcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in pairs(orig) do
+            copy[orig_key] = orig_value
+        end
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
 function inTable(tbl, item)
     for key, value in pairs(tbl) do
         if value == item then return key end
@@ -56,7 +69,8 @@ function split_to_array(inputstr, sep)
 	if sep == nil then
 		sep = "%s"
 	end
-	local t={} ; i=1
+	local t = {}
+	local i = 1
 	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
 		t[i] = str
 		i = i + 1
@@ -66,18 +80,18 @@ end
 
 --DATE
 function TimestampToDate(ts)
-	s = ts%86400
-	ts = math.floor(ts/ 86400)
-	h = math.floor(s/3600)
-	m = math.floor(s/60)%60
-	s = s%60
-	x = math.floor((ts*4+102032)/146097)+15
-	b = ts+2442113+x-math.floor(x/4)
-	c = math.floor((b*20-2442)/7305)
-	dd = b-365*c-math.floor(c/4)
-	e = math.floor(dd*1000/30601)
-	f = dd-e*30-math.floor(e*601/1000)
-	arr={}
+	local s = ts%86400
+	local ts = math.floor(ts/ 86400)
+	local h = math.floor(s/3600)
+	local m = math.floor(s/60)%60
+	local s = s%60
+	local x = math.floor((ts*4+102032)/146097)+15
+	local b = ts+2442113+x-math.floor(x/4)
+	local c = math.floor((b*20-2442)/7305)
+	local dd = b-365*c-math.floor(c/4)
+	local e = math.floor(dd*1000/30601)
+	local f = dd-e*30-math.floor(e*601/1000)
+	local arr={}
 	if e < 14 then
 		arr.anno=c-4716
 		arr.mese=e-1
@@ -96,12 +110,12 @@ function TimestampToDate(ts)
 	return arr
 end
 function DateToTimestamp(dat)
-	s=dat.secondo
-	mi= dat.minuto
-	h=dat.ora
-	dd=dat.giorno
-	m=dat.mese
-	y=dat.anno
+	local s=dat.secondo
+	local mi= dat.minuto
+	local h=dat.ora
+	local dd=dat.giorno
+	local m=dat.mese
+	local y=dat.anno
 	if m <= 2 then
 		y =y- 1
 		m =m+ 12 
@@ -132,10 +146,10 @@ function days_in_month(month, year)
 	end
 end
 function day_of_the_week_by_date(dat)
-	gg=dat.giorno
-	mm=dat.mese
-	yy=dat.anno
-	t={0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
+	local gg=dat.giorno
+	local mm=dat.mese
+	local yy=dat.anno
+	local t={0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
     if(mm<=2) then
 		yy=yy-1
 	end
@@ -154,11 +168,11 @@ function n_day_week_from_initials(initials,lang)
 	return -1
 end
 function DateToDayNumber(dat)
-	m=dat.mese
-	y=dat.anno
-	dd=dat.giorno
-	m = (m + 9) % 12
-	y = y - m/10
+	local m=dat.mese
+	local y=dat.anno
+	local dd=dat.giorno
+	local m = (m + 9) % 12
+	local y = y - m/10
 	return 365*y + math.floor(y/4) - math.floor(y/100) + math.floor(y/400) + math.floor((m*306 + 5)/10) + ( dd - 1 )
 end
 function isValidDate(dat)
@@ -369,96 +383,6 @@ function MakeItemSetLink( id, flags )
 	end
 
 	return(itemLink);
-end
-function GetItemSetDataVar(idSet)
-	if ItemsDataVar ~= nil then
-		for i = 1, #ItemsDataVar do
-			if ItemsDataVar[i].code == idSet then
-				return ItemsDataVar[i]
-			end
-		end
-	end
-	return {
-		code = 0,
-		name = "",
-		flag = 0x01,
-		zone = {},
-		traits = 0
-	}
-end
-function GetItemSetData( idSet )
-	local dataVar = GetItemSetDataVar(idSet)
-	local id = dataVar.code;
-	local flags = tonumber(dataVar.flag, 16);
-
-	local itemLink = MakeItemSetLink(id, flags);
-	local name, type, style, bonuses;
-	local zoneType = { };
-
-	if id == nil or id < 1 then
-		return nil
-	end
-
-	if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.weapon)) then
-		name = GetItemLinkName(itemLink)
-		type = "Arma"
-		bonuses = 0;
-	else
-		_, name, bonuses = GetItemLinkInfo(itemLink);
-		name = dataVar.name;
-
-		if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.crafted)) then
-			type = "Craft" .. (dataVar.traits > 0 and string.format(" (%d tratti)", dataVar.traits) or "")
-			zoneType[0] = true;
-		elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.jewelry)) then
-			type = GetString("SI_GAMEPADITEMCATEGORY", GAMEPAD_ITEM_CATEGORY_JEWELRY)
-		elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.monster)) then
-			type = "NPC"
-		elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.mixedWeights)) then
-			type = "Misto"
-		else
-			armorType = GetItemLinkArmorType(itemLink);
-			--type = GetString("SI_ARMORTYPE", armorType)
-			type = LocalizeString("<<C:1>>", GetString("SI_ARMORTYPE", armorType));
-		end
-	end
-
-	local source = "";
-
-	for i = 1, #dataVar.zone do
-		if (i > 1) then source = source .. ", " end
-		source = source .. (dataVar.zone[i] > 0 and GetZoneNameByIndex(GetZoneIndex(dataVar.zone[i])) or "Random Dungeon Finder");
-		zoneType[TUI_Config.ItemData.zoneClassification[dataVar.zone[i]]] = true;
-	end
-
-	if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.monster)) then
-		source = string.format("%s (%s)", source, TUI_Config.ItemData.undauntedNames[dataVar.undaunted]);
-	end
-
-	if ( not CheckItemSetFlag(flags, TUI_Config.ItemData.flags.jewelry) and
-	     not CheckItemSetFlag(flags, TUI_Config.ItemData.flags.monster) and
-	     not CheckItemSetFlag(flags, TUI_Config.ItemData.flags.multiStyle) ) then
-
-		--[[if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.allianceStyle)) then
-			style = GetString(SI_ITEMBROWSER_STYLE_ALLIANCE);
-		else
-			style = GetString("SI_ITEMSTYLE", GetItemLinkItemStyle(itemLink));
-		end]]--
-	end
-
-	zoneType[(GetItemLinkBindType(itemLink) == BIND_TYPE_ON_EQUIP) and 5 or 6] = true;
-
-	return({
-		numberSet = id,
-		data = dataVar,
-		name = name,
-		itemType = type,
-		source = source,
-		zoneType = zoneType,
-		style = style,
-		bonuses = bonuses,
-		itemLink = itemLink,
-	});
 end
 
 -- SORT

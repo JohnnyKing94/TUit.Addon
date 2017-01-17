@@ -253,6 +253,72 @@ function TUI_Builds:CreateScene (TUI_MENU_BAR)
 	return TUI_SCENE_BUILDS
 end
 
+function TUI_Builds:SearchBuilds (searchText)
+	self.Filter = searchText
+	self.Builds = {}
+	local searchTextInsensitive = ""
+	if searchText then
+		searchTextInsensitive = searchText:lower()
+	end
+	local i = 1
+	if SharedBuildDataVar ~= nil then
+		for key, value in pairs(SharedBuildDataVar) do
+			if value then
+				local addToBuilds = true
+				if searchTextInsensitive ~= "" and not (string.find(value.owner:lower(), searchTextInsensitive) or string.find(value.name:lower(), searchTextInsensitive)) then
+					addToBuilds = false
+				end
+				if self.FilterTargetDropdownSelected ~= 0 and value.target ~= self.FilterTargetDropdownSelected then
+					addToBuilds = false
+				end
+				if self.FilterRoleDropdownSelected ~= 0 and value.role ~= self.FilterRoleDropdownSelected then
+					addToBuilds = false
+				end
+				if addToBuilds == true then
+					local build = deepcopy(value)
+					build.id = key
+					build.game_version = TUI_Builds.GetGameVersion(build.game_version)
+					table.insert( self.Builds, i, build )
+					i = i + 1
+				end
+			end
+		end
+	end
+	self:SortBuilds(self.Sort)
+end
+
+function TUI_Builds:SortBuilds (field)
+	if self.Builds ~= nil and #self.Builds > 0 then
+		if field ~= self.Sort then
+			self.Sort = field
+			self.SortDir = 1
+		else
+			self.SortDir = self.SortDir * -1
+		end
+		quicksort(self.Builds, function (v1, v2)
+				if v1[field] == v2[field] then
+					if self.SortDir > 0 then
+						return v1.rating == v2.rating and (v1.id <= v2.id) or (v1.rating <= v2.rating)
+					end
+					return v1.rating == v2.rating and (v1.id >= v2.id) or (v1.rating >= v2.rating)
+				end
+				if self.SortDir > 0 then
+					return (v1[field] <= v2[field])
+				end
+				return (v1[field] >= v2[field])
+			end)
+	end
+    self:FillBuildsList()
+end
+
+function TUI_Builds.GetBuildTarget (target)
+    target = tonumber(target)
+    if target > 0 and target <= #TUI_Builds_Target then
+        return TUI_Builds_Target[target]
+    end
+    return nil
+end
+
 function TUI_Builds:GetFormattedDateAbbr(date)
 	local y,m,d,hh,mm = StringToDateTime(date)
 	return string.format("%02d", d) .. " " .. string.upper(GetMonthNameAbbr(m)) .. " " .. y
@@ -361,70 +427,6 @@ function TUI_Builds:FillBuildsList ()
 	end
 end
 
-function TUI_Builds:SearchBuilds (searchText)
-	self.Filter = searchText
-	self.Builds = {}
-	local searchTextInsensitive = ""
-	if searchText then
-		searchTextInsensitive = searchText:lower()
-	end
-	local i = 1
-	if SharedBuildDataVar ~= nil then
-		for key, value in pairs(SharedBuildDataVar) do
-			local addToBuilds = true
-			if searchTextInsensitive ~= "" and not (string.find(value.owner:lower(), searchTextInsensitive) or string.find(value.name:lower(), searchTextInsensitive)) then
-				addToBuilds = false
-			end
-			if self.FilterTargetDropdownSelected ~= 0 and value.target ~= self.FilterTargetDropdownSelected then
-				addToBuilds = false
-			end
-			if self.FilterRoleDropdownSelected ~= 0 and value.role ~= self.FilterRoleDropdownSelected then
-				addToBuilds = false
-			end
-			if addToBuilds == true then
-				--self.Builds[i] = deepcopy(value)
-				self.Builds[i] = value
-				self.Builds[i].id = key
-				self.Builds[i].game_version = TUI_Builds.GetGameVersion(value.game_version)
-				i = i + 1
-			end
-		end
-	end
-	self:SortBuilds(self.Sort)
-end
-
-function TUI_Builds.GetBuildTarget (target)
-    target = tonumber(target)
-    if target > 0 and target <= #TUI_Builds_Target then
-        return TUI_Builds_Target[target]
-    end
-    return nil
-end
-
-function TUI_Builds:SortBuilds (field)
-	if self.Builds ~= nil and #self.Builds > 0 then
-		if field ~= self.Sort then
-			self.Sort = field
-			self.SortDir = 1
-		else
-			self.SortDir = self.SortDir * -1
-		end
-		quicksort(self.Builds, function (v1, v2)
-				if v1[field] == v2[field] then
-					if self.SortDir > 0 then
-						return v1.rating == v2.rating and (v1.id <= v2.id) or (v1.rating <= v2.rating)
-					end
-					return v1.rating == v2.rating and (v1.id >= v2.id) or (v1.rating >= v2.rating)
-				end
-				if self.SortDir > 0 then
-					return (v1[field] <= v2[field])
-				end
-				return (v1[field] >= v2[field])
-			end)
-	end
-    self:FillBuildsList()
-end
-
 function TUI_Builds:CloseDetails ()
 	self.DynamicScrollPageBuildDetails:SetHidden(true)
 	self.DynamicScrollPageBuildShare:SetHidden(true)
@@ -530,7 +532,6 @@ end
 function TUI_Builds:ShowDetails (buildId)
 
 	local build = self:Get(buildId)
-
 	if build ~= nil then
 		
 		self.currentBuild = deepcopy(build)
@@ -662,7 +663,6 @@ function TUI_Builds:ShowMyBuild ()
 
 	-- Load the items in the slots
 	for i = 1, #items do
-		--local item = GetItemSetData(items[i].code)
 		local slot = TUI_Config.ItemData.slots[items[i].slot]
 		if slot ~= nil then
 			local icon = GetItemLinkInfo(items[i].link)
