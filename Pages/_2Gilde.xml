@@ -9,49 +9,39 @@
                 </Control>
 			</Controls> 
 		</Control>
-		
 		<Control mouseEnabled="true" name="DynamicScrollPageGilde" virtual="true">
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900" y="500" />
-			
 			<OnMouseDown>
 				MouseDownGenerale()
 			</OnMouseDown>
-			
-			
 			<Controls>
-				
-				<Label name="$(parent)Label" font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Gilde">
-						<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
-						<Dimensions x="900" y="50" />
+				<Label name="$(parent)LabelWarningApp" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
+					<Anchor point="TOP" relativePoint="TOP" relativeTo="$(parent)"/>
+					<Dimensions y="40" />
 				</Label>
 						
-
 				<EditBox name="$(parent)EditBox" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="2048" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
 					<Dimensions x="710" y="50" />
-					<Anchor point="TOP" relativeTo="$(parent)Label" relativePoint="BOTTOM" />
+					<Anchor point="TOP" relativeTo="$(parent)LabelWarningApp" relativePoint="BOTTOM" offsetY="30"/>
 					<OnInitialized>
 						self:SetMultiLine(true)
 						self:SetText("La community Tamriel Unlimited IT è lieta di presentarvi le nostre gilde ufficiali di gioco.")
 					</OnInitialized>
 				</EditBox>
-				
-				
+
 				<Control name="$(parent)cn">
 					<Dimensions x="710" y="140" />
 					<Anchor point="TOP" relativeTo="$(parent)EditBox" relativePoint="BOTTOM" />
 					<Controls>
-					
 						<EditBox name="$(parent)EditBox2" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="2048" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
 							<Dimensions x="710" y="95" />
 							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
 							<OnInitialized>
 								self:SetMultiLine(true)
-								self:SetText("NEWS\r\nSe anche tu vuoi far parte della nostra community ed entrare nella lista delle gilde ufficili, dovrai compilare un modulo per l'apply al seguente link.")
+								self:SetText("NEWS\r\nSe anche tu vuoi far parte della nostra community ed entrare nella lista delle gilde sponsorizzate, ti occorrerà compilare questa apply al seguente link.")
 							</OnInitialized>
 						</EditBox>
-						
-						
 						<Control name="$(parent)link" >
 							<Dimensions x="710" y="30"/>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)EditBox2" offsetY="20"/>
@@ -73,16 +63,13 @@
 												self:SelectAll()
 											</OnMouseUp>
 											<OnInitialized>
-												self:SetText("http://tamrielunlimited.it/form/2-apply-di-gilda/")					
+												self:SetText("https://tamrielunlimited.it/guild/roster/1-elder-scrolls-online/?do=add")					
 											</OnInitialized>
 										</EditBox>
-										
 									</Controls>
 								</Control>
 							</Controls>
 						</Control>
-				
-						
 						<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
 					</Controls>
 				</Control>
@@ -107,20 +94,17 @@
 							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
 							<Dimensions x="710" y="50" />
 						</Label>
-						<Control name="$(parent)NoGuildAD"  >
-						<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="0" offsetY="50" />
-						<Dimensions x="710" y="30" />
-						<Controls>
-							<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
-								<Anchor point="TOP" relativePoint="TOP" offsetX="0" offsetY="0" relativeTo="$(parent)" />
-								<Dimensions x="710" y="30" />
-							</Label>
-						<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
-						</Controls>
+						<Control name="$(parent)NoGuild">
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="0" offsetY="50" />
+							<Dimensions x="710" y="30" />
+							<Controls>
+								<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
+									<Anchor point="TOP" relativePoint="TOP" offsetX="0" offsetY="0" relativeTo="$(parent)" />
+									<Dimensions x="710" y="30" />
+								</Label>
+							<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
+							</Controls>
 						</Control>
-						
-						<!-- Inserimento control dinamici DC -->
-						
 					</Controls>
 				</Control>
 				
@@ -132,20 +116,17 @@
 							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
 							<Dimensions x="710" y="50" />
 						</Label>
-						<Control name="$(parent)NoGuildDC"  >
-						<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="0" offsetY="50" />
-						<Dimensions x="710" y="30" />
-						<Controls>
-							<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
-								<Anchor point="TOP" relativePoint="TOP" offsetX="0" offsetY="0" relativeTo="$(parent)" />
-								<Dimensions x="710" y="30" />
-							</Label>
-						<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
-						</Controls>
+						<Control name="$(parent)NoGuild"  >
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="0" offsetY="50" />
+							<Dimensions x="710" y="30" />
+							<Controls>
+								<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
+									<Anchor point="TOP" relativePoint="TOP" offsetX="0" offsetY="0" relativeTo="$(parent)" />
+									<Dimensions x="710" y="30" />
+								</Label>
+							<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
+							</Controls>
 						</Control>
-						
-						<!-- Inserimento control dinamici DC -->
-						
 					</Controls>
 				</Control>
 				
@@ -157,7 +138,7 @@
 							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
 							<Dimensions x="710" y="50" />
 						</Label>
-						<Control name="$(parent)NoGuildEP"  >
+						<Control name="$(parent)NoGuild"  >
 						<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="0" offsetY="50" />
 						<Dimensions x="710" y="30" />
 						<Controls>
@@ -168,29 +149,19 @@
 						<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
 						</Controls>
 						</Control>
-						
-						<!-- Inserimento control dinamici EP -->
-						
 					</Controls>
 				</Control>
 				
-				
-				
-
 			</Controls>
 		</Control>
-		
-		
 		
 		<Control mouseEnabled="true" name="DynamicGilda" virtual="true">
 			<OnMouseDown>
 				MouseDownGenerale()
 			</OnMouseDown>
-			
 			<Dimensions x="710" y="180" />
 			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label"  offsetY="10"  />
 			<Controls>
-			
 				<Control name="$(parent)Logo">
 					<Dimensions x="160" y="160" />
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
@@ -199,23 +170,18 @@
 							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" offsetX="0" offsetY="0"/>
 							<Dimensions x="160" y="160" />
 						</Texture>
-						
 					</Controls>
 				</Control>
-				
-				
 				<Control name="$(parent)Titolo">
 					<Dimensions x="580" y="30" />
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$(parent)Logo"  offsetX="10" />
 					<Controls>
 						<Label name="$(parent)Label"  font="ZoFontWinH2" inheritAlpha="true" color="ff0000" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="LEFT" text="">
-								<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
-								<Dimensions x="580" y="30" />
+							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
+							<Dimensions x="580" y="30" />
 						</Label>
 					</Controls>
 				</Control>
-				
-				
 				<Control name="$(parent)Testo">
 					<Dimensions x="580" y="100" />
 					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Titolo" />
@@ -255,12 +221,7 @@
 						</Button>
 					</Controls>
 				</Control>
-				
 			</Controls>
 		</Control>
-		
-		
-		
-		
 	</Controls>
 </GuiXml>

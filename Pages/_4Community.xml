@@ -13,12 +13,10 @@
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900" y="160" />
 			<Controls>
-				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Community">
+				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="">
 						<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
 						<Dimensions x="900" y="50" />
 				</Label>
-				
-
 			
 				<Control name="$(parent)Tabella">
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
@@ -30,18 +28,16 @@
 							<Dimensions x="815" y="22"  />
 							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
 						</Label>
-						
-						<EditBox name="$(parent)Riga1" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="2048" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
-							<Dimensions x="815" y="130" />
+						<Label name="$(parent)Riga1" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="Contatti">
+							<Dimensions x="900" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga0" offsetY="10" />
 							<OnInitialized>
 								self:SetText("La community è alla ricerca di membri che sappiano contribuire attivamente o passivamente alla traduzione. Cerchiamo traduttori che sappiano darci una mano come supporter e/o che sappiano votare i nostri sondaggi sul forum riguardo possibili traduzioni. La piattaforma è aperta a chiunque desiderasse contribuire.\r\nTi aspettiamo!")
 							</OnInitialized>
-						</EditBox>
-						
+						</Label>
 						<Control name="$(parent)Riga2" >
 							<Dimensions y="22" x="815" />
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga1" offsetY="-30"/>
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga1" offsetY="15"/>
 							<Controls>
 								<Control name="$(parent)Colonna0"  >
 									<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
@@ -51,7 +47,6 @@
 											<Dimensions x="80" y="22" />
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 										</Label>
-
 										<EditBox name="$(parent)linkTranslate" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
 											<Dimensions x="270" y="22" />
 											<Anchor point="TOPLEFT" relativeTo="$(parent)Label" relativePoint="TOPRIGHT" offsetX="5" offsetY="0" />
@@ -60,97 +55,83 @@
 												self:SelectAll()
 											</OnMouseUp>
 											<OnInitialized>
-												self:SetText("http://translate.tamrielunlimited.it")					
+												self:SetText("https://translate.tamrielunlimited.it")					
 											</OnInitialized>
 										</EditBox>
-										
 									</Controls>
 								</Control>
 							</Controls>
 						</Control>
-						
-
-				<Control name="$(parent)TranslationProgress">
-					<Dimensions x="710" y="120" />
-					<Anchor point="TOP" relativeTo="$(parent)Riga2" relativePoint="BOTTOM" offsetX="0" offsetY="20" />
-					<Controls>
-					
-					<Label name="$(parent)Label_Title" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" verticalAlignment="TOP"  horizontalAlignment="CENTER" wrapMode="TRUNCATE" text="|cff9600COMPLETAMENTO TRADUZIONE|r">
-						<Dimensions x="710" y="22" />
-						<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
-					</Label>
-					
-					<Label name="$(parent)Label_Tradotto" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE" text="Tradotto: ">
-						<Anchor point="TOP" relativeTo="$(parent)Label_Title" relativePoint="TOPLEFT" offsetX="50" offsetY="44"/>
-						<Dimensions x="80" y="22" />
-					</Label>
-					<Label name="$(parent)Label_NumTradotto" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE" text="NUM Stringhe Tradotte">
-						<Anchor point="TOPLEFT" relativeTo="$(parent)Label_Tradotto" relativePoint="TOPRIGHT" offsetX="5" offsetY="0"/>
-							<OnInitialized>
-							if TUitDataVar.TranslationStats ~= nil then
-								if TUitDataVar.TranslationStats.translated ~= nil then
-									self:SetText(TUitDataVar.TranslationStats["translated"].." stringhe")
-								else
-									self:SetText("Non è stato scaricato alcun dato!")
-								end
-							else
-								self:SetText("Non è stato scaricato alcun dato!")
-							end
-							</OnInitialized>
-						<Dimensions x="280" y="22" />
-					</Label>
-					
-					<Label name="$(parent)Label_Totale" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE" text="Totale: ">
-						<Anchor point="TOP" relativeTo="$(parent)Label_Tradotto" relativePoint="TOPLEFT" offsetX="50" offsetY="30"/>
-						<Dimensions x="60" y="22" />
-					</Label>
-					<Label name="$(parent)Label_NumTotale" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE" text="NUM Stringhe Totali">
-						<Anchor point="TOPLEFT" relativeTo="$(parent)Label_Totale" relativePoint="TOPRIGHT" offsetX="5" offsetY="0"/>
-							<OnInitialized>
-							if TUitDataVar.TranslationStats ~= nil then
-								if TUitDataVar.TranslationStats.to_translate ~= nil then
-									self:SetText(TUitDataVar.TranslationStats["to_translate"].." stringhe")
-								else
-									self:SetText("Non è stato scaricato alcun dato!")
-								end
-							else
-								self:SetText("Non è stato scaricato alcun dato!")
-							end
-							</OnInitialized>
-						<Dimensions x="280" y="22" />
-					</Label>
-					
-					<Label name="$(parent)Label_NumPercentuale" font="ZoFontWinH2" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE" text="%%.%%">
-						<Anchor point="TOPRIGHT" relativeTo="$(parent)TranslationProgress" relativePoint="BOTTOMRIGHT" offsetX="50" offsetY="-30"/>
-							<OnInitialized>
-							if TUitDataVar.TranslationStats ~= nil then
-								if TUitDataVar.TranslationStats.total ~= nil then
-									self:SetText(TUitDataVar.TranslationStats["total"].."%")
-								else
-									self:SetText("00")
-								end
-							else
-								self:SetText("00")
-							end
-							</OnInitialized>
-						<Dimensions x="120" y="35" />
-					</Label>
-						
-						
-						
-						<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
-					</Controls>
-				</Control>						
-						
-						
+						<Control name="$(parent)TranslationProgress">
+							<Dimensions x="710" y="120" />
+							<Anchor point="TOPLEFT" relativeTo="$(parent)Riga2" relativePoint="BOTTOMLEFT" offsetX="0" offsetY="30" />
+							<Controls>
+								<Label name="$(parent)Label_Title" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" verticalAlignment="TOP"  horizontalAlignment="CENTER" wrapMode="TRUNCATE" text="|cff9600COMPLETAMENTO TRADUZIONE|r">
+									<Dimensions x="710" y="22" />
+									<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
+								</Label>
+								<Label name="$(parent)Label_Tradotto" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE" text="Tradotto: ">
+									<Anchor point="TOP" relativeTo="$(parent)Label_Title" relativePoint="TOPLEFT" offsetX="50" offsetY="44"/>
+									<Dimensions x="80" y="22" />
+								</Label>
+								<Label name="$(parent)Label_NumTradotto" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE" text="NUM Stringhe Tradotte">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Label_Tradotto" relativePoint="TOPRIGHT" offsetX="5" offsetY="0"/>
+										<OnInitialized>
+										if TUitDataVar.TranslationStats ~= nil then
+											if TUitDataVar.TranslationStats.translated ~= nil then
+												self:SetText(TUitDataVar.TranslationStats["translated"].." stringhe")
+											else
+												self:SetText("Non è stato scaricato alcun dato!")
+											end
+										else
+											self:SetText("Non è stato scaricato alcun dato!")
+										end
+										</OnInitialized>
+									<Dimensions x="280" y="22" />
+								</Label>
+								<Label name="$(parent)Label_Totale" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE" text="Totale: ">
+									<Anchor point="TOP" relativeTo="$(parent)Label_Tradotto" relativePoint="TOPLEFT" offsetX="50" offsetY="30"/>
+									<Dimensions x="60" y="22" />
+								</Label>
+								<Label name="$(parent)Label_NumTotale" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE" text="NUM Stringhe Totali">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Label_Totale" relativePoint="TOPRIGHT" offsetX="5" offsetY="0"/>
+										<OnInitialized>
+										if TUitDataVar.TranslationStats ~= nil then
+											if TUitDataVar.TranslationStats.to_translate ~= nil then
+												self:SetText(TUitDataVar.TranslationStats["to_translate"].." stringhe")
+											else
+												self:SetText("Non è stato scaricato alcun dato!")
+											end
+										else
+											self:SetText("Non è stato scaricato alcun dato!")
+										end
+										</OnInitialized>
+									<Dimensions x="280" y="22" />
+								</Label>
+								<Label name="$(parent)Label_NumPercentuale" font="ZoFontWinH2" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE" text="%%.%%">
+									<Anchor point="TOPRIGHT" relativeTo="$(parent)TranslationProgress" relativePoint="BOTTOMRIGHT" offsetX="50" offsetY="-30"/>
+										<OnInitialized>
+										if TUitDataVar.TranslationStats ~= nil then
+											if TUitDataVar.TranslationStats.total ~= nil then
+												self:SetText(TUitDataVar.TranslationStats["total"].."%")
+											else
+												self:SetText("00")
+											end
+										else
+											self:SetText("00")
+										end
+										</OnInitialized>
+									<Dimensions x="120" y="35" />
+								</Label>
+								<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
+							</Controls>
+						</Control>
 						<Button name="$(parent)Riga3" alpha="1" inherits="ZO_DefaultButton">
 							<Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" offsetX="0" offsetY="20" relativeTo="$(parent)TranslationProgress" />
 							<Dimensions x="180" y="35" />
 							<OnMouseDown>
-								
 								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TuiContributori")
 								TamrielUnlimitedIT.BackToMainPage=true
-								
 							</OnMouseDown>
 							<Controls>
 								<Label name="$(parent)Label_Contributori" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Contributori">
@@ -160,35 +141,29 @@
 							</Controls>
 						</Button>
 						
-						
-						
 						<!-- TEAMSPEAK  -->
 						<Label name="$(parent)Riga4" font="$(BOLD_FONT)|22|soft-shadow-thin" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="|cff3000TEAMSPEAK 3|r">
 							<Dimensions x="815" y="22"  />
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga2" offsetY="175" />
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)TranslationProgress" offsetY="50" />
 						</Label>
-						
-						<EditBox name="$(parent)Riga5" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="2048" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
-							<Dimensions x="815" y="50" />
+						<Label name="$(parent)Riga5" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
+							<Dimensions x="815" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga4" offsetY="10" />
 							<OnInitialized>
 								self:SetText("La community Tamriel Unlimited IT mette a disposizione un server di Teamspeak 3 pubblico ed aperto a chiunque lo desideri!")
 							</OnInitialized>
-						</EditBox>
-						
-						
+						</Label>
 						<Label name="$(parent)Riga13" font="$(BOLD_FONT)|18|soft-shadow-thin" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="DATI">
 							<Dimensions x="815" y="22"  />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga5"  offsetY="30" />
 						</Label>
-						
 						<Control name="$(parent)Riga6" >
 							<Dimensions  x="815" y="22" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga13" offsetY="0"/>
 							<Controls>
-									<Control name="$(parent)Colonna0"  >
-									<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
-									<Dimensions x="815" y="22" />
+								<Control name="$(parent)Colonna0"  >
+								<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
+								<Dimensions x="815" y="22" />
 									<Controls>
 										<Label name="$(parent)Label" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="Address: ">
 											<Dimensions x="80" y="22" />
@@ -203,15 +178,12 @@
 											</OnMouseUp>
 											<OnInitialized>
 												self:SetText("ts3.tamrielunlimited.it")
-											
 											</OnInitialized>
 										</EditBox>
 									</Controls>
 								</Control>
 							</Controls>
 						</Control>
-						
-						
 						<Control name="$(parent)Riga7" >
 							<Dimensions x="815" y="22"  />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga6" offsetY="0"/>
@@ -228,7 +200,6 @@
 								</Control>
 							</Controls>
 						</Control>
-						
 						<Control name="$(parent)Riga11" >
 							<Dimensions  x="815" y="22" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga7" offsetY="15"/>
@@ -249,8 +220,7 @@
 												self:SelectAll()
 											</OnMouseUp>
 											<OnInitialized>
-												self:SetText("http://tamrielunlimited.it/community/topic/49-teamspeak-3-community/")
-											
+												self:SetText("https://tamrielunlimited.it/community/topic/49-teamspeak-3-community/")
 											</OnInitialized>
 										</EditBox>
 									</Controls>
@@ -259,35 +229,27 @@
 						</Control>
 						
 						<!-- RICHIEDI -->
-						
 						<Label name="$(parent)Riga8" font="$(BOLD_FONT)|22|soft-shadow-thin" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="|cff3000RICHIEDI|r">
 							<Dimensions x="815" y="22"  />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga11"  offsetY="30" />
 						</Label>
-						
 						<Label name="$(parent)Riga9" font="$(MEDIUM_FONT)|18|soft-shadow-thin" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="...un Teamspeak 3">
 							<Dimensions x="815" y="22"  />
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga8"  offsetY="10"   offsetX="30"/>
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga8"  offsetY="10"/>
 						</Label>
-						
-					
-						<EditBox name="$(parent)Riga10" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="2048" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
-							<Dimensions x="785" y="150" />
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga9" offsetY="10" />
+						<Label name="$(parent)Riga10" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
+							<Dimensions x="785" />
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga9" offsetY="10" offsetX="30" />
 							<OnInitialized>
 								self:SetText("La community di Tamriel Unlimited IT mette a disposizione un Teamspeak pubblico dove chiunque sarà libero di entrare e richiedere un proprio canale di gilda. Se non disponete di fondi economici o di conoscenze nel realizzarlo, questa è la vostra occasione per riceverlo in maniera semplice e gratuita. L'obiettivo è di utilizzare un server voice community dove realizzare e organizzare eventi, serate tra due o più gilde, tra pug e riunioni tra guildmaster e officer.")
 							</OnInitialized>
-						</EditBox>
-						
-						
-
-					
+						</Label>
 						<Control name="$(parent)Riga12" >
 							<Dimensions  x="815" y="22" />
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga10" offsetY="-20"/>
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga10" offsetY="10"/>
 							<Controls>
-									<Control name="$(parent)Colonna0"  >
-									<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
+								<Control name="$(parent)Colonna0"  >
+								<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
 									<Dimensions x="815" y="22" />
 									<Controls>
 										<Label name="$(parent)Label" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="LINK: ">
@@ -302,69 +264,49 @@
 												self:SelectAll()
 											</OnMouseUp>
 											<OnInitialized>
-												self:SetText("http://tamrielunlimited.it/form/1-teamspeak-3/")
-											
+												self:SetText("https://tamrielunlimited.it/form/1-teamspeak-3/")
 											</OnInitialized>
 										</EditBox>
 									</Controls>
 								</Control>
 							</Controls>
 						</Control>
-						
-						
-						
-						
-						
-						
 						<Label name="$(parent)Riga16" font="$(MEDIUM_FONT)|18|soft-shadow-thin" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="...un Forum e un Calendario">
-							<Dimensions x="815" y="22"  />
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga12"  offsetY="40"  />
+							<Dimensions x="815"  />
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga12"  offsetY="40" offsetX="-30" />
 						</Label>
-						
-						
-						<EditBox name="$(parent)Riga17" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="2048" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
-							<Dimensions x="785" y="170" />
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga16" offsetY="10" />
+						<Label name="$(parent)Riga17" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
+							<Dimensions x="785" />
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga16" offsetY="10" offsetX="30" />
 							<OnInitialized>
-								self:SetText("La community di Tamriel Unlimited IT mette a disposizione un forum e un calendario per tutti coloro che desiderano avere un luogo di ritrovo per i propri gildani, dove comunicare e scambiarsi guide, articoli, build ed altro. Questa apply vi permetterà inoltre di essere ufficializzati come gilda della nostra community. Pertanto, se lo desiderate potrete apparire nella Lista Gilde dell'Addon se e solo se avrete la spunta della privacy di Gilda su ON nel forum. In aggiunta potrete visualizzare anche i vostri eventi personali qui sul gioco!!!")
+								self:SetText("La community di Tamriel Unlimited IT mette a disposizione un forum e un calendario per tutti coloro che desiderano avere un luogo di ritrovo per i propri gildani, dove comunicare e scambiarsi guide, articoli, build ed altro. Questa apply vi permetterà inoltre di essere sponsorizzati come gilda della nostra community. Pertanto, se lo desiderate potrete apparire nella Lista Gilde dell'Addon se e solo se avrete la spunta della privacy di Gilda su ON nelle impostazioni del vostro portale.")
 							</OnInitialized>
-						</EditBox>
-						
-						
-						
+						</Label>
 						<Control name="$(parent)Riga18" >
 							<Dimensions y="22" x="815" />
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga17" offsetY="-20"/>
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga17" offsetY="10"/>
 							<Controls>
-								<Control name="$(parent)Colonna0"  >
-									<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
-									<Dimensions x="815" y="22" />
-									<Controls>
-										<Label name="$(parent)Label" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="LINK: ">
-											<Dimensions x="80" y="22" />
-											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-										</Label>
-
-										<EditBox name="$(parent)linkTranslate" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
-											<Dimensions x="350" y="22" />
-											<Anchor point="TOPLEFT" relativeTo="$(parent)Label" relativePoint="TOPRIGHT" offsetX="5" offsetY="0" />
-											<OnMouseUp>
-												self:TakeFocus()
-												self:SelectAll()
-											</OnMouseUp>
-											<OnInitialized>
-												self:SetText("http://tamrielunlimited.it/form/2-apply-di-gilda/")					
-											</OnInitialized>
-										</EditBox>
-										
-									</Controls>
-								</Control>
+								<Label name="$(parent)Label" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="LINK: ">
+									<Dimensions x="80" y="22" />
+									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+								</Label>
+								<EditBox name="$(parent)linkTranslate" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
+									<Dimensions x="350" y="22" />
+									<Anchor point="TOPLEFT" relativeTo="$(parent)Label" relativePoint="TOPRIGHT" offsetX="5" offsetY="0" />
+									<OnMouseUp>
+										self:TakeFocus()
+										self:SelectAll()
+									</OnMouseUp>
+									<OnInitialized>
+										self:SetText("https://tamrielunlimited.it/guild/roster/1-elder-scrolls-online/?do=add")					
+									</OnInitialized>
+								</EditBox>
 							</Controls>
 						</Control>
-				  </Controls>
+
+					</Controls>
 				</Control>
 
-				
 			</Controls>
 		</Control>
 	</Controls>

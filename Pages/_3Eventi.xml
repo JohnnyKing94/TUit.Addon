@@ -10,18 +10,14 @@
 			</Controls> 
 		</Control>
 		
-		
 		<Control name="DynamicScrollPageEventi" virtual="true">
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900" y="800" />
 			<Controls>
-				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Eventi">
-						<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
-						<Dimensions x="900" y="50" />
+				<Label name="$(parent)Label" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
+					<Anchor point="TOP" relativePoint="TOP" relativeTo="$(parent)"/>
+					<Dimensions y="50" />
 				</Label>
-				
-					<!-- Inserimento control dinamici -->
-				
 			</Controls>
 		</Control>
 
@@ -29,11 +25,11 @@
 			<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="30" offsetY="20" />
 			<Dimensions x="840" y="50" />
 			<Controls>
-				<Label name="$(parent)Label" font="ZoFontWinH1" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
+				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
+				<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
 					<Anchor point="TOP" relativePoint="TOP" offsetX="0" offsetY="0" relativeTo="$(parent)" />
 					<Dimensions x="840" y="50" />
 				</Label>
-			<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
 			</Controls>
 		</Control>
 	
@@ -41,7 +37,6 @@
 			<Dimensions x="710" y="120" />
 			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label"  offsetY="10"  />
 			<Controls>
-			
 				<Control name="$(parent)Data">
 					<Dimensions x="120" y="120" />
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
@@ -50,38 +45,30 @@
 							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" offsetX="0" offsetY="0"/>
 							<Dimensions x="120" y="120" />
 						</Texture>
-						
-						
 						<Label name="$(parent)LabelGiornoMese"  font="$(BOLD_FONT)|24|soft-shadow-thin" inheritAlpha="true" color="e74d3c" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="">
-								<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="5" />
-								<Dimensions x="120" y="30" />
+							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="5" />
+							<Dimensions x="120" y="30" />
 						</Label>
 						<Label name="$(parent)LabelOrario"  font="$(BOLD_FONT)|16|soft-shadow-thin" inheritAlpha="true" color="e74d3c" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="">
-								<Anchor point="TOP" relativeTo="$(parent)LabelGiornoMese" relativePoint="BOTTOM"   />
-								<Dimensions x="120" y="20" />
+							<Anchor point="TOP" relativeTo="$(parent)LabelGiornoMese" relativePoint="BOTTOM"   />
+							<Dimensions x="120" y="20" />
 						</Label>
-						
 					</Controls>
 				</Control>
-				
-				
 				<Control name="$(parent)Titolo">
 					<Dimensions x="580" y="30" />
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$(parent)Data"  offsetX="10" />
 					<Controls>
 						<Label name="$(parent)Label"  font="ZoFontWinH2" inheritAlpha="true" color="ff0000" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="LEFT" text="">
-								<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
-								<Dimensions x="580" y="30" />
+							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
+							<Dimensions x="580" y="30" />
 						</Label>
 					</Controls>
 				</Control>
-				
-				
 				<Control name="$(parent)Testo">
 					<Dimensions x="580" y="90" />
 					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Titolo" />
 					<Controls>
-						
 						<EditBox name="$(parent)Riga1" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="2048" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
 							<Dimensions x="580" y="90" />
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
@@ -92,12 +79,7 @@
 						</EditBox>
 					</Controls>
 				</Control>
-				
 			</Controls>
 		</Control>
-				
-						
-						
-						
 	</Controls>
 </GuiXml>

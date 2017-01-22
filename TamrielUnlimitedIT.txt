@@ -7,14 +7,24 @@
 ## Title: |cffe823Tamriel Unlimited|r |c0086dbIT|r
 ## APIVersion: 100017
 ## Description: |cffe823Tamriel Unlimited|r |c43db00I|r|cffffffT|r|cff0000A|r è un addon realizzato dalla community italiana di |cff0000tamrielunlimited.it|r al fine di unire gli utenti italiani nel gioco di ESO, ma sopratutto traduce il gioco!
-## Author: |cdb4d00Rarder44|r & |cdbb400JohnnyKing94|r
+## Author: |cdb4d00Rarder44|r & |cdbb400JohnnyKing94|r & |cdbb400ZioRed|r
 ## SavedVariables: TUitData
 ## Version: 1.0.11
 
 libs/LibStub/LibStub.lua
 libs/LibMainMenu/LibMainMenu.lua
 TamrielUnlimitedIT.xml
+ItemsData.lua
+TUitConfigData.lua
 TUitData.lua
+SharedBuilds.lua
+Modules/TUI_Players.lua
+Modules/TUI_Builds.lua
+Modules/TUI_Guilds.lua
+Modules/TUI_Events.lua
+Modules/TUI_Community.lua
+Modules/TUI_Validator.lua
+Modules/TUI_Contributors.lua
 Pages/_1Utenti.xml
 Pages/_2Gilde.xml
 Pages/_3Eventi.xml
@@ -22,6 +32,7 @@ Pages/_4Community.xml
 Pages/_5Convalida.xml
 Pages/_6Contributori.xml
 Pages/_7DettagliUtente.xml
+Pages/_8Builds.xml
 Function.lua
 TamrielUnlimitedIT.lua
 bindings.xml
