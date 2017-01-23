@@ -41,12 +41,12 @@
 						</Label>
 						
 						<Label name="$(parent)Gilde" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="LEFT" text="Gilde">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)Credit" relativePoint="TOPLEFT" offsetY="35" offsetX="0"/>
+							<Anchor point="TOPLEFT" relativeTo="$(parent)Credit" relativePoint="BOTTOMLEFT" offsetY="30" />
 							<Dimensions x="115" y="35" />
 						</Label>
 						
 						<EditBox name="$(parent)GildeList" inherits="ZO_DefaultEditForBackdrop" font="ZoFontWinH4"  mouseEnabled="false" maxInputCharacters="2048" editEnabled="false" multiLine="true" newLineEnabled="true"  selectionColor="FFFFFF" >
-							<Dimensions x="850" y="150" />
+							<Dimensions x="850" y="100" />
 							<Anchor point="TOPLEFT" relativeTo="$(parent)Gilde" relativePoint="TOPLEFT"  offsetX="0" offsetY="35" />
 							<OnInitialized>
 								self:SetMultiLine(true)
@@ -55,7 +55,7 @@
 						</EditBox>
 						
 						<Label name="$(parent)Personaggi" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Personaggi">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)GildeList" relativePoint="TOPLEFT" offsetX="0" offsetY="120"/>
+							<Anchor point="TOPLEFT" relativeTo="$(parent)GildeList" relativePoint="BOTTOMLEFT" offsetY="30"/>
 							<Dimensions x="250" y="35" />
 						</Label>						
 						
