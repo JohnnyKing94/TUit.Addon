@@ -27,11 +27,11 @@
 
 						<Label name="$(parent)UserID" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="@UserID">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="30"/>
-							<Dimensions x="150" y="35" />
+							<Dimensions y="35" />
 						</Label>
 
-						<Label name="$(parent)Sex" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="@Sex">
-							<Anchor point="TOPLEFT" relativeTo="$(parent)UserID" relativePoint="TOPLEFT" offsetX="250"/>
+						<Label name="$(parent)Sex" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="999999" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="@Sex">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)UserID" relativePoint="TOPRIGHT" offsetX="50"/>
 							<Dimensions x="250" y="35" />
 						</Label>
 
