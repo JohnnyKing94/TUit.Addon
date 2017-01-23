@@ -223,15 +223,18 @@ function AddYear(dat,n)
 	end 
 end
 function StringToDate(date_str)
-	local _,_,y,m,d=string.find(date_str, "(%d+)-(%d+)-(%d+)")
+	local date_fixed = date_str:gsub("[/]", "-"):gsub("[.]", ":")
+	local _,_,y,m,d=string.find(date_fixed, "(%d+)-(%d+)-(%d+)")
 	return tonumber(y),tonumber(m),tonumber(d)
 end
 function StringToDateTime(date_str)
-	local _,_,y,m,d,hh,mm=string.find(date_str, "(%d+)-(%d+)-(%d+) (%d+):(%d+)")
+	local date_fixed = date_str:gsub("[/]", "-"):gsub("[.]", ":")
+	local _,_,y,m,d,hh,mm=string.find(date_fixed, "(%d+)-(%d+)-(%d+) (%d+):(%d+)")
 	return tonumber(y),tonumber(m),tonumber(d),tonumber(hh),tonumber(mm)
 end
 function StringToDateTimeSeconds(date_str)
-	local _,_,y,m,d,hh,mm,ss=string.find(date_str, "(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)")
+	local date_fixed = date_str:gsub("[/]", "-"):gsub("[.]", ":")
+	local _,_,y,m,d,hh,mm,ss=string.find(date_fixed, "(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)")
 	return tonumber(y),tonumber(m),tonumber(d),tonumber(hh),tonumber(mm),tonumber(ss)
 end
 function GetMonthName(month)

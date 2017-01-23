@@ -321,12 +321,18 @@ end
 
 function TUI_Builds:GetFormattedDateAbbr(date)
 	local y,m,d,hh,mm = StringToDateTime(date)
-	return string.format("%02d", d) .. " " .. string.upper(GetMonthNameAbbr(m)) .. " " .. y
+	if m then
+		return string.format("%02d", d) .. " " .. string.upper(GetMonthNameAbbr(m)) .. " " .. y
+	end
+	return ""
 end
 
 function TUI_Builds:GetFormattedDate(date)
 	local y,m,d,hh,mm = StringToDateTime(date)
-	return d .. " " .. GetMonthName(m) .. " " .. y
+	if m then
+		return d .. " " .. GetMonthName(m) .. " " .. y
+	end
+	return ""
 end
 
 function TUI_Builds:FillBuildsList ()
