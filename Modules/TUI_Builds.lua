@@ -106,7 +106,7 @@ ESO_Dialogs["TUIT_DIALOG_CONFIRM_RATE"] =
 		{
 			text = SI_OK,
             callback = function(dialog)
-                            TUI_Builds:ConfirmRateBuild(dialog.data.rating)
+                            TUI_Builds.ConfirmRateBuild(dialog.data.id, dialog.data.rating)
                         end,
 		},
 		[2] =
@@ -607,12 +607,12 @@ end
 
 function TUI_Builds:RateBuild(rating)
 	if self.currentBuild then
-		ZO_Dialogs_ShowDialog("TUIT_DIALOG_CONFIRM_RATE", { rating = rating }, nil, false)
+		ZO_Dialogs_ShowDialog("TUIT_DIALOG_CONFIRM_RATE", { id = self.currentBuild.id, rating = rating }, nil, false)
 	end
 end
 
-function TUI_Builds:ConfirmRateBuild(rating)
-	TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(self.currentBuild.id)] = { rating = rating }
+function TUI_Builds.ConfirmRateBuild(id, rating)
+	TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(id)] = { rating = rating }
 	TamrielUnlimitedIT.ReloadUIFn()
 end
 

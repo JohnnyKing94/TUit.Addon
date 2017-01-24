@@ -60,7 +60,7 @@ function TUI_Events:LoadNoEvents()
     local eventMessage = self.DynamicScrollPageEventiMessage
 	eventMessage:SetHidden(false)
 	el1:SetHidden(true)
-	eventMessage:GetNamedChild("Label"):SetText("Nessun evento in corso, assicurati che l'app TUit sia in esecuzione")
+	eventMessage:GetNamedChild("Label"):SetText("Nessun evento in corso, assicurati che l'applicazione TUit sia in esecuzione")
 end
 
 function TUI_Events:LoadEventsList()
