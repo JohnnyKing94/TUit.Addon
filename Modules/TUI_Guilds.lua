@@ -54,7 +54,7 @@ function TUI_Guilds:LoadGuilds()
         self.DynamicScrollPageGilde:GetNamedChild("AD"):SetHidden(true)
         self.DynamicScrollPageGilde:GetNamedChild("DC"):SetHidden(true)
         self.DynamicScrollPageGilde:GetNamedChild("EP"):SetHidden(true)
-        self.DynamicScrollPageGilde:GetNamedChild("NOGuildsLabel"):SetText("Non è stato scaricato alcun dato!")
+        self.DynamicScrollPageGilde:GetNamedChild("NOGuildsLabel"):SetText("Nessuna gilda trovata, assicurati che l'applicazione TUit sia in esecuzione")
         do return end
     end
 

@@ -11,13 +11,17 @@
 ## SavedVariables: TUitData
 ## Version: 1.0.9
 
-libs/LibStub/LibStub.lua
-libs/LibMainMenu/LibMainMenu.lua
-TamrielUnlimitedIT.xml
-ItemsData.lua
+: Configurations
 TUitConfigData.lua
 TUitData.lua
+ItemsData.lua
 SharedBuilds.lua
+
+; Libraries
+libs/LibStub/LibStub.lua
+libs/LibMainMenu/LibMainMenu.lua
+libs/AceTimer/AceTimer-3.0.lua
+Function.lua
 Modules/TUI_Players.lua
 Modules/TUI_Builds.lua
 Modules/TUI_Guilds.lua
@@ -25,6 +29,9 @@ Modules/TUI_Events.lua
 Modules/TUI_Community.lua
 Modules/TUI_Validator.lua
 Modules/TUI_Contributors.lua
+
+; Pages
+TamrielUnlimitedIT.xml
 Pages/_1Utenti.xml
 Pages/_2Gilde.xml
 Pages/_3Eventi.xml
@@ -33,6 +40,7 @@ Pages/_5Convalida.xml
 Pages/_6Contributori.xml
 Pages/_7DettagliUtente.xml
 Pages/_8Builds.xml
-Function.lua
+
+: AddOn handlers
 TamrielUnlimitedIT.lua
 bindings.xml

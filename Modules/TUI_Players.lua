@@ -62,7 +62,7 @@ end
 function TUI_Players:LoadNoPlayer()
 	local el1 = self.DynamicScrollPagePlayer:GetNamedChild("List")
 	local pre = el1:GetNamedChild("print_Row0")
-	local searchcontrol = self.DynamicScrollPagePlayer:GetNamedChild("Search_control")
+	--[[local searchcontrol = self.DynamicScrollPagePlayer:GetNamedChild("Search_control")
 	local searchbtn = self.DynamicScrollPagePlayer:GetNamedChild("Search_btn")
 	pre:GetNamedChild("NOPG"):SetHidden(false)
 	searchcontrol:SetHidden(true)
@@ -73,16 +73,16 @@ function TUI_Players:LoadNoPlayer()
 	pre:GetNamedChild("Colonna3"):SetHidden(true)
 	pre:GetNamedChild("Colonna4"):SetHidden(true)
 	pre:GetNamedChild("Colonna5"):SetHidden(true)
-	pre:GetNamedChild("Colonna6"):SetHidden(true)
-	pre:GetNamedChild("NOPGLabel"):SetText("Non è stato scaricato alcun dato!")
+	pre:GetNamedChild("Colonna6"):SetHidden(true)]]--
+	pre:GetNamedChild("NOPGLabel"):SetText("Nessun utente trovato, assicurati che l'applicazione TUit sia in esecuzione")
 end
 
 function TUI_Players:Sort(field, sortDir)
     if self.PlayerTemp ~= nil and #self.PlayerTemp > 0 then
         if sortDir == nil then
-            self.SortDir = (self.Sort ~= field and 1 or (-1 * self.SortDir))
+            self.SortDir = (self.SortField ~= field and 1 or (-1 * self.SortDir))
         end
-        self.Sort = field
+        self.SortField = field
         self.SortDir = sortDir
         quicksort(self.PlayerTemp, function (v1, v2)
 				if v1[field] == v2[field] then
@@ -128,7 +128,7 @@ function TUI_Players:SearchPlayer(searchText)
 			end
 		end
 	end
-	self:Sort(self.Sort, self.SortDir)
+	self:Sort(self.SortField, self.SortDir)
 end
 
 function TUI_Players:FillBuildsList()
@@ -155,22 +155,48 @@ function TUI_Players:FillBuildsList()
 
 	local i = 1
 	while i <= #self.PlayerTemp do
+		
 		local v1 = el1:GetNamedChild("Dynamic_print_Row" .. i)
 		if v1 == nil then
 			v1 = CreateControlFromVirtual("$(parent)Dynamic_print_Row", el1, "DynamicRow", i)
 		end
 
-		v1:SetDimensions(900, 20)
+		local colorPG = GetColorForLevel(self.PlayerTemp[i]["lev"])
+		local raceTexture = GetRaceTexture(self.PlayerTemp[i]["race"])
+		local classTexture = GetClassTexture(self.PlayerTemp[i]["class"])
+		
+		v1:SetDimensions(900, 40)
 		v1:SetHidden(false)
 		v1:SetAnchor(TOPLEFT, pre, BOTTOMLEFT, 0, 0)
 		v1:GetNamedChild("Colonna0Label"):SetText(self.PlayerTemp[i]["lev"])
-		v1:GetNamedChild("Colonna1Label"):SetText(self.PlayerTemp[i]["CP"])
-		v1:GetNamedChild("Colonna2Label"):SetText(GetString("SI_GENDER", self.PlayerTemp[i]["sex"]) .. "(RL: " .. (self.PlayerTemp[i]["real_sex"] > 0 and string.sub(GetString("SI_GENDER", self.PlayerTemp[i]["real_sex"]), 1, 1) or "-") .. ")")
-		v1:GetNamedChild("Colonna3bttn_friendLabel"):SetText(self.PlayerTemp[i]["pg_name"])
-		v1:GetNamedChild("Colonna3bttn_friendLabel"):SetColor(0, 186, 255, 1)
-		v1:GetNamedChild("Colonna3bttn_friendLabel_UserID"):SetText(self.PlayerTemp[i]["userid"])
-		v1:GetNamedChild("Colonna4Label"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["race"])))
-		v1:GetNamedChild("Colonna5Label"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["class"])))
+		v1:GetNamedChild("Colonna0Label"):SetColor(colorPG:UnpackRGBA())
+		v1:GetNamedChild("Colonna1Label"):SetText(self.PlayerTemp[i]["CP"] > 0 and self.PlayerTemp[i]["CP"] or "")
+		v1:GetNamedChild("Colonna1Label"):SetColor(colorPG:UnpackRGBA())
+		--v1:GetNamedChild("Colonna2Label"):SetText(GetString("SI_GENDER", self.PlayerTemp[i]["sex"]) .. "(RL: " .. (self.PlayerTemp[i]["real_sex"] > 0 and string.sub(GetString("SI_GENDER", self.PlayerTemp[i]["real_sex"]), 1, 1) or "-") .. ")")
+		v1:GetNamedChild("Colonna2Label"):SetText(GetString("SI_GENDER", self.PlayerTemp[i]["sex"]))
+		v1:GetNamedChild("Colonna2Label"):SetColor(GetColorForSex(self.PlayerTemp[i]["sex"]):UnpackRGBA())
+		v1:GetNamedChild("Colonna3Label"):SetText(self.PlayerTemp[i]["pg_name"])
+		--v1:GetNamedChild("Colonna3Label"):SetColor(0, 186, 255, 1)
+		v1:GetNamedChild("Colonna3Label"):SetColor(colorPG:UnpackRGBA())
+		v1:GetNamedChild("Colonna3Label_UserID"):SetText(self.PlayerTemp[i]["userid"])
+		if raceTexture ~= "" then
+			local texture = v1:GetNamedChild("Colonna4RaceTexture")
+			texture:SetTexture(raceTexture)
+			texture:SetDimensions(24, 24)
+			texture:SetHidden(false)
+			SetToolTip(texture, "Razza: " .. zo_strformat(SI_RACE_NAME, GetRaceName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["race"])))
+		else
+			v1:GetNamedChild("Colonna4RaceTexture"):SetHidden(true)
+		end
+		if classTexture ~= "" then
+			local texture = v1:GetNamedChild("Colonna5ClassTexture")
+			texture:SetTexture(classTexture)
+			texture:SetDimensions(24, 24)
+			texture:SetHidden(false)
+			SetToolTip(texture, "Classe: " .. zo_strformat(SI_CLASS_NAME, GetClassName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["class"])))
+		else
+			v1:GetNamedChild("Colonna5ClassTexture"):SetHidden(true)
+		end
 		v1:GetNamedChild("Colonna6Label"):SetText(zo_strformat(GetString("SI_ALLIANCE", self.PlayerTemp[i]["alli"])))
 
 		if self.PlayerTemp[i]["alli"] == 2 then
@@ -185,7 +211,6 @@ function TUI_Players:FillBuildsList()
 		i = i + 1
 	end
 
-
 	local ii = i
 	while ii <= #TUitDataVar.Player do
 		local v1 = el1:GetNamedChild("Dynamic_print_Row" .. ii)
@@ -194,5 +219,9 @@ function TUI_Players:FillBuildsList()
 			v1:SetHidden(true)
 		end
 		ii = ii + 1
+	end
+
+	if #self.PlayerTemp == 0 then
+		self:LoadNoPlayer()
 	end
 end

@@ -67,8 +67,16 @@
 				<Button name="$(parent)SearchBuild_btn" alpha="1">
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT"  relativeTo="$(parent)RoleDropdown" offsetX="30" offsetY="-5" />
 					<Dimensions x="40" y="40" />
+					<OnInitialized>SetToolTip(self, "Avvia la ricerca")</OnInitialized>
 					<OnMouseDown>SearchBuilds(SearchBuild_edit:GetText())</OnMouseDown>
 					<Textures name="$(parent)Icon" normal="/esoui/art/miscellaneous/search_icon.dds"  mouseOver="/esoui/art/miscellaneous/search_icon.dds" ></Textures>
+				</Button>
+				<Button name="$(parent)RefreshBuild_btn" alpha="1">
+					<Anchor point="LEFT" relativePoint="RIGHT"  relativeTo="$(parent)SearchBuild_btn" offsetX="30" offsetY="-5" />
+					<Dimensions x="40" y="40" />
+					<OnInitialized>SetToolTip(self, "Ricarica dati dall'applicazione (riavvia la UI)")</OnInitialized>
+					<OnMouseDown>TamrielUnlimitedIT.ReloadUIFn()</OnMouseDown>
+					<Textures name="$(parent)Icon" normal="/esoui/art/characterwindow/gearslot_quickslot.dds"  mouseOver="/esoui/art/characterwindow/gearslot_quickslot.dds" ></Textures>
 				</Button>
 				<Control name="$(parent)Tabella">
 					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)SearchTextLabel" offsetY="30" />
@@ -348,6 +356,7 @@
 					<Dimensions x="150" y="30" />
 					<Controls>
 						<Label name="$(parent)NoRated" hidden="true" font="ZoFontWinT2" inheritAlpha="false" alpha="1" color="CC0000" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Non ancora valutata">
+							<Dimensions y="30" />
 							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
 						</Label>
 						<Texture name="$(parent)Rating1">

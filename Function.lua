@@ -14,10 +14,11 @@ function deepcopy(orig)
     local copy
     if orig_type == 'table' then
         copy = {}
-        for orig_key, orig_value in next, orig, nil do
+        --[[for orig_key, orig_value in next, orig, nil do
             copy[deepcopy(orig_key)] = deepcopy(orig_value)
         end
-        setmetatable(copy, deepcopy(getmetatable(orig)))
+        setmetatable(copy, deepcopy(getmetatable(orig)))]]--
+		ZO_DeepTableCopy(orig, copy)
     else
         copy = orig
     end
@@ -28,9 +29,10 @@ function shallowcopy(orig)
     local copy
     if orig_type == 'table' then
         copy = {}
-        for orig_key, orig_value in pairs(orig) do
+        --[[for orig_key, orig_value in pairs(orig) do
             copy[orig_key] = orig_value
-        end
+        end]]--
+		ZO_ShallowTableCopy(orig, copy)
     else -- number, string, boolean, etc
         copy = orig
     end
@@ -386,6 +388,30 @@ function MakeItemSetLink( id, flags )
 	end
 
 	return(itemLink);
+end
+function GetColorForLevel(level)
+	local colorPG = ZO_ColorDef:New("999999") --gray (default)
+	if level >= 50 then
+		--colorPG = ZO_ColorDef:New("EECA2A") --gold
+		colorPG = ZO_ColorDef:New(GetInterfaceColor(INTERFACE_COLOR_TYPE_ITEM_QUALITY_COLORS, ITEM_QUALITY_ARTIFACT))
+	elseif level >= 40 then
+		colorPG = ZO_ColorDef:New("3a92ff") --blue
+	elseif level >= 20 then
+		colorPG = ZO_ColorDef:New("39E600") --green
+	end
+	return colorPG
+end
+function GetColorForSex(sex)
+	if sex == nil or sex < 1 then
+		-- N.D.
+		return ZO_ColorDef:New("999999")
+	end
+	if sex == 1 then
+		-- Female
+		return ZO_ColorDef:New("FB8CFF")
+	end
+	-- Male
+	return ZO_ColorDef:New("8CCAFF")
 end
 
 -- SORT
