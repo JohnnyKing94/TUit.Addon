@@ -389,6 +389,16 @@ function MakeItemSetLink( id, flags )
 
 	return(itemLink);
 end
+function GetColorForAlliance(alliance)
+	if alliance == ALLIANCE_EBONHEART_PACT then
+		return ZO_ColorDef:New("a4231a")
+	elseif alliance == ALLIANCE_ALDMERI_DOMINION then
+		return ZO_ColorDef:New("af9839")
+	elseif alliance == ALLIANCE_DAGGERFALL_COVENANT then
+		return ZO_ColorDef:New("285aa1")
+	end
+	return ZO_ColorDef:New("ffffff")
+end
 function GetColorForLevel(level)
 	local colorPG = ZO_ColorDef:New("999999") --gray (default)
 	if level >= 50 then

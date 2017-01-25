@@ -22,11 +22,11 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NAME"] =
 {
 	title =
 	{
-		text = "Condividi Build",
+		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NAME_TITLE),
 	},
 	mainText = 
 	{
-		text = "Assegna un nome a questa build.",
+		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NAME_TEXT),
 	},
 	buttons =
 	{
@@ -40,11 +40,11 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NAME_EXISTS"] =
 {
 	title =
 	{
-		text = "Condividi Build",
+		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NAME_EXISTS_TITLE),
 	},
 	mainText = 
 	{
-		text = "Hai già usato questo nome per un'altra build.",
+		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NAME_EXISTS_TEXT),
 	},
 	buttons =
 	{
@@ -58,11 +58,11 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NUMBERPIECES"] =
 {
 	title =
 	{
-		text = "Condividi Build",
+		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NUMBERPIECES_TITLE),
 	},
 	mainText = 
 	{
-		text = "Non puoi condividere una build che abbia meno di " .. BUILD_MIN_PIECES .. " pezzi.",
+		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NUMBERPIECES_TEXT):gsub("{BUILD_MIN_PIECES}", BUILD_MIN_PIECES),
 	},
 	buttons =
 	{
@@ -76,11 +76,11 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_MAXBUILDS"] =
 {
 	title =
 	{
-		text = "Condividi Build",
+		text = GetString(SI_TUI_DIALOG_SHAREBUILD_MAXBUILDS_TITLE),
 	},
 	mainText = 
 	{
-		text = "Hai raggiunto il numero massimo di build condivisibili.",
+		text = GetString(SI_TUI_DIALOG_SHAREBUILD_MAXBUILDS_TEXT),
 	},
 	buttons =
 	{
@@ -90,15 +90,15 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_MAXBUILDS"] =
 		}
 	}
 }
-ESO_Dialogs["TUIT_DIALOG_CONFIRM_RATE"] = 
+ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_CONFIRM_RATE"] = 
 {
 	title =
 	{
-		text = "Valuta Build",
+		text = GetString(SI_TUI_DIALOG_SHAREBUILD_CONFIRM_RATE_TITLE),
 	},
 	mainText = 
 	{
-		text = "Confermi la tua valutazione?",
+		text = GetString(SI_TUI_DIALOG_SHAREBUILD_CONFIRM_RATE_TEXT),
 	},
 	buttons =
 	{
@@ -168,7 +168,7 @@ function TUI_Builds:InitializeScreenList(container)
 	local function OnFilterTargetChanged(comboBox, name, entry)
 		self.FilterTargetDropdownSelected = entry.id
 	end
-	self.FilterTargetDropdown:AddItem({ name = "<Tutti>", callback = OnFilterTargetChanged, id = 0 }, ZO_COMBOBOX_SUPRESS_UPDATE)
+	self.FilterTargetDropdown:AddItem({ name = "<" .. GetString(SI_TUI_TEXT_ALL_PLURAL) .. ">", callback = OnFilterTargetChanged, id = 0 }, ZO_COMBOBOX_SUPRESS_UPDATE)
 	for i = 1, #TUI_Builds_Target do
 		self.FilterTargetDropdown:AddItem({ name = TUI_Builds_Target[i].name, callback = OnFilterTargetChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
 	end
@@ -181,7 +181,7 @@ function TUI_Builds:InitializeScreenList(container)
 	local function OnFilterRoleChanged(comboBox, name, entry)
 		self.FilterRoleDropdownSelected = entry.id
 	end
-	self.FilterRoleDropdown:AddItem({ name = "<Tutti>", callback = OnFilterRoleChanged, id = 0 }, ZO_COMBOBOX_SUPRESS_UPDATE)
+	self.FilterRoleDropdown:AddItem({ name = "<" .. GetString(SI_TUI_TEXT_ALL_PLURAL) .. ">", callback = OnFilterRoleChanged, id = 0 }, ZO_COMBOBOX_SUPRESS_UPDATE)
 	for i = 1, #TUI_Config.Roles do
 		self.FilterRoleDropdown:AddItem({ name = TUI_Config.Roles[i].name, callback = OnFilterRoleChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
 	end
@@ -245,10 +245,17 @@ function TUI_Builds:CreateScene (TUI_MENU_BAR)
 
 	TUI_SCENE_BUILDS:AddFragment(TUI_MENU_BAR)
 
-	-- Fill the builds list
-	self.Sort = "date"
-	self.SortDir = 1
-	self:SearchBuilds("")
+	-- Access granted only to validated users
+	if TamrielUnlimitedIT.Validator ~= nil and not TamrielUnlimitedIT.Validator.isValidated then
+		self.DynamicScrollPageBuilds:SetHidden(true)
+		local container = self.Panel:GetNamedChild("ContainerScrollChild")
+		CreateControlFromVirtual("PlayersRequireAccountValidationControl", container, "RequireAccountValidationControl", 0)
+	else
+		-- Fill the builds list
+		self.Sort = "date"
+		self.SortDir = 1
+		self:SearchBuilds("")
+	end
 
 	return TUI_SCENE_BUILDS
 end
@@ -378,7 +385,7 @@ function TUI_Builds:FillBuildsList ()
 			if target ~= nil then
 				v1:GetNamedChild("Colonna1TextureTarget"):SetTexture(target.icon)
 				v1:GetNamedChild("Colonna1TextureTarget"):SetHidden(false)
-				SetToolTip(v1:GetNamedChild("Colonna1TextureTarget"), "Target: " .. target.name .. " - Ver. ESO: " .. TUI_Builds.GetGameVersion(self.Builds[i].game_version))
+				SetToolTip(v1:GetNamedChild("Colonna1TextureTarget"), GetString(SI_TUI_TEXT_TARGET) .. ": " .. target.name .. " - Ver. ESO: " .. TUI_Builds.GetGameVersion(self.Builds[i].game_version))
 			else
 				v1:GetNamedChild("Colonna1TextureTarget"):SetHidden(true)
 				SetToolTip(v1:GetNamedChild("Colonna1TextureTarget"), "N.D.")
@@ -391,7 +398,7 @@ function TUI_Builds:FillBuildsList ()
 				texture:SetTexture(raceTexture)
 				texture:SetDimensions(24, 24)
 				texture:SetHidden(false)
-				SetToolTip(texture, "Razza: " .. zo_strformat(SI_RACE_NAME, GetRaceName(2, self.Builds[i].race)))
+				SetToolTip(texture, GetString(SI_TUI_TEXT_RACE) .. ": " .. zo_strformat(SI_RACE_NAME, GetRaceName(2, self.Builds[i].race)))
 			else
 				v1:GetNamedChild("Colonna4RaceTexture"):SetHidden(true)
 			end
@@ -400,7 +407,7 @@ function TUI_Builds:FillBuildsList ()
 				texture:SetTexture(classTexture)
 				texture:SetDimensions(24, 24)
 				texture:SetHidden(false)
-				SetToolTip(texture, "Classe: " .. zo_strformat(SI_CLASS_NAME, GetClassName(2, self.Builds[i].class)))
+				SetToolTip(texture, GetString(SI_TUI_TEXT_CLASS) .. ": " .. zo_strformat(SI_CLASS_NAME, GetClassName(2, self.Builds[i].class)))
 			else
 				v1:GetNamedChild("Colonna5ClassTexture"):SetHidden(true)
 			end
@@ -409,7 +416,7 @@ function TUI_Builds:FillBuildsList ()
 				texture:SetTexture(roleTexture)
 				texture:SetDimensions(24, 24)
 				texture:SetHidden(false)
-				SetToolTip(texture, "Ruolo: " .. GetConfigRoleInfo(self.Builds[i].role).name)
+				SetToolTip(texture, GetString(SI_TUI_TEXT_ROLE) .. ": " .. GetConfigRoleInfo(self.Builds[i].role).name)
 			else
 				v1:GetNamedChild("Colonna6RoleTexture"):SetHidden(true)
 			end
@@ -445,10 +452,10 @@ function TUI_Builds:SetRatingTextures(elementUI, rating)
 
 	if label ~= nil then
 		if rating > 0 then
-			label:SetText("VALUTAZIONE MEDIA")
+			label:SetText(GetString(SI_TUI_TEXT_AVERAGE_RATING))
 			label:SetColor(TUI_Config.colors.gold:UnpackRGBA())
 		else
-			label:SetText("NON ANCORA VALUTATA")
+			label:SetText(GetString(SI_TUI_TEXT_AVERAGE_RATING_NOTRATED))
 			label:SetColor(TUI_Config.colors.red:UnpackRGBA())
 		end
 	end
@@ -471,14 +478,14 @@ function TUI_Builds:SetMyRating()
 	local showRate = true
 	if self.currentBuild.owner:lower() == GetDisplayName():lower() then
 		showRate = false
-		label:SetText("QUESTA E' UNA TUA BUILD")
+		label:SetText(GetString(SI_TUI_TEXT_IS_MY_BUILD))
 		label:SetColor(TUI_Config.colors.red:UnpackRGBA())
 	else
 		if self.currentBuild.myRating > 0 then
-			label:SetText("CAMBIA LA TUA VALUTAZIONE")
+			label:SetText(GetString(SI_TUI_TEXT_CHANGE_RATING))
 			label:SetColor(TUI_Config.colors.gold:UnpackRGBA())
 		else
-			label:SetText("VALUTA QUESTA BUILD")
+			label:SetText(GetString(SI_TUI_TEXT_RATE_BUILD))
 			label:SetColor(TUI_Config.colors.green:UnpackRGBA())
 		end
 		label:ClearAnchors()
@@ -504,7 +511,7 @@ function TUI_Builds:SetupEquipSlot(elementUI, equipSlot, texture, label)
 			slot:GetNamedChild("Texture"):SetTexture(texture)
 		end
 		if label == nil or label == "" then
-			slot:GetNamedChild("Label"):SetText("Nessun oggetto in questo slot")
+			slot:GetNamedChild("Label"):SetText(GetString(SI_TUI_TEXT_NO_OBJECT_IN_SLOT))
 			slot:GetNamedChild("Label"):SetColor(TUI_Config.colors.red:UnpackRGBA())
 			slot:GetNamedChild("Label"):SetAlpha(0.5)
 			slot:GetNamedChild("Texture"):SetAlpha(0.4)
@@ -549,7 +556,7 @@ function TUI_Builds:ShowDetails (buildId)
 		-- Load the build data
 		el1:GetNamedChild("Name"):SetText(build.name)
 		self:SetRatingTextures(el1:GetNamedChild("Rating"), build.rating)
-		el1:GetNamedChild("Author"):SetText("Condivisa da |c885533" .. build.owner .. "|r il |c885533" .. self:GetFormattedDate(build.date) .. "|r")
+		el1:GetNamedChild("Author"):SetText(GetString(SI_TUI_TEXT_SHARED_BY) .. " |c885533" .. build.owner .. "|r " .. GetString(SI_TUI_TEXT_SHARED_AT) .. " |c885533" .. self:GetFormattedDate(build.date) .. "|r")
 		if build.description then
 			el1:GetNamedChild("Description"):SetText(build.description)
 			el1:GetNamedChild("Description"):SetHidden(false)
@@ -558,18 +565,18 @@ function TUI_Builds:ShowDetails (buildId)
 		end
 		el1:GetNamedChild("PG_InfoTargetTexture"):SetTexture(TUI_Builds_Target[build.target].icon)
 		el1:GetNamedChild("PG_InfoTargetLabel"):SetText(TUI_Builds_Target[build.target].name)
-		SetToolTip(el1:GetNamedChild("PG_InfoTargetTexture"), "Target: " .. el1:GetNamedChild("PG_InfoTargetLabel"):GetText())
+		SetToolTip(el1:GetNamedChild("PG_InfoTargetTexture"), GetString(SI_TUI_TEXT_TARGET) .. ": " .. el1:GetNamedChild("PG_InfoTargetLabel"):GetText())
 		el1:GetNamedChild("PG_InfoRaceTexture"):SetTexture(GetRaceTexture(build.race))
 		el1:GetNamedChild("PG_InfoRaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, build.race)))
-		SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), "Razza: " .. el1:GetNamedChild("PG_InfoRaceLabel"):GetText())
+		SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), GetString(SI_TUI_TEXT_RACE) .. ": " .. el1:GetNamedChild("PG_InfoRaceLabel"):GetText())
 		el1:GetNamedChild("PG_InfoClassTexture"):SetTexture(GetClassTexture(build.class))
 		el1:GetNamedChild("PG_InfoClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, build.class)))
-		SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), "Classe: " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
+		SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), GetString(SI_TUI_TEXT_CLASS) .. ": " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
 		el1:GetNamedChild("PG_InfoRoleTexture"):SetTexture(GetRoleTexture(build.role))
 		el1:GetNamedChild("PG_InfoRoleLabel"):SetText(GetConfigRoleInfo(build.role).name)
-		SetToolTip(el1:GetNamedChild("PG_InfoRoleTexture"), "Ruolo: " .. el1:GetNamedChild("PG_InfoRoleLabel"):GetText())
+		SetToolTip(el1:GetNamedChild("PG_InfoRoleTexture"), GetString(SI_TUI_TEXT_ROLE) .. ": " .. el1:GetNamedChild("PG_InfoRoleLabel"):GetText())
 		el1:GetNamedChild("PG_InfoVersionLabel"):SetText(build.game_version)
-		SetToolTip(el1:GetNamedChild("PG_InfoVersionTexture"), "Game version: " .. el1:GetNamedChild("PG_InfoVersionLabel"):GetText())
+		SetToolTip(el1:GetNamedChild("PG_InfoVersionTexture"), "Ver. ESO: " .. el1:GetNamedChild("PG_InfoVersionLabel"):GetText())
 
 		-- Reset the equip slots
 		for i = EQUIP_SLOT_MIN_VALUE + 1, EQUIP_SLOT_MAX_VALUE, 1 do
@@ -607,7 +614,7 @@ end
 
 function TUI_Builds:RateBuild(rating)
 	if self.currentBuild then
-		ZO_Dialogs_ShowDialog("TUIT_DIALOG_CONFIRM_RATE", { id = self.currentBuild.id, rating = rating }, nil, false)
+		ZO_Dialogs_ShowDialog("TUIT_DIALOG_SHAREBUILD_CONFIRM_RATE", { id = self.currentBuild.id, rating = rating }, nil, false)
 	end
 end
 
@@ -652,12 +659,12 @@ function TUI_Builds:ShowMyBuild ()
 	ShareBuild_Description:SetText("")
 	el1:GetNamedChild("PG_InfoRaceTexture"):SetTexture(GetRaceTexture(GetUnitRaceId("player")))
 	el1:GetNamedChild("PG_InfoRaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
-	SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), "Razza: " .. el1:GetNamedChild("PG_InfoRaceLabel"):GetText())
+	SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), GetString(SI_TUI_TEXT_RACE) .. ": " .. el1:GetNamedChild("PG_InfoRaceLabel"):GetText())
 	el1:GetNamedChild("PG_InfoClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
 	el1:GetNamedChild("PG_InfoClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
-	SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), "Classe: " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
+	SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), GetString(SI_TUI_TEXT_CLASS) .. ": " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
 	el1:GetNamedChild("PG_InfoVersionLabel"):SetText(TUI_Builds.GetGameVersion(GetESOVersionString()))
-	SetToolTip(el1:GetNamedChild("PG_InfoVersionTexture"), "Versione ESO: " .. el1:GetNamedChild("PG_InfoVersionLabel"):GetText())
+	SetToolTip(el1:GetNamedChild("PG_InfoVersionTexture"), "Ver. ESO: " .. el1:GetNamedChild("PG_InfoVersionLabel"):GetText())
 	
 	self.ShareTargetDropdown:SelectFirstItem()
 	self.ShareRoleDropdown:SelectFirstItem()

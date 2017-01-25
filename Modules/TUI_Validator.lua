@@ -1,8 +1,12 @@
 TUI_Validator = ZO_Object:Subclass()
 
+local TUI_ACCOUNT_VALIDATION_REQUIRE, TUI_ACCOUNT_VALIDATION_REFUSED, TUI_ACCOUNT_VALIDATION_ACTIVATED = 0, 1, 2
+
 function TUI_Validator:New(control)
     local myInstance = ZO_Object.New(self)
     myInstance.control = control
+	myInstance.isValidated = false
+	myInstance.validationStatus = TUI_ACCOUNT_VALIDATION_REQUIRE;
     return myInstance
 end
 
@@ -12,6 +16,8 @@ function TUI_Validator:Initialize()
 	self.Panel:SetHidden(false)
 	local sc = self.Panel:GetNamedChild("ContainerScrollChild")
 	self.DynamicScrollPageConvalida = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelConvalida", sc, "DynamicScrollPageConvalida", 0)
+	-- Get the current validation status
+	self:LoadValidation()
 end
 
 function TUI_Validator:CreateScene(TUI_MENU_BAR)
@@ -36,27 +42,33 @@ function TUI_Validator:CreateScene(TUI_MENU_BAR)
 
 	TUI_SCENE_CONVALIDA:AddFragment(TUI_MENU_BAR)
 
-    self:LoadValidation()
+	if self.validationStatus == TUI_ACCOUNT_VALIDATION_REFUSED then
+		self:LoadRefusedValidations()
+	elseif self.validationStatus == TUI_ACCOUNT_VALIDATION_ACTIVATED then
+		self:AlreadyActivated()
+	elseif self.validationStatus == TUI_ACCOUNT_VALIDATION_REQUIRE then
+		self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(true)
+	end
+    
     return TUI_SCENE_CONVALIDA
 end
 
 function TUI_Validator:LoadValidation()
+	self.validationStatus = TUI_ACCOUNT_VALIDATION_REQUIRE
 	self.DettagliArray = TamrielUnlimitedIT.TUitDataVar.RefusedValidations
 	if self.DettagliArray ~= nil then
 		if #self.DettagliArray ~= 0 then
-			self:LoadRefusedValidations()
+			self.validationStatus = TUI_ACCOUNT_VALIDATION_REFUSED
 		else
 			if (TUitDataVar.PlayersData[GetDisplayName()] ~= nil) then
-				self:AlreadyActivated()
-			else
-				self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(true)
+				self.isValidated = true
+				self.validationStatus = TUI_ACCOUNT_VALIDATION_ACTIVATED
 			end
 		end
 	else
 		if (TUitDataVar.PlayersData[GetDisplayName()] ~= nil) then
-			self:AlreadyActivated()
-		else
-			self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(true)
+			self.isValidated = true
+			self.validationStatus = TUI_ACCOUNT_VALIDATION_ACTIVATED
 		end
 	end
 end

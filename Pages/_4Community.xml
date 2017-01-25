@@ -14,8 +14,8 @@
 			<Dimensions x="900" y="160" />
 			<Controls>
 				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="">
-						<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
-						<Dimensions x="900" y="50" />
+					<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
+					<Dimensions x="900" y="50" />
 				</Label>
 			
 				<Control name="$(parent)Tabella">
