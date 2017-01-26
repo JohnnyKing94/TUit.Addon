@@ -77,7 +77,7 @@ function TUI_Validator:ButtonSend()
 	str = NomeUtenteForum:GetText():gsub("%s+", "")
 	if str ~= "" then
 		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(1, 0.945, 0.109, 1)
-		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Invio in Corso...")
+		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText(GetString(SI_TUI_TEXT_VALIDATOR_SENDING))
 		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvio"):SetEnabled(false)
 		NomeUtenteForum:SetEditEnabled(false)
 		local delay = 2000
@@ -91,24 +91,24 @@ function TUI_Validator:ButtonSend()
 				end
 				zo_callLater(function ()
 						self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(0.121, 1, 0.054, 1)
-						self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Invio Completato")
+						self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText(GetString(SI_TUI_TEXT_VALIDATOR_SENT))
 						self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvio"):SetEnabled(true)
 						NomeUtenteForum:SetEditEnabled(true)
 					end, delay)
 			else
 			NomeUtenteForum:SetText("")
 			self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(0.996, 0.062, 0.062, 1)
-			self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Impossibile inviare alcuna mail!\n\rAggiornare i file dati addon dall'app")
+			self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText(GetString(SI_TUI_TEXT_VALIDATOR_CANNOT_SEND))
 			end
 		else
 			NomeUtenteForum:SetText("")
 			self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(0.996, 0.062, 0.062, 1)
-			self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Impossibile inviare alcuna mail!\n\rAggiornare i file dati addon dall'app")
+			self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText(GetString(SI_TUI_TEXT_VALIDATOR_CANNOT_SEND))
 		end
 	else
 		NomeUtenteForum:SetText("")
 		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(0.996, 0.062, 0.062, 1)
-		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText("Inserire un Nome Utente valido")
+		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText(GetString(SI_TUI_TEXT_VALIDATOR_VALID_NAME))
 	end
 end
 
@@ -143,11 +143,11 @@ function TUI_Validator:LoadRefusedValidations()
 	self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgRefusedValidations"):SetDimensions(800, #self.DettagliArray*50)
 	self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgLabelRefused"):SetText("Attenzione!")
 	if #self.DettagliArray == 1 then
-		self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgTextRefused"):SetText("Hai già realizzato un tentativo, sottocitato, che è fallito nel processo di convalida. Si prega di inserire il Nome Utente corretto del sito e cliccare RIPROVA!")
+		self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgTextRefused"):SetText(GetString(SI_TUI_TEXT_VALIDATOR_VALID_TRY))
 	else
-		self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgTextRefused"):SetText("Hai già realizzato dei tentativi, sottocitati, che sono falliti nel processo di convalida. Si prega di inserire il Nome Utente corretto del sito e cliccare RIPROVA!")
+		self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgTextRefused"):SetText(GetString(SI_TUI_TEXT_VALIDATOR_VALID_TRIES))
 	end
-	self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvioLabel_Convalida"):SetText("Riprova")
+	self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvioLabel_Convalida"):SetText(GetString(SI_TUI_TEXT_VALIDATOR_RETRY))
 	self.DynamicScrollPageConvalida:GetNamedChild("ContTesto"):SetAnchor(TOP, pre, BOTTOM, 0, 80 + #self.DettagliArray*25)
 	local i = 1
 	for key, value in pairs(self.DettagliArray) do
@@ -155,11 +155,11 @@ function TUI_Validator:LoadRefusedValidations()
 		Reason = TamrielUnlimitedIT.TUitDataVar.RefusedValidations[i]["Reason"]
 		
 		if (value.ForumName ~= "" and value.Reason == "UnknowUsername" ) then
-			value.Reason = "Il nome utente del sito, " .. value.ForumName .. ", non esiste"
+			value.Reason = GetString(SI_TUI_TEXT_VALIDATOR_NAME_NOT_EXISTS):gsub("{FORUM_NAME}", value.ForumName)
 		end
 		
 		if (value.ForumName == "" and value.Reason == "AccountAlreadyUsed" ) then
-			value.Reason = "L'account " .. GetDisplayName() .. " risulta essere già in uso e convalidato da un altro nome utente"
+			value.Reason = GetString(SI_TUI_TEXT_VALIDATOR_NAME_EXISTS)
 		end
 		
 		self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgRefusedValidations"):SetText(TamrielUnlimitedIT.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgRefusedValidations"):GetText() .. "- " .. value.Reason .. "\r\n")
@@ -173,5 +173,5 @@ function TUI_Validator:AlreadyActivated()
 	self.DynamicScrollPageConvalida:GetNamedChild("ContTestoTextBG"):SetHidden(true)
 	self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvio"):SetHidden(true)
 	self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgAlreadyActivated"):SetColor(0.121, 1, 0.054, 1)
-	self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgAlreadyActivated"):SetText("Il tuo account è gia stato convalidato")
+	self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsgAlreadyActivated"):SetText(GetString(SI_TUI_TEXT_VALIDATOR_VALIDATED))
 end

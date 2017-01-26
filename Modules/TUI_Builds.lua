@@ -249,7 +249,7 @@ function TUI_Builds:CreateScene (TUI_MENU_BAR)
 	if TamrielUnlimitedIT.Validator ~= nil and not TamrielUnlimitedIT.Validator.isValidated then
 		self.DynamicScrollPageBuilds:SetHidden(true)
 		local container = self.Panel:GetNamedChild("ContainerScrollChild")
-		CreateControlFromVirtual("PlayersRequireAccountValidationControl", container, "RequireAccountValidationControl", 0)
+		CreateControlFromVirtual("PlayersRequireAccountValidationControlBuilds", container, "RequireAccountValidationControl", 0)
 	else
 		-- Fill the builds list
 		self.Sort = "date"

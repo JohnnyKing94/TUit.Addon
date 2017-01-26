@@ -59,7 +59,7 @@ function TUI_Players:CreateScene(TUI_MENU_BAR)
 	if TamrielUnlimitedIT.Validator == nil or not TamrielUnlimitedIT.Validator.isValidated then
 		self.DynamicScrollPagePlayer:SetHidden(true)
 		local sc = self.Panel:GetNamedChild("ContainerScrollChild")
-		CreateControlFromVirtual("PlayersRequireAccountValidationControl", sc, "RequireAccountValidationControl", 0)
+		CreateControlFromVirtual("PlayersRequireAccountValidationControlUsers", sc, "RequireAccountValidationControl", 0)
 	else
     	self:Sort("pg_name", 1)
 	end
