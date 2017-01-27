@@ -45,8 +45,8 @@ ZO_CreateStringId("SI_TUI_TEXT_MONTH_ABBR_12", "Dec")
 
 -- Notifications
 ZO_CreateStringId("SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_SUCCESS", "|cff0000" .. GetString(SI_TUI_NOME_ADDON) .. "|r |cffff00addon loaded|r")
-ZO_CreateStringId("SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_FAILED", "The configuration of |cff0000" .. GetString(SI_TUI_NOME_ADDON) .. "|r addon is empty or invalid, please download the data through the application TUit!\n\rOnce downloaded digit the following command in chat: |cff0000/reloadui|r")
-ZO_CreateStringId("SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_NEWVALIDATIONREQUESTS", "|cffa800You have a message in the|r |cfffffftab Validation|r |cffa800of|r |cff0000" .. GetString(SI_TUI_NOME_ADDON) .. "|r|cffa800 addon. Please read it!|r")
+ZO_CreateStringId("SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_FAILED", "The configuration of |cff0000" .. GetString(SI_TUI_NOME_ADDON) .. "|r addon is empty or invalid, please download the data through the TUit application!\n\rOnce downloaded type the following command in chat: |cff0000/reloadui|r")
+ZO_CreateStringId("SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_NEWVALIDATIONREQUESTS", "|cffa800You have a message in the|r |cffffffValidation Tab|r of |cffa800of|r |cff0000" .. GetString(SI_TUI_NOME_ADDON) .. "|r|cffa800 addon. Please read it!|r")
 
 -- Account roles
 ZO_CreateStringId("SI_TUI_TEXT_TUIROLE_ADMINISTRATOR", "Administrator")
@@ -73,9 +73,9 @@ ZO_CreateStringId("SI_TUI_TEXT_ALL_PLURAL", "All")
 
 -- Actions
 ZO_CreateStringId("SI_TUI_TEXT_WARNING_APP", "Make sure that the application TUit is running")
-ZO_CreateStringId("SI_TUI_TEXT_WARNING_ACCOUNT_VALIDATED", "To access this section your account must have been validated")
-ZO_CreateStringId("SI_TUI_TEXT_START_SEARCH", "Start the search")
-ZO_CreateStringId("SI_TUI_TEXT_REFRESH_DATA", "Retrieve data from the application (reloads UI)")
+ZO_CreateStringId("SI_TUI_TEXT_WARNING_ACCOUNT_VALIDATED", "Your account need to be validated for this section access")
+ZO_CreateStringId("SI_TUI_TEXT_START_SEARCH", "Start searching")
+ZO_CreateStringId("SI_TUI_TEXT_REFRESH_DATA", "Retrieve data from the application (Reload UI)")
 ZO_CreateStringId("SI_TUI_TEXT_RETURN", "Return")
 ZO_CreateStringId("SI_TUI_TEXT_RETURN_TO_LIST", "Return to List")
 ZO_CreateStringId("SI_TUI_TEXT_ADD", "Add")
@@ -91,9 +91,9 @@ ZO_CreateStringId("SI_TUI_TEXT_USER_NO_GUILDS", "This user doesn't belong to any
 ZO_CreateStringId("SI_TUI_TEXT_USER_CHARACTERS_TITLE", "Characters")
 
 -- Module Guilds
-ZO_CreateStringId("SI_TUI_TEXT_GUILDS_WELCOME", "The community Tamriel Unlimited IT is glad to introduce our officially registered guilds.")
-ZO_CreateStringId("SI_TUI_TEXT_GUILDS_NEWS", "NEWS\r\nIf you would like to join our community and be listed in the sponsored guilds, you need to apply at the following link.")
-ZO_CreateStringId("SI_TUI_TEXT_GUILDS_NOGUILDS", "No guilds found, make sure that the application TUit is running")
+ZO_CreateStringId("SI_TUI_TEXT_GUILDS_WELCOME", "The Tamriel Unlimited IT community is glad to introduce our official gaming guilds.")
+ZO_CreateStringId("SI_TUI_TEXT_GUILDS_NEWS", "NEWS\r\nIf you would like to join our community and be listed as a sponsored guilds, you need to apply at the following link.")
+ZO_CreateStringId("SI_TUI_TEXT_GUILDS_NOGUILDS", "No guilds found, make sure that the TUit application is running")
 ZO_CreateStringId("SI_TUI_TEXT_GUILDS_NOGUILDS_IN_ALLIANCE", "No guilds in this Alliance")
 
 -- Module Builds
@@ -119,13 +119,13 @@ ZO_CreateStringId("SI_TUI_TEXT_BUILD_JEWELS", "JEWELS")
 ZO_CreateStringId("SI_TUI_TEXT_BUILD_WEAPONS", "WEAPONS")
 
 -- Module Events
-ZO_CreateStringId("SI_TUI_TEXT_EVENTS_NOEVENTS", "No current events, make sure that the application TUit is running")
+ZO_CreateStringId("SI_TUI_TEXT_EVENTS_NOEVENTS", "No current events, make sure that the TUit application is running")
 ZO_CreateStringId("SI_TUI_TEXT_EVENTS_STARTED", "This event is just started")
 ZO_CreateStringId("SI_TUI_TEXT_EVENTS_STARTING_1H", "This event will start in 1 hour")
 ZO_CreateStringId("SI_TUI_TEXT_EVENTS_STARTING_10MIN", "This event will start in 10 minutes")
 ZO_CreateStringId("SI_TUI_TEXT_EVENTS_STARTING_IN_MINUTES", "This event will start in {MINUTES} minutes")
 ZO_CreateStringId("SI_TUI_TEXT_EVENTS_STARTING_IN_MINUTE", "This event will start in 1 minute")
-ZO_CreateStringId("SI_TUI_TEXT_EVENTS_ONAIR", "Is on-air now")
+ZO_CreateStringId("SI_TUI_TEXT_EVENTS_LIVENOW", "Live Now")
 
 -- Module Community
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_TRANSLATE_TITLE", "TRANSLATE")
@@ -136,7 +136,7 @@ ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_TRANSLATED_TRANSLATED", "Translated:")
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_TRANSLATED_TOTAL", "Total:")
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_CONTRIBUTORS", "Contributors")
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_TS_TITLE", "TEAMSPEAK 3")
-ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_TS_TEXT", "The community Tamriel Unlimited IT provides a public TeamSpeak 3 server that is opened to everyone!")
+ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_TS_TEXT", "The community Tamriel Unlimited IT provides a public TeamSpeak 3 server opened to everyone!")
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_TS_DATA", "DATA")
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_TS_ADDRESS", "Address:")
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_TS_PASSWORD", "Password: <none> (it's public)")
@@ -145,15 +145,15 @@ ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_REQUEST_TITLE", "REQUEST")
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_REQUEST_TS", "...Teamspeak 3")
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_REQUEST_TS_TEXT", "The community Tamriel Unlimited IT provides a public TeamSpeak where everyone is able to access and request own guild channel. If you haven't money or knowledge, this is your chance to receive this service easily and for free. The objective is to use a voice community server where you can organize and schedule events, playing with other guilds, pugs and meetings among the guildmasters and officers.")
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_REQUEST_FORUM", "...Forum and Calendar")
-ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_REQUEST_FORUM_TEXT", "The community Tamriel Unlimited IT provides a forum and a calendar for anyone who needs a place for their guild members where they can discuss and exchange guides, news, builds and more. This appliance allows you to be sponsored as official registered guild in our community. So, if you like you can be listed in the Guilds section of this add-on if you have checked ON the Privacy flag of your Guild on our website.")
+ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_REQUEST_FORUM_TEXT", "The community Tamriel Unlimited IT provides a forum and a calendar for anyone who needs a place for their guild members where they can discuss and exchange guides, news, builds and more. This appliance allows you to be sponsored as official registered guild in our community. So, if you like you can be listed in the Guilds section of this add-on if you have checked ON the Privacy flag of your Guild Settings via website.")
 
 -- Module Validator
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_SENDING", "Sending...")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_SENT", "Sent")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CANNOT_SEND", "Cannot send any mail!\n\rUpdate the data file from the application")
-ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_NAME", "Digit a valid User Name")
-ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_TRY", "You have already done a try, mentioned below, that failed during validation process. Please insert the correct website Username and click RETRY!")
-ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_TRIES", "You have already done some tries, mentioned below, that failed during validation process. Please insert the correct website Username and click RETRY!")
+ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_NAME", "Type a valid User Name")
+ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_TRY", "You already did an attempt (mentioned below) which is failed during the validation process. Please enter the correct website Username and click RETRY!")
+ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_TRIES", "You already did some attempts (mentioned below) which are failed during the validation process. Please enter the correct website Username and click RETRY!")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_NAME_NOT_EXISTS", "The website username, {FORUM_NAME}, does not exist")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_NAME_EXISTS", "The account " .. GetDisplayName() .. " is already used and validated by another user")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALIDATED", "Your account has already been validated")
@@ -171,7 +171,7 @@ ZO_CreateStringId("SI_TUI_TEXT_FILTER_CHARACTER_NAME", "Filter by Character Name
 ZO_CreateStringId("SI_TUI_DIALOG_RELOADING_UI_TITLE", "Reload UI")
 ZO_CreateStringId("SI_TUI_DIALOG_RELOADING_UI_TEXT", "The interface is being reloaded...")
 ZO_CreateStringId("SI_TUI_DIALOG_CHANGELANG_UI_TITLE", "Change Language")
-ZO_CreateStringId("SI_TUI_DIALOG_CHANGELANG_UI_TEXT", "Setting the language, the interface is being reloaded...")
+ZO_CreateStringId("SI_TUI_DIALOG_CHANGELANG_UI_TEXT", "Chaning language, the interface is being reloaded...")
 ZO_CreateStringId("SI_TUI_DIALOG_SHAREBUILD_NAME_TITLE", "Share Build")
 ZO_CreateStringId("SI_TUI_DIALOG_SHAREBUILD_NAME_TEXT", "Assign a name to this build.")
 ZO_CreateStringId("SI_TUI_DIALOG_SHAREBUILD_NAME_EXISTS_TITLE", "Share Build")

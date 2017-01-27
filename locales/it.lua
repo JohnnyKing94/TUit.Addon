@@ -45,7 +45,7 @@ ZO_CreateStringId("SI_TUI_TEXT_MONTH_ABBR_12", "Dic")
 -- Notifications
 ZO_CreateStringId("SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_SUCCESS", "|cffff00Addon|r |cff0000" .. GetString(SI_TUI_NOME_ADDON) .. "|r |cffff00 caricato|r")
 ZO_CreateStringId("SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_FAILED", "La configurazione dell'addon |cff0000" .. GetString(SI_TUI_NOME_ADDON) .. "|r risulta essere vuota o non coerente, si prega di riscaricare i dati via applicazione TUit!\n\rUna volta caricati digitare il seguente comando in chat: |cff0000/reloadui|r")
-ZO_CreateStringId("SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_NEWVALIDATIONREQUESTS", "|cffa800Hai un messaggio nella|r |cfffffftab Convalida|r |cffa800dell'addon|r |cff0000Tamriel Unlimited IT|r|cffa800. Si prega di leggere!|r")
+ZO_CreateStringId("SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_NEWVALIDATIONREQUESTS", "|cffa800Hai un messaggio nella|r |cffffffTab Convalida|r |cffa800dell'addon|r |cff0000Tamriel Unlimited IT|r|cffa800. Si prega di leggere!|r")
 
 -- Account roles
 ZO_CreateStringId("SI_TUI_TEXT_TUIROLE_ADMINISTRATOR", "Amministratore")
@@ -69,9 +69,9 @@ ZO_CreateStringId("SI_TUI_TEXT_ALL_PLURAL", "Tutti")
 
 -- Actions
 ZO_CreateStringId("SI_TUI_TEXT_WARNING_APP", "Assicurati che l'applicazione TUit sia in esecuzione")
-ZO_CreateStringId("SI_TUI_TEXT_WARNING_ACCOUNT_VALIDATED", "Per poter visualizzare questa sezione il tuo account deve essere convalidato")
+ZO_CreateStringId("SI_TUI_TEXT_WARNING_ACCOUNT_VALIDATED", "Per poter visualizzare questa sezione, il tuo account deve essere convalidato")
 ZO_CreateStringId("SI_TUI_TEXT_START_SEARCH", "Avvia la ricerca")
-ZO_CreateStringId("SI_TUI_TEXT_REFRESH_DATA", "Ricarica dati dall'applicazione (riavvia la UI)")
+ZO_CreateStringId("SI_TUI_TEXT_REFRESH_DATA", "Ricarica dati dall'applicazione (Ricarica UI)")
 ZO_CreateStringId("SI_TUI_TEXT_RETURN", "Ritorna")
 ZO_CreateStringId("SI_TUI_TEXT_RETURN_TO_LIST", "Ritorna alla Lista")
 ZO_CreateStringId("SI_TUI_TEXT_ADD", "Aggiungi")
@@ -121,7 +121,7 @@ ZO_CreateStringId("SI_TUI_TEXT_EVENTS_STARTING_1H", "L'evento inizierà tra 1 or
 ZO_CreateStringId("SI_TUI_TEXT_EVENTS_STARTING_10MIN", "L'evento inizierà tra 10 minuti")
 ZO_CreateStringId("SI_TUI_TEXT_EVENTS_STARTING_IN_MINUTES", "L'evento inizierà tra {MINUTES} minuti")
 ZO_CreateStringId("SI_TUI_TEXT_EVENTS_STARTING_IN_MINUTE", "L'evento inizierà tra 1 minuto")
-ZO_CreateStringId("SI_TUI_TEXT_EVENTS_ONAIR", "È in corso in questo momento")
+ZO_CreateStringId("SI_TUI_TEXT_EVENTS_LIVENOW", "È in corso in questo momento")
 
 -- Module Community
 ZO_CreateStringId("SI_TUI_TEXT_COMMUNITY_TRANSLATE_TITLE", "TRADUCI")
@@ -150,8 +150,8 @@ ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_SENDING", "Invio in Corso...")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_SENT", "Invio Completato")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CANNOT_SEND", "Impossibile inviare alcuna mail!\n\rAggiornare i file dati addon dall'app")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_NAME", "Inserire un Nome Utente valido")
-ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_TRY", "Hai già realizzato un tentativo, sottocitato, che è fallito nel processo di convalida. Si prega di inserire il Nome Utente corretto del sito e cliccare RIPROVA!")
-ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_TRIES", "Hai già realizzato dei tentativi, sottocitati, che sono falliti nel processo di convalida. Si prega di inserire il Nome Utente corretto del sito e cliccare RIPROVA!")
+ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_TRY", "Hai già realizzato un tentativo (sottocitato) che è fallito nel processo di convalida. Si prega di inserire il Nome Utente corretto del sito e cliccare RIPROVA!")
+ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALID_TRIES", "Hai già realizzato dei tentativi (sottocitati) che sono falliti nel processo di convalida. Si prega di inserire il Nome Utente corretto del sito e cliccare RIPROVA!")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_NAME_NOT_EXISTS", "Il nome utente del sito, {FORUM_NAME}, non esiste")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_NAME_EXISTS", "L'account " .. GetDisplayName() .. " risulta essere già in uso e convalidato da un altro nome utente")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALIDATED", "Il tuo account è gia stato convalidato")
@@ -165,7 +165,7 @@ ZO_CreateStringId("SI_TUI_TEXT_FILTER_CHARACTER_NAME", "Filtra per Nome Personag
 -- Modules
 
 -- Dialogs
-ZO_CreateStringId("SI_TUI_DIALOG_RELOADING_UI_TITLE", "Reload UI")
+ZO_CreateStringId("SI_TUI_DIALOG_RELOADING_UI_TITLE", "Ricarica UI")
 ZO_CreateStringId("SI_TUI_DIALOG_RELOADING_UI_TEXT", "L'interfaccia sta per essere ricaricata...")
 ZO_CreateStringId("SI_TUI_DIALOG_CHANGELANG_UI_TITLE", "Cambio lingua")
 ZO_CreateStringId("SI_TUI_DIALOG_CHANGELANG_UI_TEXT", "Stiamo impostando la lingua, l'interfaccia sta per essere ricaricata...")

@@ -143,7 +143,7 @@ function TUI_Events:LoadEventsList()
 					end
 				end
 			else
-				AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_ONAIR)))
+				AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_LIVENOW)))
 			end
 		end
 	end
