@@ -11,7 +11,11 @@
 ## SavedVariables: TUitData
 ## Version: 1.0.2
 
-: Configurations
+; Localization strings
+locales/en.lua
+locales/$(language).lua
+
+; Configurations
 TUitConfigData.lua
 TUitData.lua
 ItemsData.lua
@@ -20,8 +24,9 @@ SharedBuilds.lua
 ; Libraries
 libs/LibStub/LibStub.lua
 libs/LibMainMenu/LibMainMenu.lua
-libs/AceTimer/AceTimer-3.0.lua
 Function.lua
+
+; TUit Modules
 Modules/TUI_Players.lua
 Modules/TUI_Builds.lua
 Modules/TUI_Guilds.lua
@@ -41,6 +46,6 @@ Pages/_6Contributori.xml
 Pages/_7DettagliUtente.xml
 Pages/_8Builds.xml
 
-: AddOn handlers
+; AddOn handlers
 TamrielUnlimitedIT.lua
 bindings.xml

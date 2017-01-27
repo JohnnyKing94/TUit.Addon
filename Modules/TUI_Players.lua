@@ -10,10 +10,10 @@ end
 
 function TUI_Players:Initialize()
     self.PlayerTemp = {}
-    self.Utenti = CreateControlFromVirtual("DynamicLabel_screenUtenti", self.control, "DynamicTextUtenti", 0)
-	self.Utenti:SetAnchor(TOP, self.control, TOP, 0, 0)
-	self.Utenti:SetHidden(false)
-    local sc = self.Utenti:GetNamedChild("ContainerScrollChild")
+    self.Panel = CreateControlFromVirtual("DynamicLabel_screenUtenti", self.control, "DynamicTextUtenti", 0)
+	self.Panel:SetAnchor(TOP, self.control, TOP, 0, 0)
+	self.Panel:SetHidden(false)
+    local sc = self.Panel:GetNamedChild("ContainerScrollChild")
 	self.DynamicScrollPagePlayer = CreateControlFromVirtual("Dynamic_print_ScrollPanelUtenti", sc, "DynamicScrollPageUtenti", 0)
 	if self.PlayerTemp ~= nil then
 		if #self.PlayerTemp ~= 0 then
@@ -55,7 +55,15 @@ function TUI_Players:CreateScene(TUI_MENU_BAR)
 
 	TUI_SCENE_UTENTI:AddFragment(TUI_MENU_BAR)
 
-    self:Sort("pg_name", 1)
+	-- Access granted only to validated users
+	if TamrielUnlimitedIT.Validator == nil or not TamrielUnlimitedIT.Validator.isValidated then
+		self.DynamicScrollPagePlayer:SetHidden(true)
+		local sc = self.Panel:GetNamedChild("ContainerScrollChild")
+		CreateControlFromVirtual("PlayersRequireAccountValidationControlUsers", sc, "RequireAccountValidationControl", 0)
+	else
+    	self:Sort("pg_name", 1)
+	end
+
     return TUI_SCENE_UTENTI;
 end
 
@@ -74,13 +82,16 @@ function TUI_Players:LoadNoPlayer()
 	pre:GetNamedChild("Colonna4"):SetHidden(true)
 	pre:GetNamedChild("Colonna5"):SetHidden(true)
 	pre:GetNamedChild("Colonna6"):SetHidden(true)]]--
-	pre:GetNamedChild("NOPGLabel"):SetText("Nessun utente trovato, assicurati che l'applicazione TUit sia in esecuzione")
+	pre:GetNamedChild("NOPGLabel"):SetText(GetString(SI_TUI_TEXT_NO_USERS))
 end
 
 function TUI_Players:Sort(field, sortDir)
     if self.PlayerTemp ~= nil and #self.PlayerTemp > 0 then
         if sortDir == nil then
-            self.SortDir = (self.SortField ~= field and 1 or (-1 * self.SortDir))
+			if self.SortDir == nil then
+				self.SortDir = -1
+			end
+            sortDir = (self.SortField ~= field and 1 or (-1 * self.SortDir))
         end
         self.SortField = field
         self.SortDir = sortDir
@@ -184,7 +195,7 @@ function TUI_Players:FillBuildsList()
 			texture:SetTexture(raceTexture)
 			texture:SetDimensions(24, 24)
 			texture:SetHidden(false)
-			SetToolTip(texture, "Razza: " .. zo_strformat(SI_RACE_NAME, GetRaceName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["race"])))
+			SetToolTip(texture, GetString(SI_TUI_TEXT_RACE) .. ": " .. zo_strformat(SI_RACE_NAME, GetRaceName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["race"])))
 		else
 			v1:GetNamedChild("Colonna4RaceTexture"):SetHidden(true)
 		end
@@ -193,7 +204,7 @@ function TUI_Players:FillBuildsList()
 			texture:SetTexture(classTexture)
 			texture:SetDimensions(24, 24)
 			texture:SetHidden(false)
-			SetToolTip(texture, "Classe: " .. zo_strformat(SI_CLASS_NAME, GetClassName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["class"])))
+			SetToolTip(texture, GetString(SI_TUI_TEXT_CLASS) .. ": " .. zo_strformat(SI_CLASS_NAME, GetClassName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["class"])))
 		else
 			v1:GetNamedChild("Colonna5ClassTexture"):SetHidden(true)
 		end

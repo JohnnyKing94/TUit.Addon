@@ -240,11 +240,39 @@ function StringToDateTimeSeconds(date_str)
 	return tonumber(y),tonumber(m),tonumber(d),tonumber(hh),tonumber(mm),tonumber(ss)
 end
 function GetMonthName(month)
-	local months = { "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre" }
+	local months =
+	{
+		GetString(SI_TUI_TEXT_MONTH_1),
+		GetString(SI_TUI_TEXT_MONTH_2),
+		GetString(SI_TUI_TEXT_MONTH_3),
+		GetString(SI_TUI_TEXT_MONTH_4),
+		GetString(SI_TUI_TEXT_MONTH_5),
+		GetString(SI_TUI_TEXT_MONTH_6),
+		GetString(SI_TUI_TEXT_MONTH_7),
+		GetString(SI_TUI_TEXT_MONTH_8),
+		GetString(SI_TUI_TEXT_MONTH_9),
+		GetString(SI_TUI_TEXT_MONTH_10),
+		GetString(SI_TUI_TEXT_MONTH_11),
+		GetString(SI_TUI_TEXT_MONTH_12)
+	}
 	return months[tonumber(month)]
 end
 function GetMonthNameAbbr(month)
-	local months = { "Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic" }
+	local months =
+	{
+		GetString(SI_TUI_TEXT_MONTH_ABBR_1),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_2),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_3),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_4),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_5),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_6),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_7),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_8),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_9),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_10),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_11),
+		GetString(SI_TUI_TEXT_MONTH_ABBR_12)
+	}
 	return months[tonumber(month)]
 end
 
@@ -388,6 +416,16 @@ function MakeItemSetLink( id, flags )
 	end
 
 	return(itemLink);
+end
+function GetColorForAlliance(alliance)
+	if alliance == ALLIANCE_EBONHEART_PACT then
+		return ZO_ColorDef:New("a4231a")
+	elseif alliance == ALLIANCE_ALDMERI_DOMINION then
+		return ZO_ColorDef:New("af9839")
+	elseif alliance == ALLIANCE_DAGGERFALL_COVENANT then
+		return ZO_ColorDef:New("285aa1")
+	end
+	return ZO_ColorDef:New("ffffff")
 end
 function GetColorForLevel(level)
 	local colorPG = ZO_ColorDef:New("999999") --gray (default)

@@ -17,12 +17,12 @@
 			<OnMouseDown>
 				AggiungiAmico(self)
 			</OnMouseDown>
-			
 			<Controls>
 				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
-				<Label name="$(parent)Label_AddFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Aggiungi">
+				<Label name="$(parent)Label_AddFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 					<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 					<Dimensions x="220" y="20" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_ADD))</OnInitialized>
 				</Label>
 			</Controls>
 		 </Button>	
@@ -35,9 +35,10 @@
 			</OnMouseDown>
 			<Controls>
 				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
-				<Label name="$(parent)Label_RemoveFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Rimuovi">
+				<Label name="$(parent)Label_RemoveFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 					<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 					<Dimensions x="220" y="20" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_REMOVE))</OnInitialized>
 				</Label>
 			</Controls>
 		 </Button>	
@@ -50,9 +51,10 @@
 			</OnMouseDown>
 			<Controls>
 				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
-				<Label name="$(parent)Label_SendMailFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Invia Mail">
+				<Label name="$(parent)Label_SendMailFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 					<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 					<Dimensions x="220" y="20" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_SENDMAIL))</OnInitialized>
 				</Label>
 			</Controls>
 		 </Button>
@@ -66,9 +68,10 @@
 			</OnMouseDown>
 			<Controls>
 				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
-				<Label name="$(parent)Label_WhisperFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Bisbiglia">
+				<Label name="$(parent)Label_WhisperFriend" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 					<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 					<Dimensions x="220" y="20" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WHISPER))</OnInitialized>
 				</Label>
 			</Controls>
 		 </Button> 
@@ -137,6 +140,19 @@
 	<TopLevelControl name="BuildsPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
 		<Dimensions x="920" y="640" />
 		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
+	</TopLevelControl>
+
+	<TopLevelControl name="RequireAccountValidationControl" virtual="true">
+		<Dimensions x="840" y="50" />
+		<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="30" offsetY="20" />
+		<Controls>
+			<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
+			<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFF11C" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER">
+				<Anchor point="TOP" relativePoint="TOP" relativeTo="$(parent)"/>
+				<Dimensions y="50" />
+				<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_ACCOUNT_VALIDATED))</OnInitialized>
+			</Label>
+		</Controls>
 	</TopLevelControl>
 	
   </Controls>

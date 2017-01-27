@@ -233,5 +233,7 @@ TUI_Config = {
         green           = ZO_ColorDef:New("39E600"),
         red             = ZO_ColorDef:New("CC0000"),
         gold            = ZO_ColorDef:New("EECA2A"),
+        blue            = ZO_ColorDef:New("3a92ff"),
+        gray            = ZO_ColorDef:New("999999"),
 	},
 }

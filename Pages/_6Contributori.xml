@@ -48,9 +48,10 @@
 								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TuiCommunity")
 							</OnMouseDown>
 							<Controls>
-								<Label name="$(parent)Label_Contributori" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ritorna">
+								<Label name="$(parent)Label_Contributori" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 									<Dimensions x="115" y="35" />
+									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RETURN))</OnInitialized>
 								</Label> 
 							</Controls>
 						</Button>

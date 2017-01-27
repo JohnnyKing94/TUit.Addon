@@ -15,24 +15,27 @@
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900" y="200" />
 			<Controls>
-				<Label name="$(parent)LabelWarningApp" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
+				<Label name="$(parent)LabelWarningApp" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
 					<Dimensions y="40" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_APP))</OnInitialized>
 				</Label>
 				<Button name="$(parent)ShareBuild_btn" alpha="1" inherits="ZO_DefaultButton">
 					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT"  relativeTo="$(parent)" />
 					<Dimensions x="250" y="40" />
 					<OnMouseDown>ShowMyBuild()</OnMouseDown>
 					<Controls>
-						<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Condividi la tua Build">
+						<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 							<Dimensions x="220" y="40" />
+							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_SHARE_BUILD))</OnInitialized>
 						</Label>
 					</Controls>
 				</Button>
-				<Label name="$(parent)SearchTextLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Autore/Nome">
+				<Label name="$(parent)SearchTextLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)LabelWarningApp" relativePoint="BOTTOMLEFT" offsetY="30" />
 					<Dimensions y="30" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_AUTHOR).."/"..GetString(SI_TUI_TEXT_NAME))</OnInitialized>
 				</Label>
 				<Control name="$(parent)SearchBuild_control"  >
 					<Dimensions x="150" y="30" />
@@ -42,23 +45,25 @@
 							<AnchorFill />
 							<Edge edgeSize="2" />
 						</Backdrop>
-						<EditBox name="SearchBuild_edit" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="100"  editEnabled="true" multiLine="false" newLineEnabled="false"   >
+						<EditBox name="SearchBuild_edit" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="100"  editEnabled="true" multiLine="false" newLineEnabled="false">
 							<Dimensions x="146" y="22" />
 							<Anchor point="CENTER" relativePoint="CENTER" relativeTo="$(parent)"  />
 						</EditBox>
 					</Controls>
 				</Control>
-				<Label name="$(parent)TargetLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Target">
+				<Label name="$(parent)TargetLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)SearchBuild_control" relativePoint="TOPRIGHT" offsetX="30" />
 					<Dimensions y="30" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_TARGET))</OnInitialized>
 				</Label>
 				<Control name="$(parent)TargetDropdown" inherits="ZO_ComboBox">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)TargetLabel" relativePoint="TOPRIGHT" offsetX="10"/>
 					<Dimensions x="150" y="30" />
 				</Control>
-				<Label name="$(parent)RoleLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Ruolo">
+				<Label name="$(parent)RoleLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)TargetDropdown" relativePoint="TOPRIGHT" offsetX="30" />
 					<Dimensions y="30" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_ROLE))</OnInitialized>
 				</Label>
 				<Control name="$(parent)RoleDropdown" inherits="ZO_ComboBox">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)RoleLabel" relativePoint="TOPRIGHT" offsetX="10"/>
@@ -67,14 +72,14 @@
 				<Button name="$(parent)SearchBuild_btn" alpha="1">
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT"  relativeTo="$(parent)RoleDropdown" offsetX="30" offsetY="-5" />
 					<Dimensions x="40" y="40" />
-					<OnInitialized>SetToolTip(self, "Avvia la ricerca")</OnInitialized>
+					<OnInitialized>SetToolTip(self, GetString(SI_TUI_TEXT_START_SEARCH))</OnInitialized>
 					<OnMouseDown>SearchBuilds(SearchBuild_edit:GetText())</OnMouseDown>
 					<Textures name="$(parent)Icon" normal="/esoui/art/miscellaneous/search_icon.dds"  mouseOver="/esoui/art/miscellaneous/search_icon.dds" ></Textures>
 				</Button>
 				<Button name="$(parent)RefreshBuild_btn" alpha="1">
 					<Anchor point="LEFT" relativePoint="RIGHT"  relativeTo="$(parent)SearchBuild_btn" offsetX="30" offsetY="-5" />
 					<Dimensions x="40" y="40" />
-					<OnInitialized>SetToolTip(self, "Ricarica dati dall'applicazione (riavvia la UI)")</OnInitialized>
+					<OnInitialized>SetToolTip(self, GetString(SI_TUI_TEXT_REFRESH_DATA))</OnInitialized>
 					<OnMouseDown>TamrielUnlimitedIT.ReloadUIFn()</OnMouseDown>
 					<Textures name="$(parent)Icon" normal="/esoui/art/characterwindow/gearslot_quickslot.dds"  mouseOver="/esoui/art/characterwindow/gearslot_quickslot.dds" ></Textures>
 				</Button>
@@ -91,9 +96,10 @@
 									<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="30" offsetY="40" />
 									<Dimensions x="850" y="50" />
 									<Controls>
-										<Label name="$(parent)Label" font="ZoFontWinT1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Nessuna build in archivio, assicurati che l'app TUit sia in esecuzione">
+										<Label name="$(parent)Label" font="ZoFontWinT1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOP" relativePoint="TOP" offsetX="0" offsetY="0" relativeTo="$(parent)" />
 											<Dimensions x="850" y="50" />
+											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_NO_BUILDS))</OnInitialized>
 										</Label>
 									<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
 									</Controls>
@@ -107,9 +113,10 @@
 											<Dimensions x="90" y="20" />
 											<OnMouseDown>SortBuildsByDate()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Data">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="90" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_DATE))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -124,9 +131,10 @@
 											<Dimensions x="80" y="20" />
 											<OnMouseDown>SortBuildsByTarget()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Target">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="80" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_TARGET))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -141,9 +149,10 @@
 											<Dimensions x="120" y="20" />
 											<OnMouseDown>SortBuildsByOwner()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Autore">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="200" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_AUTHOR))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -158,9 +167,10 @@
 											<Dimensions x="180" y="20" />
 											<OnMouseDown>SortBuildsByName()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Nome">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="160" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_NAME))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -175,9 +185,10 @@
 											<Dimensions x="60" y="20" />
 											<OnMouseDown>SortBuildsByRace()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Razza">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="60" y="20" />
 													<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RACE))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -192,9 +203,10 @@
 											<Dimensions x="60" y="20" />
 											<OnMouseDown>SortBuildsByClass()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Classe">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="60" y="20" />
 													<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_CLASS))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -209,9 +221,10 @@
 											<Dimensions x="60" y="20" />
 											<OnMouseDown>SortBuildsByRole()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ruolo">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="60" y="20" />
 													<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_ROLE))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -226,9 +239,10 @@
 											<Dimensions x="150" y="20" />
 											<OnMouseDown>SortBuildsByRating()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Valutazione">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="150" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RATING))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -355,9 +369,10 @@
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="10" relativeTo="$(parent)Colonna6" />
 					<Dimensions x="150" y="30" />
 					<Controls>
-						<Label name="$(parent)NoRated" hidden="true" font="ZoFontWinT2" inheritAlpha="false" alpha="1" color="CC0000" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Non ancora valutata">
+						<Label name="$(parent)NoRated" hidden="true" font="ZoFontWinT2" inheritAlpha="false" alpha="1" color="CC0000" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Dimensions y="30" />
-							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
+							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
+							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_NOT_RATED))</OnInitialized>
 						</Label>
 						<Texture name="$(parent)Rating1">
 							<Dimensions x="24" y="24" />
@@ -390,13 +405,15 @@
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900"/>
 			<Controls>
-				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Dettagli Build">
+				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER">
 					<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
 					<Dimensions x="900" y="50" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_DETAILS))</OnInitialized>
 				</Label>
-				<Label font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
+				<Label font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
 					<Dimensions y="40" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_APP))</OnInitialized>
 				</Label>
 				<Control name="$(parent)Content">
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
@@ -406,8 +423,9 @@
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="50" offsetY="10"/>
 							<Dimensions x="240" y="83"/>
 							<Controls>
-								<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="VALUTAZIONE MEDIA">
+								<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
+									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_AVERAGE_RATING))</OnInitialized>
 								</Label>
 								<Texture name="$(parent)Rating1">
 									<Dimensions x="48" y="48" />
@@ -435,8 +453,9 @@
 							<Anchor point="TOPRIGHT" relativeTo="$(parent)" relativePoint="TOPRIGHT" offsetX="-50" offsetY="10"/>
 							<Dimensions x="240" y="83"/>
 							<Controls>
-								<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="VALUTA QUESTA BUILD">
+								<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
+									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RATE_BUILD))</OnInitialized>
 								</Label>
 								<Texture name="$(parent)Rating1" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
 									<Dimensions x="48" y="48" />
@@ -613,9 +632,10 @@
 											<Dimensions x="295" y="48"/>
 											<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
 										</Backdrop>
-										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="ARMATURA">
+										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
+											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_ARMOR))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -774,9 +794,10 @@
 											<Dimensions x="295" y="48"/>
 											<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
 										</Backdrop>
-										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="GIOIELLI">
+										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
+											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_JEWELS))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -851,9 +872,10 @@
 											<Dimensions x="295" y="48"/>
 											<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
 										</Backdrop>
-										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="ARMI">
+										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
+											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_WEAPONS))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -950,9 +972,10 @@
 								BackToBuilds()
 							</OnMouseDown>
 							<Controls>
-								<Label name="$(parent)Label_BuildDetails" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ritorna alla lista">
+								<Label name="$(parent)Label_BuildDetails" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 									<Dimensions y="35" />
+									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RETURN_TO_LIST))</OnInitialized>
 								</Label> 
 								<Label name="$(parent)Label_BackPage"  hidden="true" text="TuiBuilds">
 									<Anchor point="CENTER" relativeTo="$(parent)Label_BuildDetails" relativePoint="CENTER" offsetY="0"/>
@@ -970,21 +993,24 @@
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900" />
 			<Controls>
-				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Condividi Build">
+				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER">
 					<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
 					<Dimensions x="900" y="50" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_SHARE_BUILD))</OnInitialized>
 				</Label>
-				<Label font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
+				<Label font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
 					<Dimensions y="40" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_APP))</OnInitialized>
 				</Label>
 				<Control name="$(parent)Content">
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
 					<Dimensions x="900" />
 					<Controls>
-						<Label name="$(parent)Name" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Dai un nome a questa build:">
+						<Label name="$(parent)Name" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="0"/>
 							<Dimensions x="850" y="35" />
+							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_FORM_NAME))</OnInitialized>
 						</Label>
 						<Control name="$(parent)Name_control">
 							<Dimensions x="600" y="40" />
@@ -999,9 +1025,10 @@
 								</EditBox>
 							</Controls>
 						</Control>
-						<Label name="$(parent)Description" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Scrivi una breve descrizione (MAX 500 caratteri):">
+						<Label name="$(parent)Description" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)Name_control" relativePoint="BOTTOMLEFT" offsetY="20"/>
 							<Dimensions x="850" y="35" />
+							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_FORM_DESCRIPTION))</OnInitialized>
 						</Label>
 						<Control name="$(parent)Description_control"  >
 							<Dimensions x="600" y="100" />
@@ -1016,16 +1043,18 @@
 								</EditBox>
 							</Controls>
 						</Control>
-						<Label name="$(parent)TargetLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assegna un target a questa build:">
+						<Label name="$(parent)TargetLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)Description_control" relativePoint="BOTTOMLEFT" offsetY="20" />
 							<Dimensions y="24" />
+							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_FORM_TARGET))</OnInitialized>
 						</Label>
 						<Control name="$(parent)TargetDropdown" inherits="ZO_ComboBox">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)TargetLabel" relativePoint="TOPRIGHT" offsetX="10"/>
 							<Dimensions x="150" />
 						</Control>
-						<Label name="$(parent)RoleLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assegna un ruolo:">
+						<Label name="$(parent)RoleLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)TargetDropdown" relativePoint="TOPRIGHT" offsetX="35" />
+							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_FORM_ROLE))</OnInitialized>
 						</Label>
 						<Control name="$(parent)RoleDropdown" inherits="ZO_ComboBox">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)RoleLabel" relativePoint="TOPRIGHT" offsetX="10"/>
@@ -1099,9 +1128,10 @@
 											<Dimensions x="295" y="48"/>
 											<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
 										</Backdrop>
-										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="ARMATURA">
+										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
+											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_ARMOR))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -1260,9 +1290,10 @@
 											<Dimensions x="295" y="48"/>
 											<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
 										</Backdrop>
-										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="GIOIELLI">
+										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
+											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_JEWELS))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -1337,9 +1368,10 @@
 											<Dimensions x="295" y="48"/>
 											<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
 										</Backdrop>
-										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="ARMI">
+										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
+											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_WEAPONS))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -1436,9 +1468,10 @@
 								BackToBuilds()
 							</OnMouseDown>
 							<Controls>
-								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Ritorna alla lista">
+								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 									<Dimensions y="35" />
+									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RETURN_TO_LIST))</OnInitialized>
 								</Label> 
 								<Label name="$(parent)Label_BackPage"  hidden="true" text="TuiBuilds">
 									<Anchor point="CENTER" relativeTo="$(parent)Label_BuildDetails" relativePoint="CENTER" offsetY="0"/>
@@ -1456,6 +1489,7 @@
 									<Controls>
 										<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Condividi questa build">
 											<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
+											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_SHARE_BUILD_BUTTON))</OnInitialized>
 										</Label>
 									</Controls>
 								</Button>

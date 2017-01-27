@@ -9,33 +9,27 @@ TamrielUnlimitedIT.BackToMainPage = false
 
 local playerNotified = false
 
-LibStub("AceTimer-3.0"):Embed(TamrielUnlimitedIT)
---Examples of timer usage:
---local id = TamrielUnlimitedIT:ScheduleTimer(function() d("Non-Repeating") end, 10)  -- Ran once after 10 seconds
---local id2 = TamrielUnlimitedIT:ScheduleRepeatingTimer(function() d("Repeating") end, 5)  -- Ran every 5 seconds
---TamrielUnlimitedIT:CancelTimer(id2)
-
 -- ESO Dialogs
 ESO_Dialogs["TUIT_DIALOG_RELOADING_UI"] = 
 {
 	title =
 	{
-		text = "Reload UI",
+		text = SI_TUI_DIALOG_RELOADING_UI_TITLE,
 	},
 	mainText = 
 	{
-		text = "L'interfaccia sta per essere ricaricata...",
+		text = SI_TUI_DIALOG_RELOADING_UI_TEXT,
 	},
 }
 ESO_Dialogs["TUIT_DIALOG_CHANGE_LANGUAGE"] = 
 {
 	title =
 	{
-		text = "Cambio lingua",
+		text = SI_TUI_DIALOG_CHANGELANG_UI_TITLE,
 	},
 	mainText = 
 	{
-		text = "Stiamo impostando la lingua italiana, l'interfaccia sta per essere ricaricata...",
+		text = SI_TUI_DIALOG_CHANGELANG_UI_TEXT,
 	},
 }
 
@@ -179,17 +173,17 @@ end
 local function PlayerNotification()
 	if TUitDataVar ~= nil then
 		if next(TamrielUnlimitedIT.TUitDataVar) ~= nil then
-			d("|c919191L'addon|r |cff0000"..TamrielUnlimitedIT.name.."|r |c919191è stato caricato con successo|r")
+			d(GetString(SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_SUCCESS))
 			--EVENT_MANAGER:UnregisterForEvent(TamrielUnlimitedIT.name .. " PlayerNotification", EVENT_PLAYER_ACTIVATED)
 			local DettagliArray = TamrielUnlimitedIT.TUitDataVar.RefusedValidations
 			if DettagliArray ~= nil and #DettagliArray ~= 0 then
-				d("|cffa800Hai un messaggio nella|r |cfffffftab Convalida|r |cffa800dell'addon|r |cff0000Tamriel Unlimited IT|r|cffa800. Si prega di leggere!|r")
+				d(GetString(SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_NEWVALIDATIONREQUESTS))
 			end
 		else
-			d("La struttura del |cff0000TUitDataVar|r risulta essere vuota nel file |c919191TUitData.lua|r, si prega di riscaricare i dati via app!\n\rUna volta caricati fare |cff0000/reloadui|r")
+			d(GetString(SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_FAILED))
 		end
 	else
-		d("Il file |c919191TUitData.lua|r risulta essere vuoto o non esistere, si prega di riscaricare i dati via app!\n\rUna volta caricati fare |cff0000/reloadui|r")
+		d(GetString(SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_FAILED))
 	end
 end
 
@@ -238,24 +232,6 @@ function TamrielUnlimitedIT:InitializeScene()
 end
 
 function TamrielUnlimitedIT:CreateScene()
-
-	-- Creazione stringhe
-	ZO_CreateStringId("SI_TUI_NOME_ADDON", "Tamriel Unlimited IT")
-	ZO_CreateStringId("SI_TUI_UTENTI", "Utenti")
-	ZO_CreateStringId("SI_TUI_UTENTI_TITLE", "Utenti Registrati")
-	ZO_CreateStringId("SI_TUI_GILDE", "Gilde")
-	ZO_CreateStringId("SI_TUI_GILDE_TITLE", "Gilde Registrate")
-	ZO_CreateStringId("SI_TUI_EVENTI", "Eventi")
-	ZO_CreateStringId("SI_TUI_EVENTI_TITLE", "Eventi in corso")
-	ZO_CreateStringId("SI_TUI_COMMUNITY", "Community")
-	ZO_CreateStringId("SI_TUI_COMMUNITY_TITLE", "Segui il Progetto")
-	ZO_CreateStringId("SI_TUI_CONVALIDA", "Convalida")
-	ZO_CreateStringId("SI_TUI_CONVALIDA_TITLE", "Convalida il tuo Account")
-	ZO_CreateStringId("SI_TUI_CONTRIBUTORI", "Contributori")
-	ZO_CreateStringId("SI_TUI_DETTAGLI_UTENTE", "Dettagli Utente")
-	ZO_CreateStringId("SI_TUI_BUILDS", "Builds")
-	ZO_CreateStringId("SI_TUI_BUILDS_TITLE", "Build Condivise")
-	ZO_CreateStringId("SI_BINDING_NAME_TUI_SHOW_PANEL", "Apri TamrielUnlimitedIT")
 
 	-- Creazione Array dati per icona nel menu
 	local TUI_MAIN_MENU_CATEGORY_DATA =
@@ -461,6 +437,10 @@ function TamrielUnlimitedIT:CreateScene()
 	end
 end
 
+function TamrielUnlimitedIT:SendToChat(text)
+	d("|cff0000[" .. self.name .. "]|r |cffff00" .. text .. "|r")
+end
+
 
 -- PLAYERS LIST
 
@@ -500,8 +480,60 @@ end
 -- USER CONTEXT MENU
 
 function ApriMenuPlayer(self, button, BackPage)
-	local namePG = self:GetNamedChild("Colonna3Label_UserID"):GetText()
-	if button == 1 or GetUnitName("player") == namePG then
+	if button ~= 2 then
+		-- Close the context menu if right mouse button was not pressed
+		ChiudiAddRemoveFriend()
+		do return end
+	end
+	local namePG, nameUser, levelPG = nil, nil, nil
+	if BackPage == "TuiUtenti" then
+		namePG = self:GetNamedChild("Colonna3Label"):GetText()
+		nameUser = self:GetNamedChild("Colonna3Label_UserID"):GetText()
+		levelPG = tonumber("0" .. self:GetNamedChild("Colonna0Label"):GetText())
+	elseif BackPage == "TuiGilde" then
+		nameUser = self:GetNamedChild("Label_UserID"):GetText()
+		namePG = nameUser
+		levelPG = 50
+	end
+	if not namePG then
+		do return end
+	end
+	local isMyself = (GetDisplayName():lower() == nameUser:lower())
+	AddRemoveControl:SetHidden(false)
+	if isMyself then
+		AddRemoveControlAddFriend:SetEnabled(false)
+		AddRemoveControlAddFriendLabel_AddFriend:SetColor(0.5, 0.5, 0.5, 1)
+		AddRemoveControlRemoveFriend:SetEnabled(false)
+		AddRemoveControlRemoveFriendLabel_RemoveFriend:SetColor(0.5, 0.5, 0.5, 1)
+		AddRemoveControlInviaMail:SetEnabled(false)
+		AddRemoveControlInviaMailLabel_SendMailFriend:SetColor(0.5, 0.5, 0.5, 1)
+		AddRemoveControlBisbiglia:SetEnabled(false)
+		AddRemoveControlBisbigliaLabel_WhisperFriend:SetColor(0.5, 0.5, 0.5, 1)
+	else
+		if IsFriend(nameUser) then
+			AddRemoveControlAddFriend:SetEnabled(false)
+			AddRemoveControlRemoveFriend:SetEnabled(true)
+			AddRemoveControlAddFriendLabel_AddFriend:SetColor(0.5, 0.5, 0.5, 1)
+			AddRemoveControlRemoveFriendLabel_RemoveFriend:SetColor(1, 1, 1, 1)
+		else
+			AddRemoveControlAddFriend:SetEnabled(true)
+			AddRemoveControlRemoveFriend:SetEnabled(false)
+			AddRemoveControlAddFriendLabel_AddFriend:SetColor(1, 1, 1, 1)
+			AddRemoveControlRemoveFriendLabel_RemoveFriend:SetColor(0.5, 0.5, 0.5, 1)
+		end
+		AddRemoveControlInviaMail:SetEnabled(true)
+		AddRemoveControlInviaMailLabel_SendMailFriend:SetColor(1, 1, 1, 1)
+		AddRemoveControlBisbiglia:SetEnabled(true)
+		AddRemoveControlBisbigliaLabel_WhisperFriend:SetColor(1, 1, 1, 1)
+	end
+	AddRemoveControlLabel_NomeAdd:SetText(namePG) -- Aggiunge il nome PG
+	AddRemoveControlLabel_NomeAdd:SetColor(GetColorForLevel(levelPG):UnpackRGBA())
+	AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(nameUser) -- Aggiunge UserID alla voce dettagli
+	AddRemoveControl:ClearAnchors()
+	local mouseX, mouseY = GetUIMousePosition()
+	AddRemoveControl:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, mouseX, mouseY)
+	AddRemoveControlLabel_CallPage:SetText(BackPage)
+	--[[if button == 1 or GetUnitName("player") == nameUser then
 		-- ChiudiAddRemoveFriend() -- Blocca il menu a tendina
 		AddRemoveControl:SetHidden(false)
 		AddRemoveControlAddFriend:SetEnabled(false)
@@ -513,14 +545,14 @@ function ApriMenuPlayer(self, button, BackPage)
 		AddRemoveControlBisbiglia:SetEnabled(false)
 		AddRemoveControlBisbigliaLabel_WhisperFriend:SetColor(0.5, 0.5, 0.5, 1)
 		AddRemoveControlLabel_NomeAdd:SetText(namePG) -- Aggiunge il nome PG
-		AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(namePG) -- Aggiunge UserID alla voce dettagli
+		AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(nameUser) -- Aggiunge UserID alla voce dettagli
 		AddRemoveControl:ClearAnchors()
 		local mouseX, mouseY = GetUIMousePosition()
 		AddRemoveControl:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, mouseX, mouseY)
 		AddRemoveControlLabel_CallPage:SetText(BackPage)
 	else
 		AddRemoveControl:SetHidden(false)
-		if IsFriend(namePG) then
+		if IsFriend(nameUser) then
 			AddRemoveControlAddFriend:SetEnabled(false)
 			AddRemoveControlRemoveFriend:SetEnabled(true)
 			AddRemoveControlAddFriendLabel_AddFriend:SetColor(0.5, 0.5, 0.5, 1)
@@ -532,12 +564,12 @@ function ApriMenuPlayer(self, button, BackPage)
 			AddRemoveControlRemoveFriendLabel_RemoveFriend:SetColor(0.5, 0.5, 0.5, 1)
 		end
 		AddRemoveControlLabel_NomeAdd:SetText(namePG) -- Aggiunge il nome PG
-		AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(namePG) -- Aggiunge UserID alla voce dettagli
+		AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(nameUser) -- Aggiunge UserID alla voce dettagli
 		AddRemoveControl:ClearAnchors()
 		local mouseX, mouseY = GetUIMousePosition()
 		AddRemoveControl:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, mouseX, mouseY)
 		AddRemoveControlLabel_CallPage:SetText(BackPage)
-	end
+	end]]--
 end
 function MouseDownGenerale()
 	ChiudiAddRemoveFriend()
@@ -547,12 +579,12 @@ function ChiudiAddRemoveFriend()
 end
 function AggiungiAmico(self)
 	RequestFriend(self:GetParent():GetNamedChild("Label_NomeAdd"):GetText(), "")
-	d("Richiesta Inviata")
+	TamrielUnlimitedIT:SendToChat(GetString(SI_TUI_TEXT_ADDED_FRIEND))
 	ChiudiAddRemoveFriend()
 end
 function RimuoviAmico(self)
 	RemoveFriend(self:GetParent():GetNamedChild("Label_NomeAdd"):GetText())
-	d("Amico Rimosso")
+	TamrielUnlimitedIT:SendToChat(GetString(SI_TUI_TEXT_REMOVED_FRIEND))
 	ChiudiAddRemoveFriend()
 end
 function InviaMail(self)
@@ -569,7 +601,7 @@ function GetCreditByUserID(userID)
 		if #TUitDataVar.Admins ~= 0 then
 			for i = 1, #TUitDataVar.Admins do
 				if TUitDataVar.Admins[i] == userID then
-					credit = credit .. (credit == "" and "" or ", ") .. "|cff0000Amministratore|r"
+					credit = credit .. (credit == "" and "" or ", ") .. "|cff0000" .. GetString(SI_TUI_TEXT_TUIROLE_ADMINISTRATOR) .. "|r"
 					break
 				end
 			end
@@ -579,7 +611,7 @@ function GetCreditByUserID(userID)
 		if #TUitDataVar.Developers ~= 0 then
 			for i = 1, #TUitDataVar.Developers do
 				if TUitDataVar.Developers[i] == userID then
-					credit = credit .. (credit == "" and "" or ", ") .. "|ca1d490Sviluppatore|r"
+					credit = credit .. (credit == "" and "" or ", ") .. "|ca1d490" .. GetString(SI_TUI_TEXT_TUIROLE_DEVELOPER) .. "|r"
 					break
 				end
 			end
@@ -589,7 +621,7 @@ function GetCreditByUserID(userID)
 		if #TUitDataVar.Translators ~= 0 then
 			for i = 1, #TUitDataVar.Translators do
 				if TUitDataVar.Translators[i] == userID then
-					credit = credit .. (credit == "" and "" or ", ") .. "|cc390d4Traduttore|r"
+					credit = credit .. (credit == "" and "" or ", ") .. "|cc390d4" .. GetString(SI_TUI_TEXT_TUIROLE_TRANSLATOR) .. "|r"
 					break
 				end
 			end
@@ -599,7 +631,7 @@ function GetCreditByUserID(userID)
 		if #TUitDataVar.Guildmasters ~= 0 then
 			for i = 1, #TUitDataVar.Guildmasters do
 				if TUitDataVar.Guildmasters[i] == userID then
-					credit = credit .. (credit == "" and "" or ", ") .. "|c90c3d4GuildMaster|r"
+					credit = credit .. (credit == "" and "" or ", ") .. "|c90c3d4" .. GetString(SI_TUI_TEXT_TUIROLE_GUILDMASTER) .. "|r"
 					break
 				end
 			end
@@ -610,7 +642,7 @@ end
 function ApriDettagliPlayer(self, BackPage)
 	local DettagliArray = TamrielUnlimitedIT.TUitDataVar.PlayersData[self:GetNamedChild("Label_DettagliUserID"):GetText()]
 	if (DettagliArray == nil) then
-		d("Nessuna informazione trovata per questo valore")
+		TamrielUnlimitedIT:SendToChat(GetString(SI_TUI_TEXT_INVALID_USER))
 	else
 		TamrielUnlimitedIT.BackToMainPage = true
 
@@ -621,7 +653,7 @@ function ApriDettagliPlayer(self, BackPage)
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTesto"):SetDimensions(900, (tablelength(DettagliArray.PG) - 1) * 100)
 
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoUserID"):SetText(self:GetNamedChild("Label_DettagliUserID"):GetText())
-		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoSex"):SetText("Sesso: " .. (DettagliArray.Sex > 0 and GetString("SI_GENDER", DettagliArray.Sex) or "N.D."))
+		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoSex"):SetText(GetString(SI_TUI_TEXT_SEX) .. ": " .. (DettagliArray.Sex > 0 and GetString("SI_GENDER", DettagliArray.Sex) or "N.D."))
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoSex"):SetColor(GetColorForSex(DettagliArray.Sex):UnpackRGBA())
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoCredit"):SetText(credit)
 		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoRiga5Label_BackPage"):SetText(BackPage)
@@ -630,11 +662,11 @@ function ApriDettagliPlayer(self, BackPage)
 
 		if (tablelength(DettagliArray["Guilds"]) ~= 0) then
 			for key, value in pairs(DettagliArray["Guilds"]) do
-				TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGilde"):SetText("Gilde")
+				--TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGilde"):SetText("Gilde")
 				TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):SetText(TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):GetText() .. "- " .. value .. "\r\n")
 			end
 		else
-			TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):SetText("- L'utente non fa parte di alcuna gilda!")
+			TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):SetText(GetString(SI_TUI_TEXT_USER_NO_GUILDS))
 		end
 
 		local el1 = TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoContUserDinamici")
@@ -652,36 +684,25 @@ function ApriDettagliPlayer(self, BackPage)
 				for key1, value1 in pairs(value) do
 
 					local v1 = el1:GetNamedChild("Dynamic_stampa_Row_User" .. i)
-
 					if v1 == nil then
 						v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Row_User", el1, "DynamicRowDettagliUtente", i)
 					end
+
+					local colorPG = GetColorForLevel(value1.lev)
 
 					v1:SetDimensions(800, 80)
 					v1:SetHidden(false)
 					v1:SetAnchor(TOPLEFT, pre, BOTTOMLEFT, 0, 20)
 
-					local TextAlli = ""
-					if value1.alli == 2 then
-						TextAlli = "|ca4231a" .. zo_strformat(GetString("SI_ALLIANCE", value1.alli)) .. "|r"
-					elseif value1.alli == 1 then
-						TextAlli = "|caf9839" .. zo_strformat(GetString("SI_ALLIANCE", value1.alli)) .. "|r"
-					else
-						TextAlli = "|c285aa1" .. zo_strformat(GetString("SI_ALLIANCE", value1.alli)) .. "|r"
-					end
-
-					local colorPG = GetColorForLevel(value1.lev)
-
 					v1:GetNamedChild("NomePG"):SetText(key1)
-					if colorPG ~= nil then
-						v1:GetNamedChild("NomePG"):SetColor(colorPG:UnpackRGBA())
-					end
-					v1:GetNamedChild("Alleanza"):SetText(TextAlli)
-					v1:GetNamedChild("Liv"):SetText("Livello: " .. value1.lev)
-					v1:GetNamedChild("CP"):SetText("CP: " .. DettagliArray.CP)
-					v1:GetNamedChild("Sex"):SetText("Sesso: " .. GetString("SI_GENDER", value1.sex))
-					v1:GetNamedChild("Race"):SetText("Razza: " .. zo_strformat(SI_RACE_NAME, GetRaceName(value1.sex, value1.race)))
-					v1:GetNamedChild("Class"):SetText("Classe: " .. zo_strformat(SI_CLASS_NAME, GetClassName(value1.sex, value1.class)))
+					v1:GetNamedChild("NomePG"):SetColor(colorPG:UnpackRGBA())
+					v1:GetNamedChild("Alleanza"):SetText(zo_strformat(GetString("SI_ALLIANCE", value1.alli)))
+					v1:GetNamedChild("Alleanza"):SetColor(GetColorForAlliance(value1.alli):UnpackRGBA())
+					v1:GetNamedChild("Liv"):SetText("|cEECA2A" .. GetString(SI_TUI_TEXT_LEVEL) .. "|r: " .. value1.lev)
+					v1:GetNamedChild("CP"):SetText("|cEECA2A" .. GetString(SI_TUI_TEXT_CP) .. "|r: " .. DettagliArray.CP)
+					v1:GetNamedChild("Sex"):SetText("|cEECA2A" .. GetString(SI_TUI_TEXT_SEX) .. "|r: " .. GetString("SI_GENDER", value1.sex))
+					v1:GetNamedChild("Race"):SetText("|cEECA2A" .. GetString(SI_TUI_TEXT_RACE) .. "|r: " .. zo_strformat(SI_RACE_NAME, GetRaceName(value1.sex, value1.race)))
+					v1:GetNamedChild("Class"):SetText("|cEECA2A" .. GetString(SI_TUI_TEXT_CLASS) .. "|r: " .. zo_strformat(SI_CLASS_NAME, GetClassName(value1.sex, value1.class)))
 
 					pre = v1
 					i = i + 1
@@ -790,6 +811,10 @@ function OnMouseExitSlot()
 end
 
 -- ADDON GLOBAL EVENTS
+
+function TamrielUnlimitedIT:ScheduleTimer(callback, seconds)
+	zo_callLater(callback, seconds * 1000)
+end
 
 function TamrielUnlimitedIT.ReloadUIFn ()
 	TamrielUnlimitedIT:ScheduleTimer(function()

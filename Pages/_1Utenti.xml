@@ -14,18 +14,17 @@
 		<Control mouseEnabled="true" name="DynamicScrollPageUtenti" virtual="true" >
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900" y="200" />
-			<OnMouseDown>
-				MouseDownGenerale()
-			</OnMouseDown>
+			<OnMouseDown>MouseDownGenerale()</OnMouseDown>
 			<Controls>
-				<Label name="$(parent)LabelWarningApp" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Assicurati che l'applicazione TUit sia in esecuzione">
+				<Label name="$(parent)LabelWarningApp" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
 					<Dimensions y="40" />
+					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_APP))</OnInitialized>
 				</Label>
 				<Button name="$(parent)RefreshUsers_btn" alpha="1">
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT"  relativeTo="$(parent)" offsetX="-50" />
 					<Dimensions x="40" y="40" />
-					<OnInitialized>SetToolTip(self, "Ricarica dati dall'applicazione (riavvia la UI)")</OnInitialized>
+					<OnInitialized>SetToolTip(self, GetString(SI_TUI_TEXT_REFRESH_DATA))</OnInitialized>
 					<OnMouseDown>TamrielUnlimitedIT.ReloadUIFn()</OnMouseDown>
 					<Textures name="$(parent)Icon" normal="/esoui/art/characterwindow/gearslot_quickslot.dds"  mouseOver="/esoui/art/characterwindow/gearslot_quickslot.dds" ></Textures>
 				</Button>
@@ -33,7 +32,7 @@
 					<Anchor point="TOPRIGHT" relativePoint="TOPLEFT"  relativeTo="$(parent)RefreshUsers_btn" offsetX="-10" />
 					<Textures normal="/esoui/art/miscellaneous/search_icon.dds"  mouseOver="/esoui/art/miscellaneous/search_icon.dds" ></Textures>
 					<Dimensions x="40" y="40" />
-					<OnInitialized>SetToolTip(self, "Avvia la ricerca")</OnInitialized>
+					<OnInitialized>SetToolTip(self, GetString(SI_TUI_TEXT_START_SEARCH))</OnInitialized>
 					<OnMouseDown>SearchPlayer(SearchPlayer_edit:GetText())</OnMouseDown>
 				</Button>
 				<Control name="$(parent)Search_control"  >
@@ -44,10 +43,10 @@
 							<AnchorFill />
 							<Edge edgeSize="2" />
 						</Backdrop>
-						<EditBox name="SearchPlayer_edit" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="100"  editEnabled="true" multiLine="false" newLineEnabled="false"   >
+						<EditBox name="SearchPlayer_edit" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="100"  editEnabled="true" multiLine="false" newLineEnabled="false">
 							<Dimensions x="196" y="22" />
 							<Anchor point="CENTER" relativePoint="CENTER" relativeTo="$(parent)"  />
-							<OnInitialized>SetToolTip(self, "Filtra per Nome Personaggio")</OnInitialized>
+							<OnInitialized>SetToolTip(self, GetString(SI_TUI_TEXT_FILTER_CHARACTER_NAME))</OnInitialized>
 						</EditBox>
 					</Controls>
 				</Control>
@@ -64,7 +63,7 @@
 									<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="30" offsetY="40" />
 									<Dimensions x="850" y="50" />
 									<Controls>
-										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
+										<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOP" relativePoint="TOP" offsetX="0" offsetY="0" relativeTo="$(parent)" />
 											<Dimensions x="850" y="50" />
 										</Label>
@@ -80,9 +79,10 @@
 											<Dimensions x="80" y="20" />
 											<OnMouseDown>SortLiv()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Livello">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="80" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_LEVEL))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -97,9 +97,10 @@
 											<Dimensions x="80" y="20" />
 											<OnMouseDown>SortCP()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="CP">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="80" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_CP))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -114,9 +115,10 @@
 											<Dimensions x="80" y="20" />
 											<OnMouseDown>SortSesso()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Sesso">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="80" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_SEX))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -131,9 +133,10 @@
 											<Dimensions x="200" y="20" />
 											<OnMouseDown>SortUser()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Personaggio">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="200" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_CHARACTER))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -148,9 +151,10 @@
 											<Dimensions x="60" y="20" />
 											<OnMouseDown>SortRace()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Razza">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="60" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RACE))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -165,9 +169,10 @@
 											<Dimensions x="60" y="20" />
 											<OnMouseDown>SortClass()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Classe">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="60" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_CLASS))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -182,9 +187,10 @@
 											<Dimensions x="200" y="20" />
 											<OnMouseDown>SortFazione()</OnMouseDown>
 											<Controls>
-												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Fazione">
+												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="200" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_ALLIANCE))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -221,7 +227,7 @@
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
 					<Dimensions x="80" y="40" />
 					<Controls>
-						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Livello">
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 							<Dimensions x="80" y="40" />
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 						</Label>
@@ -231,7 +237,7 @@
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="10" relativeTo="$(parent)Colonna0" />
 					<Dimensions x="80" y="40" />
 					<Controls>
-						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="CP">
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 							<Dimensions x="80" y="40" />
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 						</Label>
@@ -241,7 +247,7 @@
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="10" relativeTo="$(parent)Colonna1" />
 					<Dimensions x="80" y="40" />
 					<Controls>
-						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Sesso">
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 							<Dimensions x="80" y="40" />
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 						</Label>
@@ -251,11 +257,11 @@
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="10" relativeTo="$(parent)Colonna2" />
 					<Dimensions x="200" y="40" />
 					<Controls>
-						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Username">
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Dimensions x="200" y="40" />
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 						</Label>
-						<Label name="$(parent)Label_UserID" hidden="true" text="Username">
+						<Label name="$(parent)Label_UserID" hidden="true">
 							<Dimensions x="0" y="0" />
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 						</Label>
@@ -285,7 +291,7 @@
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="20" relativeTo="$(parent)Colonna5" />
 					<Dimensions x="200" y="40" />
 					<Controls>
-						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="Fazione">
+						<Label name="$(parent)Label" font="ZoFontWinH5" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Dimensions x="200" y="40" />
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 						</Label>

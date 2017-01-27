@@ -60,7 +60,7 @@ function TUI_Events:LoadNoEvents()
     local eventMessage = self.DynamicScrollPageEventiMessage
 	eventMessage:SetHidden(false)
 	el1:SetHidden(true)
-	eventMessage:GetNamedChild("Label"):SetText("Nessun evento in corso, assicurati che l'applicazione TUit sia in esecuzione")
+	eventMessage:GetNamedChild("Label"):SetText(GetString(SI_TUI_TEXT_EVENTS_NOEVENTS))
 end
 
 function TUI_Events:LoadEventsList()
@@ -122,11 +122,11 @@ function TUI_Events:LoadEventsList()
 				if (diff < 86400) then
 					-- Controllo che l'evento non inizia in meno di un ora
 					zo_callLater(function ()
-							TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento è appena iniziato!")
+							TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_STARTED))
 						end, diff * 1000)
 					if (diff > 3600) then
 						zo_callLater(function ()
-								TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra 1 ora!")
+								TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_STARTING_1H))
 							end, (diff - 3600) * 1000)
 					end
 					if (diff > 600) then
@@ -136,14 +136,14 @@ function TUI_Events:LoadEventsList()
 					end
 					if ((diff > 661 and diff < 3600) or (diff > 60 and diff < 600)) then
 						if (DDiff.minuto == 1) then
-							AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra " .. DDiff.minuto .. " minuto!"))
+							AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_STARTING_IN_MINUTE)))
 						else
-							AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra " .. DDiff.minuto .. " minuti!"))
+							AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_STARTING_IN_MINUTES):gsub("{MINUTES}", DDiff.minuto)))
 						end
 					end
 				end
 			else
-				AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "è in corso in questo momento!"))
+				AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_LIVENOW)))
 			end
 		end
 	end

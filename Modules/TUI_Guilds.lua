@@ -54,7 +54,7 @@ function TUI_Guilds:LoadGuilds()
         self.DynamicScrollPageGilde:GetNamedChild("AD"):SetHidden(true)
         self.DynamicScrollPageGilde:GetNamedChild("DC"):SetHidden(true)
         self.DynamicScrollPageGilde:GetNamedChild("EP"):SetHidden(true)
-        self.DynamicScrollPageGilde:GetNamedChild("NOGuildsLabel"):SetText("Nessuna gilda trovata, assicurati che l'applicazione TUit sia in esecuzione")
+        self.DynamicScrollPageGilde:GetNamedChild("NOGuildsLabel"):SetText(GetString(SI_TUI_TEXT_GUILDS_NOGUILDS))
         do return end
     end
 
@@ -101,7 +101,8 @@ end
 
 function TUI_Guilds:LoadNoGuild(el, alliance)
 	el:GetNamedChild("NoGuild"):SetHidden(false)
-	el:GetNamedChild("NoGuildLabel"):SetText("Nessuna gilda negli " .. zo_strformat(SI_ALLIANCE_NAME, GetAllianceName(alliance)))
+	--el:GetNamedChild("NoGuildLabel"):SetText(GetString(SI_TUI_TEXT_GUILDS_NOGUILDS_IN_ALLIANCE) .. " " .. zo_strformat(SI_ALLIANCE_NAME, GetAllianceName(alliance)))
+	el:GetNamedChild("NoGuildLabel"):SetText(GetString(SI_TUI_TEXT_GUILDS_NOGUILDS_IN_ALLIANCE))
 end
 
 function TUI_Guilds:LoadGuild(el, alliance)
@@ -130,6 +131,7 @@ function TUI_Guilds:LoadGuild(el, alliance)
 		v1:SetAnchor(TOP, pre, BOTTOM, 0, 10)
 
 		v1:GetNamedChild("TitoloLabel"):SetText(tempList[i]["guild_name"])
+		v1:GetNamedChild("TitoloLabel"):SetColor(GetColorForAlliance(alliance):UnpackRGBA())
 		v1:GetNamedChild("TestoEditBox"):SetText(tempList[i]["description"])
 		v1:GetNamedChild("LogoTexture"):SetTexture(tempList[i]["image"])
 		v1:GetNamedChild("GuildMasterBtnLabel"):SetText(tempList[i]["guild_master"])
