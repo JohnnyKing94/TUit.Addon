@@ -49,9 +49,7 @@
 						<Label name="$(parent)Riga1" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 							<Dimensions x="850" />
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
-							<OnInitialized>
-								self:SetText("Per convalidare il tuo account, inserisci nella casella di testo sottostante il Nome Utente del sito e premi INVIA.\r\nIl tuo account verrà convalidato appena possibile. La convalida avviene via mail di gioco ed è spedita agli amministratori TUit. Quindi occorre attendere i tempi di risposta dei server di ZOS (dai 5 ai 20 minuti) e la connessione di un admin in gioco. Grazie della pazienza!")
-							</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_VALIDATOR_VALIDATE_TEXT))</OnInitialized>
 						</Label>
 						<Control name="$(parent)TextBG" >
 							<Dimensions x="310" y="26" />
@@ -73,9 +71,10 @@
 							<Dimensions x="90" y="24" />
 							<Controls>
 								<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
-								<Label name="$(parent)Label_Convalida" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Invia">
+								<Label name="$(parent)Label_Convalida" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 									<Dimensions x="90" y="24" />
+									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_VALIDATOR_VALIDATE_SEND))</OnInitialized>
 								</Label> 
 							</Controls>
 						</Button>

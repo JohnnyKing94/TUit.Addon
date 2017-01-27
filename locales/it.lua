@@ -158,6 +158,8 @@ ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALIDATED", "Il tuo account è gia stat
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_RETRY", "Riprova")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CONTACT_TITLE", "Contatti")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CONTACT_US", "Contattaci:")
+ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALIDATE_TEXT", "Per convalidare il tuo account, inserisci nella casella di testo sottostante il Nome Utente del sito e premi INVIA.\r\nIl tuo account verrà convalidato appena possibile. La convalida avviene via mail di gioco ed è spedita agli amministratori TUit. Quindi occorre attendere i tempi di risposta dei server di ZOS (dai 5 ai 20 minuti) e la connessione di un admin in gioco. Grazie della pazienza!")
+ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALIDATE_SEND", "Invia")
 
 -- Search
 ZO_CreateStringId("SI_TUI_TEXT_FILTER_CHARACTER_NAME", "Filtra per Nome Personaggio")

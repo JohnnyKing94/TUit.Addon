@@ -163,6 +163,8 @@ ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CONTACT_EMAIL", "Email:")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CONTACT_US", "Contact us:")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CONTACT_ADDON_TRACKER", "Addon Tracker:")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CONTACT_APP_TRACKER", "App Tracker:")
+ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALIDATE_TEXT", "To validate your account, insert in the following edit box your website Username and click SEND.\r\nYour account will be validated as soon as possible. The validation is done by in game mail and is sent to the TUit administrators. So you will need to wait for the response of ZOS servers (from 5 to 20 minutes) and the login in game of an admin. Thanks for your patience!")
+ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALIDATE_SEND", "Send")
 
 -- Search
 ZO_CreateStringId("SI_TUI_TEXT_FILTER_CHARACTER_NAME", "Filter by Character Name")
@@ -171,7 +173,7 @@ ZO_CreateStringId("SI_TUI_TEXT_FILTER_CHARACTER_NAME", "Filter by Character Name
 ZO_CreateStringId("SI_TUI_DIALOG_RELOADING_UI_TITLE", "Reload UI")
 ZO_CreateStringId("SI_TUI_DIALOG_RELOADING_UI_TEXT", "The interface is being reloaded...")
 ZO_CreateStringId("SI_TUI_DIALOG_CHANGELANG_UI_TITLE", "Change Language")
-ZO_CreateStringId("SI_TUI_DIALOG_CHANGELANG_UI_TEXT", "Chaning language, the interface is being reloaded...")
+ZO_CreateStringId("SI_TUI_DIALOG_CHANGELANG_UI_TEXT", "Changing language, the interface is being reloaded...")
 ZO_CreateStringId("SI_TUI_DIALOG_SHAREBUILD_NAME_TITLE", "Share Build")
 ZO_CreateStringId("SI_TUI_DIALOG_SHAREBUILD_NAME_TEXT", "Assign a name to this build.")
 ZO_CreateStringId("SI_TUI_DIALOG_SHAREBUILD_NAME_EXISTS_TITLE", "Share Build")
