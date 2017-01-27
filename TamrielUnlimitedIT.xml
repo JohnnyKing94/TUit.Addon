@@ -143,12 +143,13 @@
 	</TopLevelControl>
 
 	<TopLevelControl name="RequireAccountValidationControl" virtual="true">
-		<Dimensions x="920" y="640" />
-		<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
+		<Dimensions x="840" y="50" />
+		<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" offsetX="30" offsetY="20" />
 		<Controls>
-			<Label font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
-				<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
-				<Dimensions y="40" />
+			<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
+			<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFF11C" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER">
+				<Anchor point="TOP" relativePoint="TOP" relativeTo="$(parent)"/>
+				<Dimensions y="50" />
 				<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_ACCOUNT_VALIDATED))</OnInitialized>
 			</Label>
 		</Controls>
