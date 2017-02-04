@@ -163,7 +163,7 @@ ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CONTACT_EMAIL", "Email:")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CONTACT_US", "Contact us:")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CONTACT_ADDON_TRACKER", "Addon Tracker:")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_CONTACT_APP_TRACKER", "App Tracker:")
-ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALIDATE_TEXT", "To validate your account, insert in the following edit box your website Username and click SEND.\r\nYour account will be validated as soon as possible. The validation is done by in game mail and is sent to the TUit administrators. So you will need to wait for the response of ZOS servers (from 5 to 20 minutes) and the login in game of an admin. Thanks for your patience!")
+ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALIDATE_TEXT", "To validate your account, enter your Username in the edit box and click SEND.\r\nThe validation is done by in game mail and is sent to the TUit administrators which they will validate you in the time slot from 8pm to 0am.  Thanks for your patience!")
 ZO_CreateStringId("SI_TUI_TEXT_VALIDATOR_VALIDATE_SEND", "Send")
 
 -- Search
