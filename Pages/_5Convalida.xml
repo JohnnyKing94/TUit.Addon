@@ -1,7 +1,7 @@
 <GuiXml>
 	<Controls>
 		<Control name="DynamicTextConvalida" virtual="true" >
-		<Dimensions x="920" y="680" />
+			<Dimensions x="920" y="680" />
 			<Controls>
 				<Control name="$(parent)Container" inherits="ZO_ScrollContainer">
                   <Anchor point="TOPLEFT" offsetY="12" />
@@ -20,11 +20,11 @@
 				</Label>
 				<Control name="$(parent)ConvalidaMsg">
 					<Dimensions x="800" y="50" />
-					<Anchor point="TOPLEFT" relativeTo="$(parent)LabelWarningApp" relativePoint="BOTTOMLEFT" offsetY="30"/>
+					<Anchor point="TOPLEFT" relativeTo="$(parent)LabelWarningApp" relativePoint="BOTTOMLEFT" offsetY="30" offsetX="10"/>
 					<Controls>
 						<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
 						<Label name="$(parent)AlreadyActivated" font="ZoFontWinH1" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
-							<Anchor point="CENTER" relativePoint="CENTER" offsetX="0" offsetY="0" relativeTo="$(parent)" />
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" offsetX="0" offsetY="0" relativeTo="$(parent)" />
 							<Dimensions x="800" y="50" />
 						</Label>
 						<Label name="$(parent)LabelRefused" font="ZoFontWinH1" inheritAlpha="true" color="FFF11C" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="">
