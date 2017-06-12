@@ -9,7 +9,7 @@
 ## Description: |cffe823Tamriel Unlimited|r |c43db00I|r|cffffffT|r|cff0000A|r è un addon realizzato dalla community italiana di |cff0000tamrielunlimited.it|r al fine di unire gli utenti italiani nel gioco di ESO, ma sopratutto traduce il gioco!
 ## Author: |cdb4d00Rarder44|r & |cdbb400JohnnyKing94|r & |cdbb400ZioRed|r
 ## SavedVariables: TUitData
-## Version: 1.1.1
+## Version: 1.1.2
 
 ; Localization strings
 locales/en.lua
