@@ -128,7 +128,40 @@
 								<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
 							</Controls>
 						</Control>
-						<Button name="$(parent)Riga3" alpha="1" inherits="ZO_DefaultButton">
+						
+						
+						<Control name="$(parent)Riga3" >
+							<Dimensions  x="815" y="22" />
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)TranslationProgress" offsetY="25"/>
+							<Controls>
+								<Control name="$(parent)Colonna0"  >
+								<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
+								<Dimensions x="815" y="22" />
+									<Controls>
+										<Label name="$(parent)Label" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
+											<Dimensions x="110" y="22" />
+											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_CONTRIBUTORS)..":")</OnInitialized>
+										</Label>
+										<EditBox name="$(parent)SearchBox" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
+											<Dimensions x="565" y="22" />
+											<Anchor point="TOPLEFT" relativeTo="$(parent)Label" relativePoint="TOPRIGHT" offsetX="5" offsetY="0" />
+											<OnMouseUp>
+												self:TakeFocus()
+												self:SelectAll()
+											</OnMouseUp>
+											<OnInitialized>
+												self:SetText("https://translate.tamrielunlimited.it/pages/contributori/")
+											</OnInitialized>
+										</EditBox>
+									</Controls>
+								</Control>
+							</Controls>
+						</Control>
+						
+						 
+						
+						<!--<Button name="$(parent)Riga3" alpha="1" inherits="ZO_DefaultButton">
 							<Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" offsetX="0" offsetY="20" relativeTo="$(parent)TranslationProgress" />
 							<Dimensions x="180" y="35" />
 							<OnMouseDown>
@@ -142,12 +175,12 @@
 									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_CONTRIBUTORS))</OnInitialized>
 								</Label> 
 							</Controls>
-						</Button>
+						</Button>-->
 						
 						<!-- TEAMSPEAK  -->
 						<Label name="$(parent)Riga4" font="$(BOLD_FONT)|22|soft-shadow-thin" inheritAlpha="true" color="ff3000" wrapMode="TRUNCATE">
 							<Dimensions x="815" y="22"  />
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)TranslationProgress" offsetY="50" />
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga3" offsetY="50" />
 							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TS_TITLE))</OnInitialized>
 						</Label>
 						<Label name="$(parent)Riga5" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
