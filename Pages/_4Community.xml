@@ -165,7 +165,7 @@
 							<Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" offsetX="0" offsetY="20" relativeTo="$(parent)TranslationProgress" />
 							<Dimensions x="180" y="35" />
 							<OnMouseDown>
-								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TuiContributori")
+								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TUit_Contributor")
 								TamrielUnlimitedIT.BackToMainPage=true
 							</OnMouseDown>
 							<Controls>

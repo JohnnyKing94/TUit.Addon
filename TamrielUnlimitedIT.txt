@@ -27,7 +27,7 @@ libs/LibMainMenu/LibMainMenu.lua
 Function.lua
 
 ; TUit Modules
-modules/TUIT_User.lua
+modules/TUIT_Player.lua
 modules/TUIT_Build.lua
 modules/TUIT_Guild.lua
 modules/TUIT_Event.lua
@@ -37,13 +37,13 @@ modules/TUIT_Contributor.lua
 
 ; TUit Pages
 TamrielUnlimitedIT.xml
-pages/_1User.xml
+pages/_1Player.xml
 pages/_2Guild.xml
 pages/_3Event.xml
 pages/_4Community.xml
 pages/_5Validation.xml
 pages/_6Contributor.xml
-pages/_7UserDetail.xml
+pages/_7PlayerDetail.xml
 pages/_8Build.xml
 
 ; AddOn handlers

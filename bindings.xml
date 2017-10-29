@@ -13,7 +13,7 @@
 				SCENE_MANAGER:ShowBaseScene()
 			else
 				if(TamrielUnlimitedIT.BackToMainPage) then
-					TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TUit_User")
+					TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TUit_Player")
 					TamrielUnlimitedIT.BackToMainPage=false
 				else
 					ZO_MenuBar_SelectDescriptor(TamrielUnlimitedIT.categoryBar, 1, true)

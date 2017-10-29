@@ -33,27 +33,27 @@ end
 
 function TUIT_Players:CreateScene(TUIT_MENU_BAR)
 	-- Creazione Scena Utenti
-	local TUIT_SCENE_UTENTI = ZO_Scene:New("TUit_User", SCENE_MANAGER)
+	local TUIT_SCENE_PLAYER = ZO_Scene:New("TUit_Player", SCENE_MANAGER)
 
 	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUIT_SCENE_UTENTI:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUIT_SCENE_UTENTI:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUIT_SCENE_UTENTI:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUIT_SCENE_UTENTI:AddFragment(TITLE_FRAGMENT)
-	TUIT_SCENE_UTENTI:AddFragment(RIGHT_BG_FRAGMENT)
-	TUIT_SCENE_UTENTI:AddFragment(TOP_BAR_FRAGMENT)
+	-- TUIT_SCENE_PLAYER:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
+	TUIT_SCENE_PLAYER:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+	TUIT_SCENE_PLAYER:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
+	TUIT_SCENE_PLAYER:AddFragment(TITLE_FRAGMENT)
+	TUIT_SCENE_PLAYER:AddFragment(RIGHT_BG_FRAGMENT)
+	TUIT_SCENE_PLAYER:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
-	TUIT_USER_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_USER_TITLE)
-	TUIT_SCENE_UTENTI:AddFragment(TUIT_USER_TITLE_FRAGMENT)
+	TUIT_PLAYER_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_PLAYER_TITLE)
+	TUIT_SCENE_PLAYER:AddFragment(TUIT_PLAYER_TITLE_FRAGMENT)
 
 	-- Aggiunta codice XML alla Scena
 	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
-	TUIT_USER_WINDOW = ZO_FadeSceneFragment:New(self.control)
-	TUIT_SCENE_UTENTI:AddFragment(TUIT_USER_WINDOW)
+	TUIT_PLAYER_WINDOW = ZO_FadeSceneFragment:New(self.control)
+	TUIT_SCENE_PLAYER:AddFragment(TUIT_PLAYER_WINDOW)
 
-	TUIT_SCENE_UTENTI:AddFragment(TUIT_MENU_BAR)
+	TUIT_SCENE_PLAYER:AddFragment(TUIT_MENU_BAR)
 
 	-- Access granted only to validated users
 	if TamrielUnlimitedIT.Validation == nil or not TamrielUnlimitedIT.Validation.isValidated then
@@ -64,7 +64,7 @@ function TUIT_Players:CreateScene(TUIT_MENU_BAR)
     	self:Sort("pg_name", 1)
 	end
 
-    return TUIT_SCENE_UTENTI;
+    return TUIT_SCENE_PLAYER;
 end
 
 function TUIT_Players:LoadNoPlayer()

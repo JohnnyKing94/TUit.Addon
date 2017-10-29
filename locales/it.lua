@@ -1,7 +1,7 @@
 
 -- Scene manager
-ZO_CreateStringId("SI_TUIT_USER", "Utenti")
-ZO_CreateStringId("SI_TUIT_USER_TITLE", "Utenti Registrati")
+ZO_CreateStringId("SI_TUIT_PLAYER", "Utenti")
+ZO_CreateStringId("SI_TUIT_PLAYER_TITLE", "Utenti Registrati")
 ZO_CreateStringId("SI_TUIT_GUILD", "Gilde")
 ZO_CreateStringId("SI_TUIT_GUILD_TITLE", "Gilde Registrate")
 ZO_CreateStringId("SI_TUIT_EVENT", "Eventi")
@@ -11,7 +11,7 @@ ZO_CreateStringId("SI_TUIT_COMMUNITY_TITLE", "Segui il Progetto")
 ZO_CreateStringId("SI_TUIT_VALIDATION", "Convalida")
 ZO_CreateStringId("SI_TUIT_VALIDATION_TITLE", "Convalida il tuo Account")
 ZO_CreateStringId("SI_TUIT_CONTRIBUTORI", "Contributori")
-ZO_CreateStringId("SI_TUIT_USER_DETAIL", "Dettagli Utente")
+ZO_CreateStringId("SI_TUIT_PLAYER_DETAIL", "Dettagli Utente")
 ZO_CreateStringId("SI_TUIT_BUILD", "Builds")
 ZO_CreateStringId("SI_TUIT_BUILD_TITLE", "Build Condivise")
 ZO_CreateStringId("SI_BINDING_NAME_TUIT_SHOW_PANEL", "Apri TamrielUnlimitedIT")
@@ -43,9 +43,9 @@ ZO_CreateStringId("SI_TUIT_TEXT_MONTH_ABBR_11", "Nov")
 ZO_CreateStringId("SI_TUIT_TEXT_MONTH_ABBR_12", "Dic")
 
 -- Notifications
-ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDONLOADED_SUCCESS", "|cffff00Addon|r |cff0000" .. GetString(SI_TUIT_ADDON_NAME) .. "|r |cffff00 caricato|r")
-ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDONLOADED_FAILED", "La configurazione dell'addon |cff0000" .. GetString(SI_TUIT_ADDON_NAME) .. "|r risulta essere vuota o non coerente, si prega di riscaricare i dati via applicazione TUit!\n\rUna volta caricati digitare il seguente comando in chat: |cff0000/reloadui|r")
-ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDONLOADED_NEWVALIDATIONREQUESTS", "|cffa800Hai un messaggio nella|r |cffffffTab Convalida|r |cffa800dell'addon|r |cff0000Tamriel Unlimited IT|r|cffa800. Si prega di leggere!|r")
+ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDON_LOADED_SUCCESS", "|cffff00Addon|r |cff0000" .. GetString(SI_TUIT_ADDON_NAME) .. "|r |cffff00 caricato|r")
+ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDON_LOADED_FAILED", "La configurazione dell'addon |cff0000" .. GetString(SI_TUIT_ADDON_NAME) .. "|r risulta essere vuota o non coerente, si prega di riscaricare i dati via applicazione TUit!\n\rUna volta caricati digitare il seguente comando in chat: |cff0000/reloadui|r")
+ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDON_LOADED_NEWVALIDATIONREQUESTS", "|cffa800Hai un messaggio nella|r |cffffffTab Convalida|r |cffa800dell'addon|r |cff0000Tamriel Unlimited IT|r|cffa800. Si prega di leggere!|r")
 
 -- Account roles
 ZO_CreateStringId("SI_TUIT_TEXT_TUIROLE_ADMINISTRATOR", "Amministratore")
@@ -159,7 +159,7 @@ ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_VALIDATED", "Il tuo account è gia st
 ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_RETRY", "Riprova")
 ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_CONTACT_TITLE", "Contatti")
 ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_CONTACT_US", "Contattaci:")
-ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_VALIDATE_TEXT", "Per convalidare il tuo account, inserisci nella casella di testo sottostante il Nome Utente del sito e infine premi INVIA.\r\nLa convalida avviene via mail di gioco ed è spedita agli amministratori TUit che provvederanno a validarti nella fascia oraria dalle 20:00 alle 24:00. Grazie della pazienza!")
+ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_VALIDATE_TEXT", "Per convalidare il tuo account, inserisci nella casella di testo sottostante il Nome Utente del sito e infine premi INVIA.\r\nLa convalida avviene in automatico. Subito dopo il caricamento dell'UI, controlla l'app!")
 ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_VALIDATE_SEND", "Invia")
 
 -- Search

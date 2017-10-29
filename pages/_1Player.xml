@@ -209,7 +209,7 @@
 		<Button name="DynamicRow" virtual="true">
 			<MouseButton button="2" enabled="true"/>
 			<MouseButton button="1" enabled="true"/>
-			<OnMouseDown>ApriMenuPlayer(self,button,"TUit_User")</OnMouseDown>
+			<OnMouseDown>ApriMenuPlayer(self,button,"TUit_Player")</OnMouseDown>
 			<OnMouseEnter>OnMouseEnterUserRow(self)</OnMouseEnter>
 			<OnMouseExit>OnMouseExitUserRow(self)</OnMouseExit>
 			<Dimensions y="40" x="650" />

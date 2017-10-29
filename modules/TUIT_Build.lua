@@ -224,26 +224,26 @@ function TUIT_Builds:InitializeScreenShare(container)
 end
 
 function TUIT_Builds:CreateScene (TUIT_MENU_BAR)
-	local TUIT_SCENE_BUILDS = ZO_Scene:New("TUit_Build", SCENE_MANAGER)
+	local TUIT_SCENE_BUILD = ZO_Scene:New("TUit_Build", SCENE_MANAGER)
 
 	-- Assign background and UI components
-	-- TUIT_SCENE_BUILDS:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUIT_SCENE_BUILDS:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUIT_SCENE_BUILDS:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUIT_SCENE_BUILDS:AddFragment(TITLE_FRAGMENT)
-	TUIT_SCENE_BUILDS:AddFragment(RIGHT_BG_FRAGMENT)
-	TUIT_SCENE_BUILDS:AddFragment(TOP_BAR_FRAGMENT)
+	-- TUIT_SCENE_BUILD:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
+	TUIT_SCENE_BUILD:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+	TUIT_SCENE_BUILD:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
+	TUIT_SCENE_BUILD:AddFragment(TITLE_FRAGMENT)
+	TUIT_SCENE_BUILD:AddFragment(RIGHT_BG_FRAGMENT)
+	TUIT_SCENE_BUILD:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
 	TUIT_BUILD_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_BUILD_TITLE)
-	TUIT_SCENE_BUILDS:AddFragment(TUIT_BUILD_TITLE_FRAGMENT)
+	TUIT_SCENE_BUILD:AddFragment(TUIT_BUILD_TITLE_FRAGMENT)
 	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
 	-- Aggiunta codice XML alla Scena
 	TUIT_BUILD_WINDOW = ZO_FadeSceneFragment:New(self.control)
-	TUIT_SCENE_BUILDS:AddFragment(TUIT_BUILD_WINDOW)
+	TUIT_SCENE_BUILD:AddFragment(TUIT_BUILD_WINDOW)
 
-	TUIT_SCENE_BUILDS:AddFragment(TUIT_MENU_BAR)
+	TUIT_SCENE_BUILD:AddFragment(TUIT_MENU_BAR)
 
 	-- Access granted only to validated users
 	if TamrielUnlimitedIT.Validation ~= nil and not TamrielUnlimitedIT.Validation.isValidated then
@@ -257,7 +257,7 @@ function TUIT_Builds:CreateScene (TUIT_MENU_BAR)
 		self:SearchBuilds("")
 	end
 
-	return TUIT_SCENE_BUILDS
+	return TUIT_SCENE_BUILD
 end
 
 function TUIT_Builds:SearchBuilds (searchText)

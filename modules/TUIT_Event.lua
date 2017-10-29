@@ -16,37 +16,37 @@ function TUIT_Events:Initialize()
 end
 
 function TUIT_Events:CreateScene(TUIT_MENU_BAR)
-	local TUIT_SCENE_EVENTI = ZO_Scene:New("TUit_Event", SCENE_MANAGER)
+	local TUIT_SCENE_EVENT = ZO_Scene:New("TUit_Event", SCENE_MANAGER)
 
 	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUIT_SCENE_EVENTI:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUIT_SCENE_EVENTI:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUIT_SCENE_EVENTI:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUIT_SCENE_EVENTI:AddFragment(TITLE_FRAGMENT)
-	TUIT_SCENE_EVENTI:AddFragment(RIGHT_BG_FRAGMENT)
-	TUIT_SCENE_EVENTI:AddFragment(TOP_BAR_FRAGMENT)
+	-- TUIT_SCENE_EVENT:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
+	TUIT_SCENE_EVENT:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+	TUIT_SCENE_EVENT:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
+	TUIT_SCENE_EVENT:AddFragment(TITLE_FRAGMENT)
+	TUIT_SCENE_EVENT:AddFragment(RIGHT_BG_FRAGMENT)
+	TUIT_SCENE_EVENT:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
 	TUIT_EVENT_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_EVENT_TITLE) -- The title at the left of the scene is the "global one" but we can change it
-	TUIT_SCENE_EVENTI:AddFragment(TUIT_EVENT_TITLE_FRAGMENT)
+	TUIT_SCENE_EVENT:AddFragment(TUIT_EVENT_TITLE_FRAGMENT)
 	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
 	-- Aggiunta codice XML alla Scena
 	TUIT_EVENT_WINDOW = ZO_FadeSceneFragment:New(self.control)
-	TUIT_SCENE_EVENTI:AddFragment(TUIT_EVENT_WINDOW)
+	TUIT_SCENE_EVENT:AddFragment(TUIT_EVENT_WINDOW)
 
-	TUIT_SCENE_EVENTI:AddFragment(TUIT_MENU_BAR)
+	TUIT_SCENE_EVENT:AddFragment(TUIT_MENU_BAR)
 
     self:LoadEvents()
-    return TUIT_SCENE_EVENTI;
+    return TUIT_SCENE_EVENT;
 end
 
 --[[function self:Sort()
-	quicksort(TamrielUnlimitedIT.TUitDataVar.Events, function (v1, v2) return v1[1] <= v2[1] end)
+	quicksort(TUitDataVar_Copy.Events, function (v1, v2) return v1[1] <= v2[1] end)
 end]]--
 
 function TUIT_Events:LoadEvents()
-	if TamrielUnlimitedIT.TUitDataVar.Events ~= nil and #TamrielUnlimitedIT.TUitDataVar.Events > 0 then
+	if TUitDataVar_Copy.Events ~= nil and #TUitDataVar_Copy.Events > 0 then
         TUIT_Events.CalculateRepeatsEvents()
         --Sort()
         self:LoadEventsList()
@@ -78,10 +78,10 @@ function TUIT_Events:LoadEventsList()
 
 	local counterControl = 1
 
-	for i = 1, #TamrielUnlimitedIT.TUitDataVar.Events do
+	for i = 1, #TUitDataVar_Copy.Events do
 
 		-- minore della fine
-		if (CurrentTimeStamp < TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]) then
+		if (CurrentTimeStamp < TUitDataVar_Copy.Events[i]["end_date"]) then
 
 			local v1 = el1:GetNamedChild("Dynamic_print_Evento" .. counterControl)
 			if v1 == nil then
@@ -92,8 +92,8 @@ function TUIT_Events:LoadEventsList()
 			v1:SetHidden(false)
 			v1:SetAnchor(TOP, pre, BOTTOM, 0, 10)
 
-			DInizio = TimestampToDate(TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"] + 3600)
-			DFine = TimestampToDate(TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"] + 3600)
+			DInizio = TimestampToDate(TUitDataVar_Copy.Events[i]["start_date"] + 3600)
+			DFine = TimestampToDate(TUitDataVar_Copy.Events[i]["end_date"] + 3600)
 
 			local OrariTxt = DInizio.ora .. ":"
 			if (DInizio.minuto < 10) then
@@ -107,43 +107,43 @@ function TUIT_Events:LoadEventsList()
 
 			v1:GetNamedChild("DataLabelGiornoMese"):SetText(DInizio.giorno .. "/" .. DInizio.mese)
 			v1:GetNamedChild("DataLabelOrario"):SetText(OrariTxt)
-			v1:GetNamedChild("TitoloLabel"):SetText(TamrielUnlimitedIT.TUitDataVar.Events[i]["title"])
-			v1:GetNamedChild("TestoRiga1"):SetText(TamrielUnlimitedIT.TUitDataVar.Events[i]["description"])
+			v1:GetNamedChild("TitoloLabel"):SetText(TUitDataVar_Copy.Events[i]["title"])
+			v1:GetNamedChild("TestoRiga1"):SetText(TUitDataVar_Copy.Events[i]["description"])
 
 			pre = v1
 			counterControl = counterControl + 1
 
 			-- minore dell'inizio
-			if (CurrentTimeStamp < TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]) then
-				local diff = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"] - CurrentTimeStamp
+			if (CurrentTimeStamp < TUitDataVar_Copy.Events[i]["start_date"]) then
+				local diff = TUitDataVar_Copy.Events[i]["start_date"] - CurrentTimeStamp
 				local DDiff = TimestampToDate(diff)
 				-- Controllo che l'evento è nelle successive 24 ore
 				TamrielUnlimitedIT.ciao = "asd"
 				if (diff < 86400) then
 					-- Controllo che l'evento non inizia in meno di un ora
 					zo_callLater(function ()
-							TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTED))
+							TUIT_Events.ShowEventMessage("|cffe823" .. TUitDataVar_Copy.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTED))
 						end, diff * 1000)
 					if (diff > 3600) then
 						zo_callLater(function ()
-								TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTING_1H))
+								TUIT_Events.ShowEventMessage("|cffe823" .. TUitDataVar_Copy.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTING_1H))
 							end, (diff - 3600) * 1000)
 					end
 					if (diff > 600) then
 						zo_callLater(function ()
-								TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra 10 minuti!")
+								TUIT_Events.ShowEventMessage("|cffe823" .. TUitDataVar_Copy.Events[i]["title"] .. "|r", "L'evento inizierà tra 10 minuti!")
 							end, (diff - 600) * 1000)
 					end
 					if ((diff > 661 and diff < 3600) or (diff > 60 and diff < 600)) then
 						if (DDiff.minuto == 1) then
-							AddPreLoadEvent(TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTING_IN_MINUTE)))
+							AddPreLoadEvent(TUIT_Events.ShowEventMessage("|cffe823" .. TUitDataVar_Copy.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTING_IN_MINUTE)))
 						else
-							AddPreLoadEvent(TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTING_IN_MINUTES):gsub("{MINUTES}", DDiff.minuto)))
+							AddPreLoadEvent(TUIT_Events.ShowEventMessage("|cffe823" .. TUitDataVar_Copy.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTING_IN_MINUTES):gsub("{MINUTES}", DDiff.minuto)))
 						end
 					end
 				end
 			else
-				AddPreLoadEvent(TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_LIVENOW)))
+				AddPreLoadEvent(TUIT_Events.ShowEventMessage("|cffe823" .. TUitDataVar_Copy.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_LIVENOW)))
 			end
 		end
 	end
@@ -151,7 +151,7 @@ function TUIT_Events:LoadEventsList()
 	self.DynamicScrollPageEventi:SetDimensions(900, AltezzaComponente * counterControl)
 
 	local ii = counterControl
-	while ii <= #TamrielUnlimitedIT.TUitDataVar.Events do
+	while ii <= #TUitDataVar_Copy.Events do
 		local v1 = el1:GetNamedChild("Dynamic_print_Evento" .. ii)
 		if v1 ~= nil then
 			v1:SetDimensions(0, 0)
@@ -175,11 +175,11 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 	ArrTemp = {}
 	local CurrentTimeStamp = GetTimeStamp() + 7200
 
-	for i = 1, #TamrielUnlimitedIT.TUitDataVar.Events do
+	for i = 1, #TUitDataVar_Copy.Events do
 
-		if (TamrielUnlimitedIT.TUitDataVar.Events[i]["recurring"] ~= "" and TamrielUnlimitedIT.TUitDataVar.Events[i]["recurring"] ~= nil) then
+		if (TUitDataVar_Copy.Events[i]["recurring"] ~= "" and TUitDataVar_Copy.Events[i]["recurring"] ~= nil) then
 			local ArrRepTemp = {}
-			local T1 = explode(";", TamrielUnlimitedIT.TUitDataVar.Events[i]["recurring"])
+			local T1 = explode(";", TUitDataVar_Copy.Events[i]["recurring"])
 			for ii = 1, #T1 do
 				local T2 = explode("=", T1[ii])
 				ArrRepTemp[T2[1]] = T2[2]
@@ -204,8 +204,8 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 							DatTermine.secondo = tonumber(string.sub(ArrRepTemp["UNTIL"], 14, 15))
 
 							DataTermineTS = DateToTimestamp(DatTermine)
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+							lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+							lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 							while (lastITS < DataTermineTS) do
 
@@ -219,14 +219,14 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 
 								if (lastITS < DataTermineTS and lastFTS > CurrentTimeStamp) then
 									-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 								end
 							end
 
 						elseif (ArrRepTemp["COUNT"] ~= nil) then
 
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+							lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+							lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 							-- NUMERO DI RIPETIZIONI
 							for iii = 1, tonumber(ArrRepTemp["COUNT"]) do
@@ -242,14 +242,14 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 								-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
 
 								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 								end
 
 							end
 						else
 
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+							lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+							lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 							-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
 							local iii = 1
@@ -264,7 +264,7 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 								lastFTS = DateToTimestamp(tt2)
 
 								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 									iii = iii + 1
 								end
 							end
@@ -290,8 +290,8 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 								DatTermine.secondo = tonumber(string.sub(ArrRepTemp["UNTIL"], 14, 15))
 
 								DataTermineTS = DateToTimestamp(DatTermine)
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+								lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+								lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 								local cc = 1
 								while (lastITS < DataTermineTS) do
@@ -324,7 +324,7 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 
 									if (lastITS < DataTermineTS and lastFTS > CurrentTimeStamp) then
 										-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 									end
 
 									if (cc >= #ArrRepTemp["BYDAY"]) then
@@ -336,8 +336,8 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 
 							elseif (ArrRepTemp["COUNT"] ~= nil) then
 
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+								lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+								lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 								local cc = 1
 								-- NUMERO DI RIPETIZIONI
@@ -374,7 +374,7 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 									-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
 
 									if (lastFTS > CurrentTimeStamp) then
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 									end
 
 									if (cc >= #ArrRepTemp["BYDAY"]) then
@@ -385,8 +385,8 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 								end
 							else
 
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+								lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+								lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 								local cc = 1
 
 								-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
@@ -422,7 +422,7 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 									lastFTS = DateToTimestamp(tt2)
 
 									if (lastFTS > CurrentTimeStamp) then
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 										iii = iii + 1
 									end
 
@@ -448,8 +448,8 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 								DatTermine.secondo = tonumber(string.sub(ArrRepTemp["UNTIL"], 14, 15))
 
 								DataTermineTS = DateToTimestamp(DatTermine)
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+								lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+								lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 								while (lastITS < DataTermineTS) do
 
@@ -463,14 +463,14 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 
 									if (lastITS < DataTermineTS and lastFTS > CurrentTimeStamp) then
 										-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 									end
 								end
 
 							elseif (ArrRepTemp["COUNT"] ~= nil) then
 
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+								lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+								lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 								-- NUMERO DI RIPETIZIONI
 								for iii = 1, tonumber(ArrRepTemp["COUNT"]) do
@@ -486,13 +486,13 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 									-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
 
 									if (lastFTS > CurrentTimeStamp) then
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 									end
 								end
 							else
 
-								lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-								lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+								lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+								lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 								-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
 								local iii = 1
@@ -507,7 +507,7 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 									lastFTS = DateToTimestamp(tt2)
 
 									if (lastFTS > CurrentTimeStamp) then
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 										iii = iii + 1
 									end
 								end
@@ -532,8 +532,8 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 							DatTermine.secondo = tonumber(string.sub(ArrRepTemp["UNTIL"], 14, 15))
 
 							DataTermineTS = DateToTimestamp(DatTermine)
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+							lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+							lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 							if (DataTermineTS > CurrentTimeStamp) then
 								while (lastITS < DataTermineTS) do
@@ -548,15 +548,15 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 
 									if (lastITS < DataTermineTS and lastFTS > CurrentTimeStamp) then
 										-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 									end
 								end
 							end
 
 						elseif (ArrRepTemp["COUNT"] ~= nil) then
 
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+							lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+							lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 							-- NUMERO DI RIPETIZIONI
 							for iii = 1, tonumber(ArrRepTemp["COUNT"]) do
@@ -572,13 +572,13 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 								-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
 
 								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 								end
 							end
 						else
 
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+							lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+							lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 							-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
 							local iii = 1
@@ -593,7 +593,7 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 								lastFTS = DateToTimestamp(tt2)
 
 								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 									iii = iii + 1
 								end
 							end
@@ -617,8 +617,8 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 							DatTermine.secondo = tonumber(string.sub(ArrRepTemp["UNTIL"], 14, 15))
 
 							DataTermineTS = DateToTimestamp(DatTermine)
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+							lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+							lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 							if (DataTermineTS > CurrentTimeStamp) then
 								while (lastITS < DataTermineTS) do
@@ -633,15 +633,15 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 
 									if (lastITS < DataTermineTS and lastFTS > CurrentTimeStamp) then
 										-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
-										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+										ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 									end
 								end
 							end
 
 						elseif (ArrRepTemp["COUNT"] ~= nil) then
 
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+							lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+							lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 							-- NUMERO DI RIPETIZIONI
 							for iii = 1, tonumber(ArrRepTemp["COUNT"]) do
@@ -657,13 +657,13 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 								-- AddErr(tt2.giorno.."/"..tt2.mese.."/"..tt2.anno)
 
 								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 								end
 							end
 						else
 
-							lastITS = TamrielUnlimitedIT.TUitDataVar.Events[i]["start_date"]
-							lastFTS = TamrielUnlimitedIT.TUitDataVar.Events[i]["end_date"]
+							lastITS = TUitDataVar_Copy.Events[i]["start_date"]
+							lastFTS = TUitDataVar_Copy.Events[i]["end_date"]
 
 							-- NUMERO DI RIPETIZIONI CON VALORE DI DEFAULT (NumeroMaxRipetizioniSeNonSettate)
 							local iii = 1
@@ -678,7 +678,7 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 								lastFTS = DateToTimestamp(tt2)
 
 								if (lastFTS > CurrentTimeStamp) then
-									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TamrielUnlimitedIT.TUitDataVar.Events[i]["title"], TamrielUnlimitedIT.TUitDataVar.Events[i]["description"], ""}
+									ArrTemp[#ArrTemp + 1] = {lastITS, lastFTS, TUitDataVar_Copy.Events[i]["title"], TUitDataVar_Copy.Events[i]["description"], ""}
 									iii = iii + 1
 								end
 							end
@@ -691,9 +691,9 @@ TUIT_Events.CalculateRepeatsEvents = function ()
 
 
 	for i = 1, #ArrTemp do
-		TamrielUnlimitedIT.TUitDataVar.Events[#TamrielUnlimitedIT.TUitDataVar.Events + 1] = ArrTemp[i]
+		TUitDataVar_Copy.Events[#TUitDataVar_Copy.Events + 1] = ArrTemp[i]
 	end
 
-	-- AddErr(TamrielUnlimitedIT.TUitDataVar.Events)
+	-- AddErr(TUitDataVar_Copy.Events)
 	-- zo_loadstring("d(\"test\"")()
 end

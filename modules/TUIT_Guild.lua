@@ -15,37 +15,37 @@ function TUIT_Guilds:Initialize()
 end
 
 function TUIT_Guilds:CreateScene(TUIT_MENU_BAR)
-	local TUIT_SCENE_GILDE = ZO_Scene:New("TUit_Guild", SCENE_MANAGER)
+	local TUIT_SCENE_GUILD = ZO_Scene:New("TUit_Guild", SCENE_MANAGER)
 
 	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUIT_SCENE_GILDE:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUIT_SCENE_GILDE:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUIT_SCENE_GILDE:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUIT_SCENE_GILDE:AddFragment(TITLE_FRAGMENT)
-	TUIT_SCENE_GILDE:AddFragment(RIGHT_BG_FRAGMENT)
-	TUIT_SCENE_GILDE:AddFragment(TOP_BAR_FRAGMENT)
+	-- TUIT_SCENE_GUILD:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
+	TUIT_SCENE_GUILD:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+	TUIT_SCENE_GUILD:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
+	TUIT_SCENE_GUILD:AddFragment(TITLE_FRAGMENT)
+	TUIT_SCENE_GUILD:AddFragment(RIGHT_BG_FRAGMENT)
+	TUIT_SCENE_GUILD:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
 	TUIT_GUILD_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_GUILD_TITLE) -- The title at the left of the scene is the "global one" but we can change it
-	TUIT_SCENE_GILDE:AddFragment(TUIT_GUILD_TITLE_FRAGMENT)
+	TUIT_SCENE_GUILD:AddFragment(TUIT_GUILD_TITLE_FRAGMENT)
 	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
 	-- Aggiunta codice XML alla Scena
 	TUIT_GUILD_WINDOW = ZO_FadeSceneFragment:New(self.control)
-	TUIT_SCENE_GILDE:AddFragment(TUIT_GUILD_WINDOW)
+	TUIT_SCENE_GUILD:AddFragment(TUIT_GUILD_WINDOW)
 
-	TUIT_SCENE_GILDE:AddFragment(TUIT_MENU_BAR)
+	TUIT_SCENE_GUILD:AddFragment(TUIT_MENU_BAR)
 
 	self:LoadGuilds()
-    return TUIT_SCENE_GILDE;
+    return TUIT_SCENE_GUILD;
 end
 
 function TUIT_Guilds:LoadGuilds()
 	--local GuildTemp = deepcopy(TUitDataVar.Guild)
 
-    self.GuildADTemp = (TUitDataVar.GuildAD ~= nil and deepcopy(TUitDataVar.GuildAD) or {})
-	self.GuildDCTemp = (TUitDataVar.GuildDC ~= nil and deepcopy(TUitDataVar.GuildDC) or {})
-	self.GuildEPTemp = (TUitDataVar.GuildEP ~= nil and deepcopy(TUitDataVar.GuildEP) or {})
+    self.GuildADTemp = (TUitDataVar.Guild_AD ~= nil and deepcopy(TUitDataVar.Guild_AD) or {})
+	self.GuildDCTemp = (TUitDataVar.Guild_DC ~= nil and deepcopy(TUitDataVar.Guild_DC) or {})
+	self.GuildEPTemp = (TUitDataVar.Guild_EP ~= nil and deepcopy(TUitDataVar.Guild_EP) or {})
 
     local preNoGuilds = self.DynamicScrollPageGilde:GetNamedChild("NOGuilds")
 

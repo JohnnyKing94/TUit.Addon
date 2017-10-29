@@ -21,50 +21,41 @@ function TUIT_Validation:Initialize()
 end
 
 function TUIT_Validation:CreateScene(TUIT_MENU_BAR)
-	local TUIT_SCENE_CONVALIDA = ZO_Scene:New("TUit_Validation", SCENE_MANAGER)
+	local TUIT_SCENE_VALIDATION = ZO_Scene:New("TUit_Validation", SCENE_MANAGER)
 
 	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUIT_SCENE_CONVALIDA:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUIT_SCENE_CONVALIDA:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUIT_SCENE_CONVALIDA:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUIT_SCENE_CONVALIDA:AddFragment(TITLE_FRAGMENT)
-	TUIT_SCENE_CONVALIDA:AddFragment(RIGHT_BG_FRAGMENT)
-	TUIT_SCENE_CONVALIDA:AddFragment(TOP_BAR_FRAGMENT)
+	-- TUIT_SCENE_VALIDATION:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
+	TUIT_SCENE_VALIDATION:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+	TUIT_SCENE_VALIDATION:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
+	TUIT_SCENE_VALIDATION:AddFragment(TITLE_FRAGMENT)
+	TUIT_SCENE_VALIDATION:AddFragment(RIGHT_BG_FRAGMENT)
+	TUIT_SCENE_VALIDATION:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
 	TUIT_VALIDATION_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_VALIDATION_TITLE) -- The title at the left of the scene is the "global one" but we can change it
-	TUIT_SCENE_CONVALIDA:AddFragment(TUIT_VALIDATION_TITLE_FRAGMENT)
+	TUIT_SCENE_VALIDATION:AddFragment(TUIT_VALIDATION_TITLE_FRAGMENT)
 	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
 	-- Aggiunta codice XML alla Scena
 	TUIT_VALIDATION_WINDOW = ZO_FadeSceneFragment:New(self.control)
-	TUIT_SCENE_CONVALIDA:AddFragment(TUIT_VALIDATION_WINDOW)
+	TUIT_SCENE_VALIDATION:AddFragment(TUIT_VALIDATION_WINDOW)
 
-	TUIT_SCENE_CONVALIDA:AddFragment(TUIT_MENU_BAR)
+	TUIT_SCENE_VALIDATION:AddFragment(TUIT_MENU_BAR)
 
 	if self.validationStatus == TUIT_ACCOUNT_VALIDATION_ACTIVATED then
 		self:AlreadyActivated()
 	elseif self.validationStatus == TUIT_ACCOUNT_VALIDATION_REQUIRED then
 		self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(true)
 	end
-    return TUIT_SCENE_CONVALIDA
+    return TUIT_SCENE_VALIDATION
 end
 
 function TUIT_Validation:LoadValidation()
 	self.validationStatus = TUIT_ACCOUNT_VALIDATION_REQUIRED
-	self.UserData = TamrielUnlimitedIT.TUitDataVar.RefusedValidations
-	if self.UserData ~= nil then
-		if #self.UserData > 0 then
-			if (TUitDataVar.PlayersData[GetDisplayName()] ~= nil) then
-				self.isValidated = true
-				self.validationStatus = TUIT_ACCOUNT_VALIDATION_ACTIVATED
-			end
-		end
-	else
-		if (TUitDataVar.PlayersData[GetDisplayName()] ~= nil) then
-			self.isValidated = true
-			self.validationStatus = TUIT_ACCOUNT_VALIDATION_ACTIVATED
-		end
+	self.account_name = TUitDataVar_Copy.PlayersData[GetDisplayName()]
+	if self.account_name ~= nil then
+		self.isValidated = true
+		self.validationStatus = TUIT_ACCOUNT_VALIDATION_ACTIVATED
 	end
 end
 
@@ -75,9 +66,9 @@ function TUIT_Validation:ButtonSend()
 		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText(GetString(SI_TUIT_TEXT_VALIDATION_SENDING))
 		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvio"):SetEnabled(false)
 		TUit_Username:SetEditEnabled(false)
-		local Username_text = TUit_Username:GetText()
+		local username_text = TUit_Username:GetText()
 		TUit_Username:SetText("")
-		self:SaveValidation(Username_text)
+		self:SaveValidation(username_text)
 		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetColor(0.121, 1, 0.054, 1)
 		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaLabelMsg"):SetText(GetString(SI_TUIT_TEXT_VALIDATION_SENT))
 		self.DynamicScrollPageConvalida:GetNamedChild("ContTestoConvalidaButtonInvio"):SetEnabled(true)
@@ -90,23 +81,18 @@ function TUIT_Validation:ButtonSend()
 end
 
 function TUIT_Validation:SendValidation()
-	self.UserData = TamrielUnlimitedIT.TUitDataVar.RefusedValidations
-	if self.UserData ~= nil then
-		if #self.UserData ~= 0 then
-			self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(false)
-			self:ButtonSend()
-		else
-			self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(true)
-			self:ButtonSend()
-		end
+	self.account_name = TUitDataVar_Copy.PlayersData[GetDisplayName()]
+	if self.account_name ~= nil then
+		self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(false)
+		self:ButtonSend()
 	else
 		self.DynamicScrollPageConvalida:GetNamedChild("ConvalidaMsg"):SetHidden(false)
 		self:ButtonSend()
 	end
 end
 
-function TUIT_Validation:SaveValidation(Username)
-	TamrielUnlimitedIT.savedVariablesGlobal.validationUsername = Username
+function TUIT_Validation:SaveValidation(username)
+	TamrielUnlimitedIT.savedVariablesGlobal.validationUsername = username
 	TamrielUnlimitedIT.ReloadUI_SaveValidation()
 	--d(GetString(SI_TUIT_TEXT_VALIDATION_REQUEST_SENT))
 end

@@ -1,6 +1,6 @@
 <GuiXml>
 	<Controls>
-		<Control name="DynamicText_UserDetail" virtual="true" >
+		<Control name="DynamicText_PlayerDetail" virtual="true" >
 		<Dimensions x="920" y="660" />
 			<Controls>
 				<Control name="$(parent)Container" inherits="ZO_ScrollContainer">
@@ -9,7 +9,7 @@
                 </Control>
 			</Controls> 
 		</Control>
-		<Control name="DynamicScrollPageUserDetail" virtual="true">
+		<Control name="DynamicScrollPagePlayerDetail" virtual="true">
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900" y="160" />
 			<Controls>
@@ -74,13 +74,13 @@
 								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, self:GetNamedChild("Label_BackPage"):GetText())
 							</OnMouseDown>
 							<Controls>
-								<Label name="$(parent)Label_UserDetail" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
+								<Label name="$(parent)Label_PlayerDetail" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 									<Dimensions x="115" y="35" />
 									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_RETURN))</OnInitialized>
 								</Label> 
-								<Label name="$(parent)Label_BackPage"  hidden="true" text="TUit_User">
-									<Anchor point="CENTER" relativeTo="$(parent)Label_UserDetail" relativePoint="CENTER" offsetY="0"/>
+								<Label name="$(parent)Label_BackPage"  hidden="true" text="TUit_Player">
+									<Anchor point="CENTER" relativeTo="$(parent)Label_PlayerDetail" relativePoint="CENTER" offsetY="0"/>
 								</Label> 
 							</Controls>
 						</Button>
@@ -89,7 +89,7 @@
 			</Controls>
 		</Control>
 
-		<Control name="DynamicRowUserDetail" virtual="true">
+		<Control name="DynamicRowPlayerDetail" virtual="true">
 			<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)ContUserDinamici" offsetY="10" />
 			<Dimensions x="700" y="80" />
 			<Controls>

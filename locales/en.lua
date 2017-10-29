@@ -1,8 +1,8 @@
 
 -- Scene manager
 ZO_CreateStringId("SI_TUIT_ADDON_NAME", "Tamriel Unlimited IT")
-ZO_CreateStringId("SI_TUIT_USER", "Users")
-ZO_CreateStringId("SI_TUIT_USER_TITLE", "Registered Users")
+ZO_CreateStringId("SI_TUIT_PLAYER", "Users")
+ZO_CreateStringId("SI_TUIT_PLAYER_TITLE", "Registered Users")
 ZO_CreateStringId("SI_TUIT_GUILD", "Guilds")
 ZO_CreateStringId("SI_TUIT_GUILD_TITLE", "Registered Guilds")
 ZO_CreateStringId("SI_TUIT_EVENT", "Events")
@@ -12,7 +12,7 @@ ZO_CreateStringId("SI_TUIT_COMMUNITY_TITLE", "Follow the Project")
 ZO_CreateStringId("SI_TUIT_VALIDATION", "Validation")
 ZO_CreateStringId("SI_TUIT_VALIDATION_TITLE", "Validate your Account")
 ZO_CreateStringId("SI_TUIT_CONTRIBUTORI", "Contributors")
-ZO_CreateStringId("SI_TUIT_USER_DETAIL", "User Details")
+ZO_CreateStringId("SI_TUIT_PLAYER_DETAIL", "User Details")
 ZO_CreateStringId("SI_TUIT_BUILD", "Builds")
 ZO_CreateStringId("SI_TUIT_BUILD_TITLE", "Shared Build")
 ZO_CreateStringId("SI_BINDING_NAME_TUIT_SHOW_PANEL", "Open TamrielUnlimitedIT")
@@ -44,9 +44,9 @@ ZO_CreateStringId("SI_TUIT_TEXT_MONTH_ABBR_11", "Nov")
 ZO_CreateStringId("SI_TUIT_TEXT_MONTH_ABBR_12", "Dec")
 
 -- Notifications
-ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDONLOADED_SUCCESS", "|cff0000" .. GetString(SI_TUIT_ADDON_NAME) .. "|r |cffff00addon loaded|r")
-ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDONLOADED_FAILED", "The configuration of |cff0000" .. GetString(SI_TUIT_ADDON_NAME) .. "|r addon is empty or invalid, please download the data through the TUit application!\n\rOnce downloaded type the following command in chat: |cff0000/reloadui|r")
-ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDONLOADED_NEWVALIDATIONREQUESTS", "|cffa800You have a message in the|r |cffffffValidation Tab|r of |cffa800of|r |cff0000" .. GetString(SI_TUIT_ADDON_NAME) .. "|r|cffa800 addon. Please read it!|r")
+ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDON_LOADED_SUCCESS", "|cff0000" .. GetString(SI_TUIT_ADDON_NAME) .. "|r |cffff00addon loaded|r")
+ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDON_LOADED_FAILED", "The configuration of |cff0000" .. GetString(SI_TUIT_ADDON_NAME) .. "|r addon is empty or invalid, please download the data through the TUit application!\n\rOnce downloaded type the following command in chat: |cff0000/reloadui|r")
+ZO_CreateStringId("SI_TUIT_TEXT_NOTIFICATION_ADDON_LOADED_NEWVALIDATIONREQUESTS", "|cffa800You have a message in the|r |cffffffValidation Tab|r of |cffa800of|r |cff0000" .. GetString(SI_TUIT_ADDON_NAME) .. "|r|cffa800 addon. Please read it!|r")
 
 -- Account roles
 ZO_CreateStringId("SI_TUIT_TEXT_TUIROLE_ADMINISTRATOR", "Administrator")
@@ -164,7 +164,7 @@ ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_CONTACT_EMAIL", "Email:")
 ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_CONTACT_US", "Contact us:")
 ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_CONTACT_ADDON_TRACKER", "Addon Tracker:")
 ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_CONTACT_APP_TRACKER", "App Tracker:")
-ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_VALIDATE_TEXT", "To validate your account, enter your Username in the edit box and click SEND.\r\nThe validation is done by in game mail and is sent to the TUit administrators which they will validate you in the time slot from 8pm to 0am.  Thanks for your patience!")
+ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_VALIDATE_TEXT", "To validate your account, enter your Username in the edit box and click SEND.\r\nThe validation takes place with an auto-system. Immediately after the reloading IU, check the app!")
 ZO_CreateStringId("SI_TUIT_TEXT_VALIDATION_VALIDATE_SEND", "Send")
 
 -- Search

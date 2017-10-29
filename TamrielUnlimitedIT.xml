@@ -76,7 +76,7 @@
 			</Controls>
 		 </Button> 
 		 
-		 <Button name="$(parent)UserDetailID" alpha="1">
+		 <Button name="$(parent)PlayerDetailID" alpha="1">
 			<Dimensions x="220" y="20" />
 			<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Bisbiglia" offsetX="0" offsetY="40"></Anchor>
 			<OnMouseDown>
@@ -84,7 +84,7 @@
 			</OnMouseDown>
 			<Controls>
 				<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />	 
-				<Label name="$(parent)Label_UserDetailID" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Dettagli">
+				<Label name="$(parent)Label_PlayerDetailID" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Dettagli">
 					<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 					<Dimensions x="220" y="20" />
 				</Label>
@@ -92,7 +92,7 @@
 		 </Button>
 
 		<Label name="$(parent)Label_CallPage"  hidden="true" text="TUit_Community">
-			<Anchor point="CENTER" relativeTo="$(parent)Label_UserDetail" relativePoint="CENTER" offsetY="0"/>
+			<Anchor point="CENTER" relativeTo="$(parent)Label_PlayerDetail" relativePoint="CENTER" offsetY="0"/>
 		</Label>
 		 
       </Controls>
@@ -132,7 +132,7 @@
 		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
 	</TopLevelControl>
 	
-	<TopLevelControl name="UserDetailPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
+	<TopLevelControl name="PlayerDetailPanelMainMenu" inherits="ZO_RightPanelFootPrint" hidden="true">
 		<Dimensions x="920" y="640" />
 		<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetY="240" offsetX="-150"></Anchor>
 	</TopLevelControl>

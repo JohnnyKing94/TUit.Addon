@@ -66,7 +66,7 @@
 						</Control>
 						<Button name="$(parent)ConvalidaButtonInvio" alpha="1">
 							<Anchor point="TOP" relativePoint="BOTTOM" offsetX="0" offsetY="30" relativeTo="$(parent)TextBG" />
-							<OnMouseDown>SendValidationMail()</OnMouseDown>
+							<OnMouseDown>SendValidation()</OnMouseDown>
 							<Dimensions x="90" y="24" />
 							<Controls>
 								<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
