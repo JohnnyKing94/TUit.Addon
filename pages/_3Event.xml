@@ -1,6 +1,6 @@
 <GuiXml>
 	<Controls>
-		<Control name="DynamicTextEventi" virtual="true" >
+		<Control name="DynamicText_Event" virtual="true" >
 			<Dimensions x="920" y="660" />
 			<Controls>
 				<Control name="$(parent)Container" inherits="ZO_ScrollContainer">
@@ -17,7 +17,7 @@
 				<Label name="$(parent)Label" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOP" relativePoint="TOP" relativeTo="$(parent)"/>
 					<Dimensions y="50" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_APP))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_WARNING_APP))</OnInitialized>
 				</Label>
 			</Controls>
 		</Control>
@@ -42,7 +42,7 @@
 					<Dimensions x="120" y="120" />
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
 					<Controls>		
-						<Texture name="$(parent)Texture" textureFile="TamrielUnlimitedIT\Textures\calendar.dds" >
+						<Texture name="$(parent)Texture" textureFile="TamrielUnlimitedIT\textures\calendar.dds" >
 							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" offsetX="0" offsetY="0"/>
 							<Dimensions x="120" y="120" />
 						</Texture>

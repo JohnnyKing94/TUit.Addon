@@ -1,16 +1,16 @@
 
-TUI_Players = ZO_Object:Subclass()
+TUIT_Players = ZO_Object:Subclass()
 
-function TUI_Players:New(control)
+function TUIT_Players:New(control)
     local myInstance = ZO_Object.New(self)
     myInstance.control = control
     myInstance:ClearArrayPlayerTemp()
     return myInstance
 end
 
-function TUI_Players:Initialize()
+function TUIT_Players:Initialize()
     self.PlayerTemp = {}
-    self.Panel = CreateControlFromVirtual("DynamicLabel_screenUtenti", self.control, "DynamicTextUtenti", 0)
+    self.Panel = CreateControlFromVirtual("DynamicLabel_User", self.control, "DynamicText_User", 0)
 	self.Panel:SetAnchor(TOP, self.control, TOP, 0, 0)
 	self.Panel:SetHidden(false)
     local sc = self.Panel:GetNamedChild("ContainerScrollChild")
@@ -31,32 +31,32 @@ function TUI_Players:Initialize()
 	self:LoadArrayPlayerTemp()
 end
 
-function TUI_Players:CreateScene(TUI_MENU_BAR)
+function TUIT_Players:CreateScene(TUIT_MENU_BAR)
 	-- Creazione Scena Utenti
-	local TUI_SCENE_UTENTI = ZO_Scene:New("TuiUtenti", SCENE_MANAGER)
+	local TUIT_SCENE_UTENTI = ZO_Scene:New("TUit_User", SCENE_MANAGER)
 
 	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUI_SCENE_UTENTI:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_UTENTI:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_UTENTI:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_UTENTI:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_UTENTI:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_UTENTI:AddFragment(TOP_BAR_FRAGMENT)
+	-- TUIT_SCENE_UTENTI:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
+	TUIT_SCENE_UTENTI:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+	TUIT_SCENE_UTENTI:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
+	TUIT_SCENE_UTENTI:AddFragment(TITLE_FRAGMENT)
+	TUIT_SCENE_UTENTI:AddFragment(RIGHT_BG_FRAGMENT)
+	TUIT_SCENE_UTENTI:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
-	TUI_UTENTI_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_UTENTI_TITLE)
-	TUI_SCENE_UTENTI:AddFragment(TUI_UTENTI_TITLE_FRAGMENT)
+	TUIT_USER_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_USER_TITLE)
+	TUIT_SCENE_UTENTI:AddFragment(TUIT_USER_TITLE_FRAGMENT)
 
 	-- Aggiunta codice XML alla Scena
 	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
-	TUI_UTENTI_WINDOW = ZO_FadeSceneFragment:New(self.control)
-	TUI_SCENE_UTENTI:AddFragment(TUI_UTENTI_WINDOW)
+	TUIT_USER_WINDOW = ZO_FadeSceneFragment:New(self.control)
+	TUIT_SCENE_UTENTI:AddFragment(TUIT_USER_WINDOW)
 
-	TUI_SCENE_UTENTI:AddFragment(TUI_MENU_BAR)
+	TUIT_SCENE_UTENTI:AddFragment(TUIT_MENU_BAR)
 
 	-- Access granted only to validated users
-	if TamrielUnlimitedIT.Validator == nil or not TamrielUnlimitedIT.Validator.isValidated then
+	if TamrielUnlimitedIT.Validation == nil or not TamrielUnlimitedIT.Validation.isValidated then
 		self.DynamicScrollPagePlayer:SetHidden(true)
 		local sc = self.Panel:GetNamedChild("ContainerScrollChild")
 		CreateControlFromVirtual("PlayersRequireAccountValidationControlUsers", sc, "RequireAccountValidationControl", 0)
@@ -64,10 +64,10 @@ function TUI_Players:CreateScene(TUI_MENU_BAR)
     	self:Sort("pg_name", 1)
 	end
 
-    return TUI_SCENE_UTENTI;
+    return TUIT_SCENE_UTENTI;
 end
 
-function TUI_Players:LoadNoPlayer()
+function TUIT_Players:LoadNoPlayer()
 	local el1 = self.DynamicScrollPagePlayer:GetNamedChild("List")
 	local pre = el1:GetNamedChild("print_Row0")
 	--[[local searchcontrol = self.DynamicScrollPagePlayer:GetNamedChild("Search_control")
@@ -82,10 +82,10 @@ function TUI_Players:LoadNoPlayer()
 	pre:GetNamedChild("Colonna4"):SetHidden(true)
 	pre:GetNamedChild("Colonna5"):SetHidden(true)
 	pre:GetNamedChild("Colonna6"):SetHidden(true)]]--
-	pre:GetNamedChild("NOPGLabel"):SetText(GetString(SI_TUI_TEXT_NO_USERS))
+	pre:GetNamedChild("NOPGLabel"):SetText(GetString(SI_TUIT_TEXT_NO_USERS))
 end
 
-function TUI_Players:Sort(field, sortDir)
+function TUIT_Players:Sort(field, sortDir)
     if self.PlayerTemp ~= nil and #self.PlayerTemp > 0 then
         if sortDir == nil then
 			if self.SortDir == nil then
@@ -114,18 +114,18 @@ function TUI_Players:Sort(field, sortDir)
     self:FillBuildsList()
 end
 
-function TUI_Players:ClearArrayPlayerTemp()
+function TUIT_Players:ClearArrayPlayerTemp()
 	--[[for k in pairs(self.PlayerTemp) do
 		self.PlayerTemp[k] = nil
 	end]]--
     self.PlayerTemp = {}
 end
-function TUI_Players:LoadArrayPlayerTemp()
+function TUIT_Players:LoadArrayPlayerTemp()
 	self:ClearArrayPlayerTemp()
 	self.PlayerTemp = deepcopy(TUitDataVar.Player)
 end
 
-function TUI_Players:SearchPlayer(searchText)
+function TUIT_Players:SearchPlayer(searchText)
 	if searchText == "" then
 		self:LoadArrayPlayerTemp()
 	else
@@ -142,7 +142,7 @@ function TUI_Players:SearchPlayer(searchText)
 	self:Sort(self.SortField, self.SortDir)
 end
 
-function TUI_Players:FillBuildsList()
+function TUIT_Players:FillBuildsList()
 	ChiudiAddRemoveFriend()
 
 	self.DynamicScrollPagePlayer:SetDimensions(900, 20 * #self.PlayerTemp + 50)
@@ -195,7 +195,7 @@ function TUI_Players:FillBuildsList()
 			texture:SetTexture(raceTexture)
 			texture:SetDimensions(24, 24)
 			texture:SetHidden(false)
-			SetToolTip(texture, GetString(SI_TUI_TEXT_RACE) .. ": " .. zo_strformat(SI_RACE_NAME, GetRaceName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["race"])))
+			SetToolTip(texture, GetString(SI_TUIT_TEXT_RACE) .. ": " .. zo_strformat(SI_RACE_NAME, GetRaceName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["race"])))
 		else
 			v1:GetNamedChild("Colonna4RaceTexture"):SetHidden(true)
 		end
@@ -204,7 +204,7 @@ function TUI_Players:FillBuildsList()
 			texture:SetTexture(classTexture)
 			texture:SetDimensions(24, 24)
 			texture:SetHidden(false)
-			SetToolTip(texture, GetString(SI_TUI_TEXT_CLASS) .. ": " .. zo_strformat(SI_CLASS_NAME, GetClassName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["class"])))
+			SetToolTip(texture, GetString(SI_TUIT_TEXT_CLASS) .. ": " .. zo_strformat(SI_CLASS_NAME, GetClassName(self.PlayerTemp[i]["sex"], self.PlayerTemp[i]["class"])))
 		else
 			v1:GetNamedChild("Colonna5ClassTexture"):SetHidden(true)
 		end

@@ -1,6 +1,6 @@
-TUI_Builds = ZO_Object:Subclass()
+TUIT_Builds = ZO_Object:Subclass()
 
-function TUI_Builds:New(control)
+function TUIT_Builds:New(control)
     local myInstance = ZO_Object.New(self)
     myInstance.control = control
 	myInstance.Builds = {}
@@ -10,11 +10,11 @@ function TUI_Builds:New(control)
     return myInstance
 end
 
-local TUI_Builds_Target =
+local TUIT_Builds_Target =
 {
-	[1] = { name = "PVE", icon = "TamrielUnlimitedIT/Textures/PVE.dds" },
-	[2] = { name = "PVP", icon = "TamrielUnlimitedIT/Textures/PVP.dds" },
-	[3] = { name = "PVP/PVE", icon = "TamrielUnlimitedIT/Textures/PVE-PVP.dds" }
+	[1] = { name = "PVE", icon = "TamrielUnlimitedIT/textures/PVE.dds" },
+	[2] = { name = "PVP", icon = "TamrielUnlimitedIT/textures/PVP.dds" },
+	[3] = { name = "PVP/PVE", icon = "TamrielUnlimitedIT/textures/PVE-PVP.dds" }
 }
 local BUILD_MIN_PIECES = 3
 
@@ -22,11 +22,11 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NAME"] =
 {
 	title =
 	{
-		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NAME_TITLE),
+		text = GetString(SI_TUIT_DIALOG_SHAREBUILD_NAME_TITLE),
 	},
 	mainText = 
 	{
-		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NAME_TEXT),
+		text = GetString(SI_TUIT_DIALOG_SHAREBUILD_NAME_TEXT),
 	},
 	buttons =
 	{
@@ -40,11 +40,11 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NAME_EXISTS"] =
 {
 	title =
 	{
-		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NAME_EXISTS_TITLE),
+		text = GetString(SI_TUIT_DIALOG_SHAREBUILD_NAME_EXISTS_TITLE),
 	},
 	mainText = 
 	{
-		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NAME_EXISTS_TEXT),
+		text = GetString(SI_TUIT_DIALOG_SHAREBUILD_NAME_EXISTS_TEXT),
 	},
 	buttons =
 	{
@@ -58,11 +58,11 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_NUMBERPIECES"] =
 {
 	title =
 	{
-		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NUMBERPIECES_TITLE),
+		text = GetString(SI_TUIT_DIALOG_SHAREBUILD_NUMBERPIECES_TITLE),
 	},
 	mainText = 
 	{
-		text = GetString(SI_TUI_DIALOG_SHAREBUILD_NUMBERPIECES_TEXT):gsub("{BUILD_MIN_PIECES}", BUILD_MIN_PIECES),
+		text = GetString(SI_TUIT_DIALOG_SHAREBUILD_NUMBERPIECES_TEXT):gsub("{BUILD_MIN_PIECES}", BUILD_MIN_PIECES),
 	},
 	buttons =
 	{
@@ -76,11 +76,11 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_MAXBUILDS"] =
 {
 	title =
 	{
-		text = GetString(SI_TUI_DIALOG_SHAREBUILD_MAXBUILDS_TITLE),
+		text = GetString(SI_TUIT_DIALOG_SHAREBUILD_MAXBUILDS_TITLE),
 	},
 	mainText = 
 	{
-		text = GetString(SI_TUI_DIALOG_SHAREBUILD_MAXBUILDS_TEXT),
+		text = GetString(SI_TUIT_DIALOG_SHAREBUILD_MAXBUILDS_TEXT),
 	},
 	buttons =
 	{
@@ -94,11 +94,11 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_CONFIRM_RATE"] =
 {
 	title =
 	{
-		text = GetString(SI_TUI_DIALOG_SHAREBUILD_CONFIRM_RATE_TITLE),
+		text = GetString(SI_TUIT_DIALOG_SHAREBUILD_CONFIRM_RATE_TITLE),
 	},
 	mainText = 
 	{
-		text = GetString(SI_TUI_DIALOG_SHAREBUILD_CONFIRM_RATE_TEXT),
+		text = GetString(SI_TUIT_DIALOG_SHAREBUILD_CONFIRM_RATE_TEXT),
 	},
 	buttons =
 	{
@@ -106,7 +106,7 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_CONFIRM_RATE"] =
 		{
 			text = SI_OK,
             callback = function(dialog)
-                            TUI_Builds.ConfirmRateBuild(dialog.data.id, dialog.data.rating)
+                            TUIT_Builds.ConfirmRateBuild(dialog.data.id, dialog.data.rating)
                         end,
 		},
 		[2] =
@@ -116,7 +116,7 @@ ESO_Dialogs["TUIT_DIALOG_SHAREBUILD_CONFIRM_RATE"] =
 	}
 }
 
-function TUI_Builds:Get(buildId)
+function TUIT_Builds:Get(buildId)
 	if self.Builds ~= nil then
 		for i = 1, #self.Builds do
 			if self.Builds[i].id == buildId then
@@ -127,13 +127,13 @@ function TUI_Builds:Get(buildId)
 	return nil
 end
 
-function TUI_Builds:Initialize ()
+function TUIT_Builds:Initialize ()
 	-- Initialize SavedVars
 	if SharedBuildDataVar == nil then
 		SharedBuildDataVar = {}
 	end
-	if TUI_Config == nil then
-		TUI_Config = {}
+	if TUIT_Config == nil then
+		TUIT_Config = {}
 	end
 	if TamrielUnlimitedIT.savedVariablesGlobal.Builds == nil then
 		TamrielUnlimitedIT.savedVariablesGlobal.Builds = { Created = {}, Evaluated = {} }
@@ -146,7 +146,7 @@ function TUI_Builds:Initialize ()
 		end
 	end
     -- Initialize UI for Builds screen
-    self.Panel = CreateControlFromVirtual("DynamicLabel_screenBuilds", self.control, "DynamicTextBuilds", 0)
+    self.Panel = CreateControlFromVirtual("DynamicLabel_Build", self.control, "DynamicText_Build", 0)
 	self.Panel:SetAnchor(TOP, self.control, TOP, 0, 0)
 	self.Panel:SetHidden(false)
 	local container = self.Panel:GetNamedChild("ContainerScrollChild")
@@ -155,7 +155,7 @@ function TUI_Builds:Initialize ()
 	self:InitializeScreenShare(container)
 end
 
-function TUI_Builds:InitializeScreenList(container)
+function TUIT_Builds:InitializeScreenList(container)
 	self.DynamicScrollPageBuilds = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuilds", container, "DynamicScrollPageBuilds", 0)
 
 	SearchBuild_edit:SetHandler("OnEnter", function (btn, key, ctrl, alt, shift, command)
@@ -168,9 +168,9 @@ function TUI_Builds:InitializeScreenList(container)
 	local function OnFilterTargetChanged(comboBox, name, entry)
 		self.FilterTargetDropdownSelected = entry.id
 	end
-	self.FilterTargetDropdown:AddItem({ name = "<" .. GetString(SI_TUI_TEXT_ALL_PLURAL) .. ">", callback = OnFilterTargetChanged, id = 0 }, ZO_COMBOBOX_SUPRESS_UPDATE)
-	for i = 1, #TUI_Builds_Target do
-		self.FilterTargetDropdown:AddItem({ name = TUI_Builds_Target[i].name, callback = OnFilterTargetChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
+	self.FilterTargetDropdown:AddItem({ name = "<" .. GetString(SI_TUIT_TEXT_ALL_PLURAL) .. ">", callback = OnFilterTargetChanged, id = 0 }, ZO_COMBOBOX_SUPRESS_UPDATE)
+	for i = 1, #TUIT_Builds_Target do
+		self.FilterTargetDropdown:AddItem({ name = TUIT_Builds_Target[i].name, callback = OnFilterTargetChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
 	end
 	self.FilterTargetDropdown:UpdateItems()
 	self.FilterTargetDropdown:SelectFirstItem()
@@ -181,20 +181,20 @@ function TUI_Builds:InitializeScreenList(container)
 	local function OnFilterRoleChanged(comboBox, name, entry)
 		self.FilterRoleDropdownSelected = entry.id
 	end
-	self.FilterRoleDropdown:AddItem({ name = "<" .. GetString(SI_TUI_TEXT_ALL_PLURAL) .. ">", callback = OnFilterRoleChanged, id = 0 }, ZO_COMBOBOX_SUPRESS_UPDATE)
-	for i = 1, #TUI_Config.Roles do
-		self.FilterRoleDropdown:AddItem({ name = TUI_Config.Roles[i].name, callback = OnFilterRoleChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
+	self.FilterRoleDropdown:AddItem({ name = "<" .. GetString(SI_TUIT_TEXT_ALL_PLURAL) .. ">", callback = OnFilterRoleChanged, id = 0 }, ZO_COMBOBOX_SUPRESS_UPDATE)
+	for i = 1, #TUIT_Config.Roles do
+		self.FilterRoleDropdown:AddItem({ name = TUIT_Config.Roles[i].name, callback = OnFilterRoleChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
 	end
 	self.FilterRoleDropdown:UpdateItems()
 	self.FilterRoleDropdown:SelectFirstItem()
 end
 
-function TUI_Builds:InitializeScreenDetails(container)
+function TUIT_Builds:InitializeScreenDetails(container)
 	self.DynamicScrollPageBuildDetails = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuildDetails", container, "DynamicScrollPageBuildDetails", 0)
 	self.DynamicScrollPageBuildDetails:SetHidden(true)
 end
 
-function TUI_Builds:InitializeScreenShare(container)
+function TUIT_Builds:InitializeScreenShare(container)
 	self.DynamicScrollPageBuildShare = CreateControlFromVirtual("Dynamic_print_ScrollPanelBuildShare", container, "DynamicScrollPageBuildShare", 0)
 	self.DynamicScrollPageBuildShare:SetHidden(true)
 
@@ -206,8 +206,8 @@ function TUI_Builds:InitializeScreenShare(container)
 	local function OnShareTargetChanged(comboBox, name, entry)
 		self.ShareTargetDropdownSelected = entry.id
 	end
-	for i = 1, #TUI_Builds_Target do
-		self.ShareTargetDropdown:AddItem({ name = TUI_Builds_Target[i].name, callback = OnShareTargetChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
+	for i = 1, #TUIT_Builds_Target do
+		self.ShareTargetDropdown:AddItem({ name = TUIT_Builds_Target[i].name, callback = OnShareTargetChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
 	end
 	self.ShareTargetDropdown:UpdateItems()
 
@@ -217,36 +217,36 @@ function TUI_Builds:InitializeScreenShare(container)
 	local function OnShareRoleChanged(comboBox, name, entry)
 		self.ShareRoleDropdownSelected = entry.id
 	end
-	for i = 1, #TUI_Config.Roles do
-		self.ShareRoleDropdown:AddItem({ name = TUI_Config.Roles[i].name, callback = OnShareRoleChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
+	for i = 1, #TUIT_Config.Roles do
+		self.ShareRoleDropdown:AddItem({ name = TUIT_Config.Roles[i].name, callback = OnShareRoleChanged, id = i }, ZO_COMBOBOX_SUPRESS_UPDATE)
 	end
 	self.ShareRoleDropdown:UpdateItems()
 end
 
-function TUI_Builds:CreateScene (TUI_MENU_BAR)
-	local TUI_SCENE_BUILDS = ZO_Scene:New("TuiBuilds", SCENE_MANAGER)
+function TUIT_Builds:CreateScene (TUIT_MENU_BAR)
+	local TUIT_SCENE_BUILDS = ZO_Scene:New("TUit_Build", SCENE_MANAGER)
 
 	-- Assign background and UI components
-	-- TUI_SCENE_BUILDS:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_BUILDS:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_BUILDS:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_BUILDS:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_BUILDS:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_BUILDS:AddFragment(TOP_BAR_FRAGMENT)
+	-- TUIT_SCENE_BUILDS:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
+	TUIT_SCENE_BUILDS:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+	TUIT_SCENE_BUILDS:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
+	TUIT_SCENE_BUILDS:AddFragment(TITLE_FRAGMENT)
+	TUIT_SCENE_BUILDS:AddFragment(RIGHT_BG_FRAGMENT)
+	TUIT_SCENE_BUILDS:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
-	TUI_BUILDS_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_BUILDS_TITLE)
-	TUI_SCENE_BUILDS:AddFragment(TUI_BUILDS_TITLE_FRAGMENT)
+	TUIT_BUILD_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_BUILD_TITLE)
+	TUIT_SCENE_BUILDS:AddFragment(TUIT_BUILD_TITLE_FRAGMENT)
 	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
 	-- Aggiunta codice XML alla Scena
-	TUI_BUILDS_WINDOW = ZO_FadeSceneFragment:New(self.control)
-	TUI_SCENE_BUILDS:AddFragment(TUI_BUILDS_WINDOW)
+	TUIT_BUILD_WINDOW = ZO_FadeSceneFragment:New(self.control)
+	TUIT_SCENE_BUILDS:AddFragment(TUIT_BUILD_WINDOW)
 
-	TUI_SCENE_BUILDS:AddFragment(TUI_MENU_BAR)
+	TUIT_SCENE_BUILDS:AddFragment(TUIT_MENU_BAR)
 
 	-- Access granted only to validated users
-	if TamrielUnlimitedIT.Validator ~= nil and not TamrielUnlimitedIT.Validator.isValidated then
+	if TamrielUnlimitedIT.Validation ~= nil and not TamrielUnlimitedIT.Validation.isValidated then
 		self.DynamicScrollPageBuilds:SetHidden(true)
 		local container = self.Panel:GetNamedChild("ContainerScrollChild")
 		CreateControlFromVirtual("PlayersRequireAccountValidationControlBuilds", container, "RequireAccountValidationControl", 0)
@@ -257,10 +257,10 @@ function TUI_Builds:CreateScene (TUI_MENU_BAR)
 		self:SearchBuilds("")
 	end
 
-	return TUI_SCENE_BUILDS
+	return TUIT_SCENE_BUILDS
 end
 
-function TUI_Builds:SearchBuilds (searchText)
+function TUIT_Builds:SearchBuilds (searchText)
 	self.Filter = searchText
 	self.Builds = {}
 	local searchTextInsensitive = ""
@@ -284,7 +284,7 @@ function TUI_Builds:SearchBuilds (searchText)
 				if addToBuilds == true then
 					local build = deepcopy(value)
 					build.id = key
-					build.game_version = TUI_Builds.GetGameVersion(build.game_version)
+					build.game_version = TUIT_Builds.GetGameVersion(build.game_version)
 					table.insert( self.Builds, i, build )
 					i = i + 1
 				end
@@ -294,7 +294,7 @@ function TUI_Builds:SearchBuilds (searchText)
 	self:SortBuilds(self.Sort)
 end
 
-function TUI_Builds:SortBuilds (field)
+function TUIT_Builds:SortBuilds (field)
 	if self.Builds ~= nil and #self.Builds > 0 then
 		if field ~= self.Sort then
 			self.Sort = field
@@ -318,15 +318,15 @@ function TUI_Builds:SortBuilds (field)
     self:FillBuildsList()
 end
 
-function TUI_Builds.GetBuildTarget (target)
+function TUIT_Builds.GetBuildTarget (target)
     target = tonumber(target)
-    if target > 0 and target <= #TUI_Builds_Target then
-        return TUI_Builds_Target[target]
+    if target > 0 and target <= #TUIT_Builds_Target then
+        return TUIT_Builds_Target[target]
     end
     return nil
 end
 
-function TUI_Builds:GetFormattedDateAbbr(date)
+function TUIT_Builds:GetFormattedDateAbbr(date)
 	local y,m,d,hh,mm = StringToDateTime(date)
 	if m then
 		return string.format("%02d", d) .. " " .. string.upper(GetMonthNameAbbr(m)) .. " " .. y
@@ -334,7 +334,7 @@ function TUI_Builds:GetFormattedDateAbbr(date)
 	return ""
 end
 
-function TUI_Builds:GetFormattedDate(date)
+function TUIT_Builds:GetFormattedDate(date)
 	local y,m,d,hh,mm = StringToDateTime(date)
 	if m then
 		return d .. " " .. GetMonthName(m) .. " " .. y
@@ -342,7 +342,7 @@ function TUI_Builds:GetFormattedDate(date)
 	return ""
 end
 
-function TUI_Builds:FillBuildsList ()
+function TUIT_Builds:FillBuildsList ()
 	self.DynamicScrollPageBuilds:SetDimensions(900, 20 * #self.Builds + 50)
 	self.DynamicScrollPageBuilds:GetNamedChild("Tabella"):SetDimensions(900, 20 * #self.Builds + 50)
 
@@ -371,7 +371,7 @@ function TUI_Builds:FillBuildsList ()
 				v1 = CreateControlFromVirtual("$(parent)Dynamic_print_BuildsRow", el1, "BuildsDynamicRow", i)
 			end
 
-			local target = TUI_Builds.GetBuildTarget(self.Builds[i].target)
+			local target = TUIT_Builds.GetBuildTarget(self.Builds[i].target)
 			local raceTexture = GetRaceTexture(self.Builds[i].race)
 			local classTexture = GetClassTexture(self.Builds[i].class)
 			local roleTexture = GetRoleTexture(self.Builds[i].role)
@@ -381,11 +381,11 @@ function TUI_Builds:FillBuildsList ()
 			v1:SetAnchor(TOPLEFT, pre, BOTTOMLEFT, 0, 0)
 			v1:GetNamedChild("Label_BuildID"):SetText(self.Builds[i].id)
 			v1:GetNamedChild("Colonna0Label"):SetText(self:GetFormattedDateAbbr(self.Builds[i].date))
-			--SetToolTip(v1:GetNamedChild("Colonna1TextureVersion"), "Client ESO: " .. TUI_Builds.GetGameVersion(self.Builds[i].game_version))
+			--SetToolTip(v1:GetNamedChild("Colonna1TextureVersion"), "Client ESO: " .. TUIT_Builds.GetGameVersion(self.Builds[i].game_version))
 			if target ~= nil then
 				v1:GetNamedChild("Colonna1TextureTarget"):SetTexture(target.icon)
 				v1:GetNamedChild("Colonna1TextureTarget"):SetHidden(false)
-				SetToolTip(v1:GetNamedChild("Colonna1TextureTarget"), GetString(SI_TUI_TEXT_TARGET) .. ": " .. target.name .. " - Ver. ESO: " .. TUI_Builds.GetGameVersion(self.Builds[i].game_version))
+				SetToolTip(v1:GetNamedChild("Colonna1TextureTarget"), GetString(SI_TUIT_TEXT_TARGET) .. ": " .. target.name .. " - Ver. ESO: " .. TUIT_Builds.GetGameVersion(self.Builds[i].game_version))
 			else
 				v1:GetNamedChild("Colonna1TextureTarget"):SetHidden(true)
 				SetToolTip(v1:GetNamedChild("Colonna1TextureTarget"), "N.D.")
@@ -398,7 +398,7 @@ function TUI_Builds:FillBuildsList ()
 				texture:SetTexture(raceTexture)
 				texture:SetDimensions(24, 24)
 				texture:SetHidden(false)
-				SetToolTip(texture, GetString(SI_TUI_TEXT_RACE) .. ": " .. zo_strformat(SI_RACE_NAME, GetRaceName(2, self.Builds[i].race)))
+				SetToolTip(texture, GetString(SI_TUIT_TEXT_RACE) .. ": " .. zo_strformat(SI_RACE_NAME, GetRaceName(2, self.Builds[i].race)))
 			else
 				v1:GetNamedChild("Colonna4RaceTexture"):SetHidden(true)
 			end
@@ -407,7 +407,7 @@ function TUI_Builds:FillBuildsList ()
 				texture:SetTexture(classTexture)
 				texture:SetDimensions(24, 24)
 				texture:SetHidden(false)
-				SetToolTip(texture, GetString(SI_TUI_TEXT_CLASS) .. ": " .. zo_strformat(SI_CLASS_NAME, GetClassName(2, self.Builds[i].class)))
+				SetToolTip(texture, GetString(SI_TUIT_TEXT_CLASS) .. ": " .. zo_strformat(SI_CLASS_NAME, GetClassName(2, self.Builds[i].class)))
 			else
 				v1:GetNamedChild("Colonna5ClassTexture"):SetHidden(true)
 			end
@@ -416,7 +416,7 @@ function TUI_Builds:FillBuildsList ()
 				texture:SetTexture(roleTexture)
 				texture:SetDimensions(24, 24)
 				texture:SetHidden(false)
-				SetToolTip(texture, GetString(SI_TUI_TEXT_ROLE) .. ": " .. GetConfigRoleInfo(self.Builds[i].role).name)
+				SetToolTip(texture, GetString(SI_TUIT_TEXT_ROLE) .. ": " .. GetConfigRoleInfo(self.Builds[i].role).name)
 			else
 				v1:GetNamedChild("Colonna6RoleTexture"):SetHidden(true)
 			end
@@ -440,23 +440,23 @@ function TUI_Builds:FillBuildsList ()
 	end
 end
 
-function TUI_Builds:CloseDetails ()
+function TUIT_Builds:CloseDetails ()
 	self.DynamicScrollPageBuildDetails:SetHidden(true)
 	self.DynamicScrollPageBuildShare:SetHidden(true)
 	self.DynamicScrollPageBuilds:SetHidden(false)
 end
 
-function TUI_Builds:SetRatingTextures(elementUI, rating)
+function TUIT_Builds:SetRatingTextures(elementUI, rating)
 	local rating_textures = GetRatingTextures(rating)
 	local label = elementUI:GetNamedChild("Label")
 
 	if label ~= nil then
 		if rating > 0 then
-			label:SetText(GetString(SI_TUI_TEXT_AVERAGE_RATING))
-			label:SetColor(TUI_Config.colors.gold:UnpackRGBA())
+			label:SetText(GetString(SI_TUIT_TEXT_AVERAGE_RATING))
+			label:SetColor(TUIT_Config.colors.gold:UnpackRGBA())
 		else
-			label:SetText(GetString(SI_TUI_TEXT_AVERAGE_RATING_NOTRATED))
-			label:SetColor(TUI_Config.colors.red:UnpackRGBA())
+			label:SetText(GetString(SI_TUIT_TEXT_AVERAGE_RATING_NOTRATED))
+			label:SetColor(TUIT_Config.colors.red:UnpackRGBA())
 		end
 	end
 	for j = 1, 5, 1 do
@@ -472,21 +472,21 @@ function TUI_Builds:SetRatingTextures(elementUI, rating)
 	end
 end
 
-function TUI_Builds:SetMyRating()
+function TUIT_Builds:SetMyRating()
 	local el = self.DynamicScrollPageBuildDetails:GetNamedChild("ContentRate")
 	local label = el:GetNamedChild("Label")
 	local showRate = true
 	if self.currentBuild.owner:lower() == GetDisplayName():lower() then
 		showRate = false
-		label:SetText(GetString(SI_TUI_TEXT_IS_MY_BUILD))
-		label:SetColor(TUI_Config.colors.red:UnpackRGBA())
+		label:SetText(GetString(SI_TUIT_TEXT_IS_MY_BUILD))
+		label:SetColor(TUIT_Config.colors.red:UnpackRGBA())
 	else
 		if self.currentBuild.myRating > 0 then
-			label:SetText(GetString(SI_TUI_TEXT_CHANGE_RATING))
-			label:SetColor(TUI_Config.colors.gold:UnpackRGBA())
+			label:SetText(GetString(SI_TUIT_TEXT_CHANGE_RATING))
+			label:SetColor(TUIT_Config.colors.gold:UnpackRGBA())
 		else
-			label:SetText(GetString(SI_TUI_TEXT_RATE_BUILD))
-			label:SetColor(TUI_Config.colors.green:UnpackRGBA())
+			label:SetText(GetString(SI_TUIT_TEXT_RATE_BUILD))
+			label:SetColor(TUIT_Config.colors.green:UnpackRGBA())
 		end
 		label:ClearAnchors()
 		label:SetAnchor(TOP, el:GetNamedChild("Rate"), TOP, 0, 0)
@@ -496,7 +496,7 @@ function TUI_Builds:SetMyRating()
 			if rating > 0 and i <= rating then
 				tex = "star-full.dds"
 			end
-			el:GetNamedChild("Rating" .. i):SetTexture("TamrielUnlimitedIT/Textures/" .. tex)
+			el:GetNamedChild("Rating" .. i):SetTexture("TamrielUnlimitedIT/textures/" .. tex)
 		end
 	end
 	for i = 1, 5, 1 do
@@ -504,27 +504,27 @@ function TUI_Builds:SetMyRating()
 	end
 end
 
-function TUI_Builds:SetupEquipSlot(elementUI, equipSlot, texture, label)
+function TUIT_Builds:SetupEquipSlot(elementUI, equipSlot, texture, label)
 	local slot = elementUI:GetNamedChild("SlotsSlot" .. equipSlot);
 	if slot ~= nil then
 		if texture ~= nil and texture ~= "" then
 			slot:GetNamedChild("Texture"):SetTexture(texture)
 		end
 		if label == nil or label == "" then
-			slot:GetNamedChild("Label"):SetText(GetString(SI_TUI_TEXT_NO_OBJECT_IN_SLOT))
-			slot:GetNamedChild("Label"):SetColor(TUI_Config.colors.red:UnpackRGBA())
+			slot:GetNamedChild("Label"):SetText(GetString(SI_TUIT_TEXT_NO_OBJECT_IN_SLOT))
+			slot:GetNamedChild("Label"):SetColor(TUIT_Config.colors.red:UnpackRGBA())
 			slot:GetNamedChild("Label"):SetAlpha(0.5)
 			slot:GetNamedChild("Texture"):SetAlpha(0.4)
 		else
 			slot:GetNamedChild("Label"):SetAlpha(1)
 			slot:GetNamedChild("Texture"):SetAlpha(1)
-			slot:GetNamedChild("Label"):SetColor(TUI_Config.colors.white:UnpackRGBA())
+			slot:GetNamedChild("Label"):SetColor(TUIT_Config.colors.white:UnpackRGBA())
 			slot:GetNamedChild("Label"):SetText(label)
 		end
 	end
 end
 
-function TUI_Builds:PreviewSlot(elementUI, slot)
+function TUIT_Builds:PreviewSlot(elementUI, slot)
 	local itemLink = nil
 	if slot ~= nil and self.currentBuild and self.currentBuild.items then
 		for i = 1, #self.currentBuild.items do
@@ -542,7 +542,7 @@ function TUI_Builds:PreviewSlot(elementUI, slot)
 	end
 end
 
-function TUI_Builds:ShowDetails (buildId)
+function TUIT_Builds:ShowDetails (buildId)
 
 	local build = self:Get(buildId)
 	if build ~= nil then
@@ -556,25 +556,25 @@ function TUI_Builds:ShowDetails (buildId)
 		-- Load the build data
 		el1:GetNamedChild("Name"):SetText(build.name)
 		self:SetRatingTextures(el1:GetNamedChild("Rating"), build.rating)
-		el1:GetNamedChild("Author"):SetText(GetString(SI_TUI_TEXT_SHARED_BY) .. " |c885533" .. build.owner .. "|r " .. GetString(SI_TUI_TEXT_SHARED_AT) .. " |c885533" .. self:GetFormattedDate(build.date) .. "|r")
+		el1:GetNamedChild("Author"):SetText(GetString(SI_TUIT_TEXT_SHARED_BY) .. " |c885533" .. build.owner .. "|r " .. GetString(SI_TUIT_TEXT_SHARED_AT) .. " |c885533" .. self:GetFormattedDate(build.date) .. "|r")
 		if build.description then
 			el1:GetNamedChild("Description"):SetText(build.description)
 			el1:GetNamedChild("Description"):SetHidden(false)
 		else
 			el1:GetNamedChild("Description"):SetHidden(true)
 		end
-		el1:GetNamedChild("PG_InfoTargetTexture"):SetTexture(TUI_Builds_Target[build.target].icon)
-		el1:GetNamedChild("PG_InfoTargetLabel"):SetText(TUI_Builds_Target[build.target].name)
-		SetToolTip(el1:GetNamedChild("PG_InfoTargetTexture"), GetString(SI_TUI_TEXT_TARGET) .. ": " .. el1:GetNamedChild("PG_InfoTargetLabel"):GetText())
+		el1:GetNamedChild("PG_InfoTargetTexture"):SetTexture(TUIT_Builds_Target[build.target].icon)
+		el1:GetNamedChild("PG_InfoTargetLabel"):SetText(TUIT_Builds_Target[build.target].name)
+		SetToolTip(el1:GetNamedChild("PG_InfoTargetTexture"), GetString(SI_TUIT_TEXT_TARGET) .. ": " .. el1:GetNamedChild("PG_InfoTargetLabel"):GetText())
 		el1:GetNamedChild("PG_InfoRaceTexture"):SetTexture(GetRaceTexture(build.race))
 		el1:GetNamedChild("PG_InfoRaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, build.race)))
-		SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), GetString(SI_TUI_TEXT_RACE) .. ": " .. el1:GetNamedChild("PG_InfoRaceLabel"):GetText())
+		SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), GetString(SI_TUIT_TEXT_RACE) .. ": " .. el1:GetNamedChild("PG_InfoRaceLabel"):GetText())
 		el1:GetNamedChild("PG_InfoClassTexture"):SetTexture(GetClassTexture(build.class))
 		el1:GetNamedChild("PG_InfoClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, build.class)))
-		SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), GetString(SI_TUI_TEXT_CLASS) .. ": " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
+		SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), GetString(SI_TUIT_TEXT_CLASS) .. ": " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
 		el1:GetNamedChild("PG_InfoRoleTexture"):SetTexture(GetRoleTexture(build.role))
 		el1:GetNamedChild("PG_InfoRoleLabel"):SetText(GetConfigRoleInfo(build.role).name)
-		SetToolTip(el1:GetNamedChild("PG_InfoRoleTexture"), GetString(SI_TUI_TEXT_ROLE) .. ": " .. el1:GetNamedChild("PG_InfoRoleLabel"):GetText())
+		SetToolTip(el1:GetNamedChild("PG_InfoRoleTexture"), GetString(SI_TUIT_TEXT_ROLE) .. ": " .. el1:GetNamedChild("PG_InfoRoleLabel"):GetText())
 		el1:GetNamedChild("PG_InfoVersionLabel"):SetText(build.game_version)
 		SetToolTip(el1:GetNamedChild("PG_InfoVersionTexture"), "Ver. ESO: " .. el1:GetNamedChild("PG_InfoVersionLabel"):GetText())
 
@@ -586,7 +586,7 @@ function TUI_Builds:ShowDetails (buildId)
 		-- Load the items in the slots
 		if build.items ~= nil then
 			for i = 1, #build.items do
-				local slot = TUI_Config.ItemData.slots[build.items[i].slot]
+				local slot = TUIT_Config.ItemData.slots[build.items[i].slot]
 				if slot ~= nil then
 					--local text = string.format( "|cBA5AC4%s|r |cC4855A[%s]|r   |c5A99C4%s|r", item.name, item.itemType, item.source )
 					local text = build.items[i].link
@@ -612,29 +612,29 @@ function TUI_Builds:ShowDetails (buildId)
 	end
 end
 
-function TUI_Builds:RateBuild(rating)
+function TUIT_Builds:RateBuild(rating)
 	if self.currentBuild then
 		ZO_Dialogs_ShowDialog("TUIT_DIALOG_SHAREBUILD_CONFIRM_RATE", { id = self.currentBuild.id, rating = rating }, nil, false)
 	end
 end
 
-function TUI_Builds.ConfirmRateBuild(id, rating)
+function TUIT_Builds.ConfirmRateBuild(id, rating)
 	TamrielUnlimitedIT.savedVariablesGlobal.Builds.Evaluated[tostring(id)] = { rating = rating }
-	TamrielUnlimitedIT.ReloadUIFn()
+	TamrielUnlimitedIT.ReloadUI()
 end
 
-function TUI_Builds:GetItemDataFromLink(link)
+function TUIT_Builds:GetItemDataFromLink(link)
 	local name,col,typID,id,qual,levelreq,enchant,ench1,ench2,un1,un2,un3,un4,un5,un6,un7,un8,un9,style,un10,bound,charge,un11=ZO_LinkHandler_ParseLink(link)		
 	id = tonumber(id)
 	name = zo_strformat(SI_TOOLTIP_ITEM_NAME, name)
 	return id,name,enchant,qual,levelreq,typID,ench1,ench2,col,un1,un2,un3,un4,un5,un6,un7,un8,un9,style,un10,bound,charge,un11
 end
 
-function TUI_Builds:GetCurrentEquipment ()
+function TUIT_Builds:GetCurrentEquipment ()
 	local items = {}
 	local itemsId = 0
 	for i = EQUIP_SLOT_MIN_VALUE + 1, EQUIP_SLOT_MAX_VALUE, 1 do
-		local slot = TUI_Config.ItemData.slots[i];
+		local slot = TUIT_Config.ItemData.slots[i];
 		if slot and GetItemInstanceId(BAG_WORN, i) then
 			itemsId = itemsId + 1
 			local itemLink = GetItemLink(BAG_WORN, i)
@@ -645,7 +645,7 @@ function TUI_Builds:GetCurrentEquipment ()
 	return items
 end
 
-function TUI_Builds:ShowMyBuild ()
+function TUIT_Builds:ShowMyBuild ()
 	self.DynamicScrollPageBuilds:SetHidden(true)
 
 	local items = self:GetCurrentEquipment()
@@ -659,11 +659,11 @@ function TUI_Builds:ShowMyBuild ()
 	ShareBuild_Description:SetText("")
 	el1:GetNamedChild("PG_InfoRaceTexture"):SetTexture(GetRaceTexture(GetUnitRaceId("player")))
 	el1:GetNamedChild("PG_InfoRaceLabel"):SetText(zo_strformat(SI_RACE_NAME, GetRaceName(2, GetUnitRaceId("player"))))
-	SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), GetString(SI_TUI_TEXT_RACE) .. ": " .. el1:GetNamedChild("PG_InfoRaceLabel"):GetText())
+	SetToolTip(el1:GetNamedChild("PG_InfoRaceTexture"), GetString(SI_TUIT_TEXT_RACE) .. ": " .. el1:GetNamedChild("PG_InfoRaceLabel"):GetText())
 	el1:GetNamedChild("PG_InfoClassTexture"):SetTexture(GetClassTexture(GetUnitClassId("player")))
 	el1:GetNamedChild("PG_InfoClassLabel"):SetText(zo_strformat(SI_CLASS_NAME, GetClassName(2, GetUnitClassId("player"))))
-	SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), GetString(SI_TUI_TEXT_CLASS) .. ": " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
-	el1:GetNamedChild("PG_InfoVersionLabel"):SetText(TUI_Builds.GetGameVersion(GetESOVersionString()))
+	SetToolTip(el1:GetNamedChild("PG_InfoClassTexture"), GetString(SI_TUIT_TEXT_CLASS) .. ": " .. el1:GetNamedChild("PG_InfoClassLabel"):GetText())
+	el1:GetNamedChild("PG_InfoVersionLabel"):SetText(TUIT_Builds.GetGameVersion(GetESOVersionString()))
 	SetToolTip(el1:GetNamedChild("PG_InfoVersionTexture"), "Ver. ESO: " .. el1:GetNamedChild("PG_InfoVersionLabel"):GetText())
 	
 	self.ShareTargetDropdown:SelectFirstItem()
@@ -676,7 +676,7 @@ function TUI_Builds:ShowMyBuild ()
 
 	-- Load the items in the slots
 	for i = 1, #items do
-		local slot = TUI_Config.ItemData.slots[items[i].slot]
+		local slot = TUIT_Config.ItemData.slots[items[i].slot]
 		if slot ~= nil then
 			local icon = GetItemLinkInfo(items[i].link)
 			if icon == nil or icon == "" then
@@ -689,7 +689,7 @@ function TUI_Builds:ShowMyBuild ()
 	self.DynamicScrollPageBuildShare:SetHidden(false)
 end
 
-function TUI_Builds.GetGameVersion(game_version)
+function TUIT_Builds.GetGameVersion(game_version)
 	local versionText = ""
 	if game_version then
 		-- Format the game version as ##.##.##
@@ -702,7 +702,7 @@ function TUI_Builds.GetGameVersion(game_version)
 	return versionText
 end
 
-function TUI_Builds:NameExists(name)
+function TUIT_Builds:NameExists(name)
 	if TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created ~= nil then
 		local nameInsensitive = name:lower()
 		for key, value in pairs(TamrielUnlimitedIT.savedVariablesGlobal.Builds.Created) do
@@ -714,7 +714,7 @@ function TUI_Builds:NameExists(name)
 	return false
 end
 
-function TUI_Builds:Share ()
+function TUIT_Builds:Share ()
 	local name = zo_strtrim(ShareBuild_Name:GetText())
 	local items = self:GetCurrentEquipment()
 	if name == "" then
@@ -734,9 +734,9 @@ function TUI_Builds:Share ()
 			race = GetUnitRaceId("player"),
 			class = GetUnitClassId("player"),
 			role = self.ShareRoleDropdownSelected,
-			game_version = TUI_Builds.GetGameVersion(GetESOVersionString()),
+			game_version = TUIT_Builds.GetGameVersion(GetESOVersionString()),
 			items = items
 		}
-		TamrielUnlimitedIT.ReloadUIFn()
+		TamrielUnlimitedIT.ReloadUI()
 	end
 end

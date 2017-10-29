@@ -1,6 +1,6 @@
 <GuiXml>
 	<Controls>
-		<Control name="DynamicTextBuilds"  virtual="true" >
+		<Control name="DynamicText_Build"  virtual="true" >
 			<Dimensions x="920" y="680" />
 			<Controls>
 				<Control name="$(parent)Container" inherits="ZO_ScrollContainer">
@@ -18,7 +18,7 @@
 				<Label name="$(parent)LabelWarningApp" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
 					<Dimensions y="40" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_APP))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_WARNING_APP))</OnInitialized>
 				</Label>
 				<Button name="$(parent)ShareBuild_btn" alpha="1" inherits="ZO_DefaultButton">
 					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT"  relativeTo="$(parent)" />
@@ -28,14 +28,14 @@
 						<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 							<Dimensions x="220" y="40" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_SHARE_BUILD))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_SHARE_BUILD))</OnInitialized>
 						</Label>
 					</Controls>
 				</Button>
 				<Label name="$(parent)SearchTextLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)LabelWarningApp" relativePoint="BOTTOMLEFT" offsetY="30" />
 					<Dimensions y="30" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_AUTHOR).."/"..GetString(SI_TUI_TEXT_NAME))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_AUTHOR).."/"..GetString(SI_TUIT_TEXT_NAME))</OnInitialized>
 				</Label>
 				<Control name="$(parent)SearchBuild_control"  >
 					<Dimensions x="150" y="30" />
@@ -54,7 +54,7 @@
 				<Label name="$(parent)TargetLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)SearchBuild_control" relativePoint="TOPRIGHT" offsetX="30" />
 					<Dimensions y="30" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_TARGET))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_TARGET))</OnInitialized>
 				</Label>
 				<Control name="$(parent)TargetDropdown" inherits="ZO_ComboBox">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)TargetLabel" relativePoint="TOPRIGHT" offsetX="10"/>
@@ -63,7 +63,7 @@
 				<Label name="$(parent)RoleLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)TargetDropdown" relativePoint="TOPRIGHT" offsetX="30" />
 					<Dimensions y="30" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_ROLE))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_ROLE))</OnInitialized>
 				</Label>
 				<Control name="$(parent)RoleDropdown" inherits="ZO_ComboBox">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)RoleLabel" relativePoint="TOPRIGHT" offsetX="10"/>
@@ -72,15 +72,15 @@
 				<Button name="$(parent)SearchBuild_btn" alpha="1">
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT"  relativeTo="$(parent)RoleDropdown" offsetX="30" offsetY="-5" />
 					<Dimensions x="40" y="40" />
-					<OnInitialized>SetToolTip(self, GetString(SI_TUI_TEXT_START_SEARCH))</OnInitialized>
+					<OnInitialized>SetToolTip(self, GetString(SI_TUIT_TEXT_START_SEARCH))</OnInitialized>
 					<OnMouseDown>SearchBuilds(SearchBuild_edit:GetText())</OnMouseDown>
 					<Textures name="$(parent)Icon" normal="/esoui/art/miscellaneous/search_icon.dds"  mouseOver="/esoui/art/miscellaneous/search_icon.dds" ></Textures>
 				</Button>
 				<Button name="$(parent)RefreshBuild_btn" alpha="1">
 					<Anchor point="LEFT" relativePoint="RIGHT"  relativeTo="$(parent)SearchBuild_btn" offsetX="30" offsetY="-5" />
 					<Dimensions x="40" y="40" />
-					<OnInitialized>SetToolTip(self, GetString(SI_TUI_TEXT_REFRESH_DATA))</OnInitialized>
-					<OnMouseDown>TamrielUnlimitedIT.ReloadUIFn()</OnMouseDown>
+					<OnInitialized>SetToolTip(self, GetString(SI_TUIT_TEXT_REFRESH_DATA))</OnInitialized>
+					<OnMouseDown>TamrielUnlimitedIT.ReloadUI()</OnMouseDown>
 					<Textures name="$(parent)Icon" normal="/esoui/art/characterwindow/gearslot_quickslot.dds"  mouseOver="/esoui/art/characterwindow/gearslot_quickslot.dds" ></Textures>
 				</Button>
 				<Control name="$(parent)Tabella">
@@ -99,7 +99,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinT1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOP" relativePoint="TOP" offsetX="0" offsetY="0" relativeTo="$(parent)" />
 											<Dimensions x="850" y="50" />
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_NO_BUILDS))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_NO_BUILDS))</OnInitialized>
 										</Label>
 									<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
 									</Controls>
@@ -116,7 +116,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="90" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_DATE))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_DATE))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -134,7 +134,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="80" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_TARGET))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_TARGET))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -152,7 +152,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="200" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_AUTHOR))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_AUTHOR))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -170,7 +170,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="160" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_NAME))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_NAME))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -188,7 +188,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="60" y="20" />
 													<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RACE))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_RACE))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -206,7 +206,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="60" y="20" />
 													<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_CLASS))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_CLASS))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -224,7 +224,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="60" y="20" />
 													<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_ROLE))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_ROLE))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -242,7 +242,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="150" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RATING))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_RATING))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -275,7 +275,7 @@
 			<Dimensions y="30" x="900" />
 			<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
 			<MouseButton button="1" enabled="true"/>
-			<OnMouseDown>OpenBuildDetails(self, "TuiBuilds")</OnMouseDown>
+			<OnMouseDown>OpenBuildDetails(self, "TUit_Build")</OnMouseDown>
 			<OnMouseEnter>OnMouseEnterBuildRow(self)</OnMouseEnter>
 			<OnMouseExit>OnMouseExitBuildRow(self)</OnMouseExit>
 			<Controls>
@@ -305,7 +305,7 @@
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" offsetX="10" relativeTo="$(parent)Colonna0" />
 					<Dimensions x="80" y="30" />
 					<Controls>
-						<!--Texture name="$(parent)TextureVersion" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/version.dds">
+						<!--Texture name="$(parent)TextureVersion" mouseEnabled="true" textureFile="TamrielUnlimitedIT/textures/version.dds">
 							<Dimensions x="24" y="24" />
 							<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetX="-21" />
 						</Texture-->
@@ -372,7 +372,7 @@
 						<Label name="$(parent)NoRated" hidden="true" font="ZoFontWinT2" inheritAlpha="false" alpha="1" color="CC0000" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Dimensions y="30" />
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_NOT_RATED))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_NOT_RATED))</OnInitialized>
 						</Label>
 						<Texture name="$(parent)Rating1">
 							<Dimensions x="24" y="24" />
@@ -408,12 +408,12 @@
 				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER">
 					<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
 					<Dimensions x="900" y="50" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_DETAILS))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_DETAILS))</OnInitialized>
 				</Label>
 				<Label font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
 					<Dimensions y="40" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_APP))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_WARNING_APP))</OnInitialized>
 				</Label>
 				<Control name="$(parent)Content">
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
@@ -425,7 +425,7 @@
 							<Controls>
 								<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
-									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_AVERAGE_RATING))</OnInitialized>
+									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_AVERAGE_RATING))</OnInitialized>
 								</Label>
 								<Texture name="$(parent)Rating1">
 									<Dimensions x="48" y="48" />
@@ -455,9 +455,9 @@
 							<Controls>
 								<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP"/>
-									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RATE_BUILD))</OnInitialized>
+									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_RATE_BUILD))</OnInitialized>
 								</Label>
-								<Texture name="$(parent)Rating1" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
+								<Texture name="$(parent)Rating1" mouseEnabled="true" textureFile="TamrielUnlimitedIT/textures/star-empty.dds">
 									<Dimensions x="48" y="48" />
 									<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetY="35" />
 									<OnMouseEnter>
@@ -470,7 +470,7 @@
 										OnMouseDownBuildRate(self)
 									</OnMouseDown>
 								</Texture>
-								<Texture name="$(parent)Rating2" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
+								<Texture name="$(parent)Rating2" mouseEnabled="true" textureFile="TamrielUnlimitedIT/textures/star-empty.dds">
 									<Dimensions x="48" y="48" />
 									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating1" relativePoint="TOPRIGHT" />
 									<OnMouseEnter>
@@ -483,7 +483,7 @@
 										OnMouseDownBuildRate(self)
 									</OnMouseDown>
 								</Texture>
-								<Texture name="$(parent)Rating3" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
+								<Texture name="$(parent)Rating3" mouseEnabled="true" textureFile="TamrielUnlimitedIT/textures/star-empty.dds">
 									<Dimensions x="48" y="48" />
 									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating2" relativePoint="TOPRIGHT" />
 									<OnMouseEnter>
@@ -496,7 +496,7 @@
 										OnMouseDownBuildRate(self)
 									</OnMouseDown>
 								</Texture>
-								<Texture name="$(parent)Rating4" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
+								<Texture name="$(parent)Rating4" mouseEnabled="true" textureFile="TamrielUnlimitedIT/textures/star-empty.dds">
 									<Dimensions x="48" y="48" />
 									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating3" relativePoint="TOPRIGHT" />
 									<OnMouseEnter>
@@ -509,7 +509,7 @@
 										OnMouseDownBuildRate(self)
 									</OnMouseDown>
 								</Texture>
-								<Texture name="$(parent)Rating5" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/star-empty.dds">
+								<Texture name="$(parent)Rating5" mouseEnabled="true" textureFile="TamrielUnlimitedIT/textures/star-empty.dds">
 									<Dimensions x="48" y="48" />
 									<Anchor point="TOPLEFT" relativeTo="$(parent)Rating4" relativePoint="TOPRIGHT" />
 									<OnMouseEnter>
@@ -604,7 +604,7 @@
 									<Anchor point="TOPRIGHT" relativeTo="$(parent)Target" relativePoint="TOPLEFT"/>
 									<Dimensions x="160" y="48"/>
 									<Controls>
-										<Texture name="$(parent)Texture" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/version.dds">
+										<Texture name="$(parent)Texture" mouseEnabled="true" textureFile="TamrielUnlimitedIT/textures/version.dds">
 											<Dimensions x="48" y="48" />
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
 										</Texture>
@@ -635,7 +635,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_ARMOR))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_ARMOR))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -797,7 +797,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_JEWELS))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_JEWELS))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -875,7 +875,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_WEAPONS))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_WEAPONS))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -975,9 +975,9 @@
 								<Label name="$(parent)Label_BuildDetails" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 									<Dimensions y="35" />
-									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RETURN_TO_LIST))</OnInitialized>
+									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_RETURN_TO_LIST))</OnInitialized>
 								</Label> 
-								<Label name="$(parent)Label_BackPage"  hidden="true" text="TuiBuilds">
+								<Label name="$(parent)Label_BackPage"  hidden="true" text="TUit_Build">
 									<Anchor point="CENTER" relativeTo="$(parent)Label_BuildDetails" relativePoint="CENTER" offsetY="0"/>
 								</Label> 
 							</Controls>
@@ -996,12 +996,12 @@
 				<Label name="$(parent)Label"  font="ZoFontWinH1" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER">
 					<Anchor point="TOPCENTER" relativeTo="$(parent)" relativePoint="TOPCENTER" />
 					<Dimensions x="900" y="50" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_SHARE_BUILD))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_SHARE_BUILD))</OnInitialized>
 				</Label>
 				<Label font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
 					<Dimensions y="40" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_APP))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_WARNING_APP))</OnInitialized>
 				</Label>
 				<Control name="$(parent)Content">
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$(parent)Label" />
@@ -1010,7 +1010,7 @@
 						<Label name="$(parent)Name" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="0"/>
 							<Dimensions x="850" y="35" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_FORM_NAME))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_FORM_NAME))</OnInitialized>
 						</Label>
 						<Control name="$(parent)Name_control">
 							<Dimensions x="600" y="40" />
@@ -1028,7 +1028,7 @@
 						<Label name="$(parent)Description" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)Name_control" relativePoint="BOTTOMLEFT" offsetY="20"/>
 							<Dimensions x="850" y="35" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_FORM_DESCRIPTION))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_FORM_DESCRIPTION))</OnInitialized>
 						</Label>
 						<Control name="$(parent)Description_control"  >
 							<Dimensions x="600" y="100" />
@@ -1046,7 +1046,7 @@
 						<Label name="$(parent)TargetLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)Description_control" relativePoint="BOTTOMLEFT" offsetY="20" />
 							<Dimensions y="24" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_FORM_TARGET))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_FORM_TARGET))</OnInitialized>
 						</Label>
 						<Control name="$(parent)TargetDropdown" inherits="ZO_ComboBox">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)TargetLabel" relativePoint="TOPRIGHT" offsetX="10"/>
@@ -1054,7 +1054,7 @@
 						</Control>
 						<Label name="$(parent)RoleLabel" height="10" font="ZoFontWinT1" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)TargetDropdown" relativePoint="TOPRIGHT" offsetX="35" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_FORM_ROLE))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_FORM_ROLE))</OnInitialized>
 						</Label>
 						<Control name="$(parent)RoleDropdown" inherits="ZO_ComboBox">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)RoleLabel" relativePoint="TOPRIGHT" offsetX="10"/>
@@ -1100,7 +1100,7 @@
 									<Anchor point="TOPRIGHT" relativeTo="$(parent)Race" relativePoint="TOPLEFT"/>
 									<Dimensions x="160" y="48"/>
 									<Controls>
-										<Texture name="$(parent)Texture" mouseEnabled="true" textureFile="TamrielUnlimitedIT/Textures/version.dds">
+										<Texture name="$(parent)Texture" mouseEnabled="true" textureFile="TamrielUnlimitedIT/textures/version.dds">
 											<Dimensions x="48" y="48" />
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
 										</Texture>
@@ -1131,7 +1131,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_ARMOR))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_ARMOR))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -1293,7 +1293,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_JEWELS))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_JEWELS))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -1371,7 +1371,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="eeca2a" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 											<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
 											<Dimensions x="300" y="48" />
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_BUILD_WEAPONS))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_BUILD_WEAPONS))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -1471,9 +1471,9 @@
 								<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 									<Dimensions y="35" />
-									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RETURN_TO_LIST))</OnInitialized>
+									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_RETURN_TO_LIST))</OnInitialized>
 								</Label> 
-								<Label name="$(parent)Label_BackPage"  hidden="true" text="TuiBuilds">
+								<Label name="$(parent)Label_BackPage"  hidden="true" text="TUit_Build">
 									<Anchor point="CENTER" relativeTo="$(parent)Label_BuildDetails" relativePoint="CENTER" offsetY="0"/>
 								</Label> 
 							</Controls>
@@ -1489,7 +1489,7 @@
 									<Controls>
 										<Label name="$(parent)Label_BuildDetails" height="10" font="ZoFontWinH2" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER" text="Condividi questa build">
 											<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_SHARE_BUILD_BUTTON))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_SHARE_BUILD_BUTTON))</OnInitialized>
 										</Label>
 									</Controls>
 								</Button>

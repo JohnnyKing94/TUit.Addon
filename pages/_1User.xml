@@ -1,6 +1,6 @@
 <GuiXml>
 	<Controls>
-		<Control name="DynamicTextUtenti"  virtual="true" >
+		<Control name="DynamicText_User"  virtual="true" >
 			<Dimensions x="920" y="680" />
 			<Controls>
 				<Control name="$(parent)Container" inherits="ZO_ScrollContainer">
@@ -19,20 +19,20 @@
 				<Label name="$(parent)LabelWarningApp" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)"/>
 					<Dimensions y="40" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_APP))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_WARNING_APP))</OnInitialized>
 				</Label>
 				<Button name="$(parent)RefreshUsers_btn" alpha="1">
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT"  relativeTo="$(parent)" offsetX="-50" />
 					<Dimensions x="40" y="40" />
-					<OnInitialized>SetToolTip(self, GetString(SI_TUI_TEXT_REFRESH_DATA))</OnInitialized>
-					<OnMouseDown>TamrielUnlimitedIT.ReloadUIFn()</OnMouseDown>
+					<OnInitialized>SetToolTip(self, GetString(SI_TUIT_TEXT_REFRESH_DATA))</OnInitialized>
+					<OnMouseDown>TamrielUnlimitedIT.ReloadUI()</OnMouseDown>
 					<Textures name="$(parent)Icon" normal="/esoui/art/characterwindow/gearslot_quickslot.dds"  mouseOver="/esoui/art/characterwindow/gearslot_quickslot.dds" ></Textures>
 				</Button>
 				<Button name="$(parent)Search_btn" alpha="1">
 					<Anchor point="TOPRIGHT" relativePoint="TOPLEFT"  relativeTo="$(parent)RefreshUsers_btn" offsetX="-10" />
 					<Textures normal="/esoui/art/miscellaneous/search_icon.dds"  mouseOver="/esoui/art/miscellaneous/search_icon.dds" ></Textures>
 					<Dimensions x="40" y="40" />
-					<OnInitialized>SetToolTip(self, GetString(SI_TUI_TEXT_START_SEARCH))</OnInitialized>
+					<OnInitialized>SetToolTip(self, GetString(SI_TUIT_TEXT_START_SEARCH))</OnInitialized>
 					<OnMouseDown>SearchPlayer(SearchPlayer_edit:GetText())</OnMouseDown>
 				</Button>
 				<Control name="$(parent)Search_control"  >
@@ -46,7 +46,7 @@
 						<EditBox name="SearchPlayer_edit" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" maxInputCharacters="100"  editEnabled="true" multiLine="false" newLineEnabled="false">
 							<Dimensions x="196" y="22" />
 							<Anchor point="CENTER" relativePoint="CENTER" relativeTo="$(parent)"  />
-							<OnInitialized>SetToolTip(self, GetString(SI_TUI_TEXT_FILTER_CHARACTER_NAME))</OnInitialized>
+							<OnInitialized>SetToolTip(self, GetString(SI_TUIT_TEXT_FILTER_CHARACTER_NAME))</OnInitialized>
 						</EditBox>
 					</Controls>
 				</Control>
@@ -82,7 +82,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="80" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_LEVEL))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_LEVEL))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -100,7 +100,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="80" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_CP))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_CP))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -118,7 +118,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="80" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_SEX))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_SEX))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -136,7 +136,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="200" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_CHARACTER))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_CHARACTER))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>	
@@ -154,7 +154,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="60" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RACE))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_RACE))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -172,7 +172,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 													<Dimensions x="60" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_CLASS))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_CLASS))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -190,7 +190,7 @@
 												<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="EECA2A" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 													<Dimensions x="200" y="20" />
 													<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-													<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_ALLIANCE))</OnInitialized>
+													<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_ALLIANCE))</OnInitialized>
 												</Label>
 											</Controls>
 										</Button>
@@ -209,7 +209,7 @@
 		<Button name="DynamicRow" virtual="true">
 			<MouseButton button="2" enabled="true"/>
 			<MouseButton button="1" enabled="true"/>
-			<OnMouseDown>ApriMenuPlayer(self,button,"TuiUtenti")</OnMouseDown>
+			<OnMouseDown>ApriMenuPlayer(self,button,"TUit_User")</OnMouseDown>
 			<OnMouseEnter>OnMouseEnterUserRow(self)</OnMouseEnter>
 			<OnMouseExit>OnMouseExitUserRow(self)</OnMouseExit>
 			<Dimensions y="40" x="650" />

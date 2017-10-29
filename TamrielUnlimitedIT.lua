@@ -10,26 +10,37 @@ TamrielUnlimitedIT.BackToMainPage = false
 local playerNotified = false
 
 -- ESO Dialogs
-ESO_Dialogs["TUIT_DIALOG_RELOADING_UI"] = 
+ESO_Dialogs["TUIT_DIALOG_RELOADING_UI_DEFAULT"] =
 {
 	title =
 	{
-		text = SI_TUI_DIALOG_RELOADING_UI_TITLE,
+		text = SI_TUIT_DIALOG_RELOADING_UI_DEFAULT_TITLE,
 	},
-	mainText = 
+	mainText =
 	{
-		text = SI_TUI_DIALOG_RELOADING_UI_TEXT,
+		text = SI_TUIT_DIALOG_RELOADING_UI_DEFAULT_TEXT,
 	},
 }
-ESO_Dialogs["TUIT_DIALOG_CHANGE_LANGUAGE"] = 
+ESO_Dialogs["SI_TUIT_DIALOG_VALIDATION_REQUEST"] =
 {
 	title =
 	{
-		text = SI_TUI_DIALOG_CHANGELANG_UI_TITLE,
+		text = SI_TUIT_DIALOG_VALIDATION_REQUEST_TITLE,
 	},
-	mainText = 
+	mainText =
 	{
-		text = SI_TUI_DIALOG_CHANGELANG_UI_TEXT,
+		text = SI_TUIT_DIALOG_VALIDATION_REQUEST_TEXT,
+	},
+}
+ESO_Dialogs["TUIT_DIALOG_CHANGE_LANGUAGE"] =
+{
+	title =
+	{
+		text = SI_TUIT_DIALOG_CHANGELANG_UI_TITLE,
+	},
+	mainText =
+	{
+		text = SI_TUIT_DIALOG_CHANGELANG_UI_TEXT,
 	},
 }
 
@@ -86,9 +97,10 @@ end
 local function InitializeSavedVars()
 	AccountData = {
 		Guilds = {},
-		CP = 0
+		CP = 0,
+		validationUsername = "",
 	}
-	CharactersData = {
+	CharacterData = {
 		lev = 0,
 		sex = 1,
 		class = "",
@@ -97,7 +109,7 @@ local function InitializeSavedVars()
 		last_update = "",
 	}
 	TamrielUnlimitedIT.savedVariablesGlobal = ZO_SavedVars:NewAccountWide("TUitData", 1, nil, AccountData)
-	TamrielUnlimitedIT.savedVariables = ZO_SavedVars:New("TUitData", 1, nil, CharactersData)
+	TamrielUnlimitedIT.savedVariables = ZO_SavedVars:New("TUitData", 1, nil, CharacterData)
 	UpdateAccountData()
 	UpdateCharacterData()
 end
@@ -173,17 +185,17 @@ end
 local function PlayerNotification()
 	if TUitDataVar ~= nil then
 		if next(TamrielUnlimitedIT.TUitDataVar) ~= nil then
-			d(GetString(SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_SUCCESS))
+			d(GetString(SI_TUIT_TEXT_NOTIFICATION_ADDONLOADED_SUCCESS))
 			--EVENT_MANAGER:UnregisterForEvent(TamrielUnlimitedIT.name .. " PlayerNotification", EVENT_PLAYER_ACTIVATED)
-			local DettagliArray = TamrielUnlimitedIT.TUitDataVar.RefusedValidations
-			if DettagliArray ~= nil and #DettagliArray ~= 0 then
-				d(GetString(SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_NEWVALIDATIONREQUESTS))
+			local UserData = TamrielUnlimitedIT.TUitDataVar.RefusedValidations
+			if UserData ~= nil and #UserData ~= 0 then
+				d(GetString(SI_TUIT_TEXT_NOTIFICATION_ADDONLOADED_NEWVALIDATIONREQUESTS))
 			end
 		else
-			d(GetString(SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_FAILED))
+			d(GetString(SI_TUIT_TEXT_NOTIFICATION_ADDONLOADED_FAILED))
 		end
 	else
-		d(GetString(SI_TUI_TEXT_NOTIFICATION_ADDONLOADED_FAILED))
+		d(GetString(SI_TUIT_TEXT_NOTIFICATION_ADDONLOADED_FAILED))
 	end
 end
 
@@ -194,38 +206,38 @@ function TamrielUnlimitedIT:InitializeScene()
 	self.InPausa = IsReticleHidden();
 
 	-- Utenti
-	self.Players = TUI_Players:New(UtentiPanelMainMenu)
+	self.Players = TUIT_Players:New(UtentiPanelMainMenu)
 	self.Players:Initialize()
 
 	-- Gilde
-	self.Guilds = TUI_Guilds:New(GildePanelMainMenu)
+	self.Guilds = TUIT_Guilds:New(GildePanelMainMenu)
 	self.Guilds:Initialize()
 
 	-- Eventi
-	self.Events = TUI_Events:New(EventiPanelMainMenu)
+	self.Events = TUIT_Events:New(EventiPanelMainMenu)
 	self.Events:Initialize()
 
 	-- Community
-	self.Community = TUI_Community:New(CommunityPanelMainMenu)
+	self.Community = TUIT_Community:New(CommunityPanelMainMenu)
 	self.Community:Initialize()
 
 	-- Convalida
-	self.Validator = TUI_Validator:New(ConvalidaPanelMainMenu)
-	self.Validator:Initialize()
+	self.Validation = TUIT_Validation:New(ConvalidaPanelMainMenu)
+	self.Validation:Initialize()
 
 	-- Contributori
-	self.Contributors = TUI_Contributors:New(ContributoriPanelMainMenu)
+	self.Contributors = TUIT_Contributors:New(ContributoriPanelMainMenu)
 	self.Contributors:Initialize()
 
-	-- DettagliUtente
-	self.DettagliUtente = CreateControlFromVirtual("DynamicLabel_stampataDettagliUtente", DettagliUtentePanelMainMenu, "DynamicTextDettagliUtente", 0)
-	self.DettagliUtente:SetAnchor(TOP, DettagliUtentePanelMainMenu, TOP, 0, 0)
-	self.DettagliUtente:SetHidden(false)
-	local sc = DynamicLabel_stampataDettagliUtente0ContainerScrollChild
-	self.DynamicScrollPageDettagliUtente = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelDettagliUtente", sc, "DynamicScrollPageDettagliUtente", 0)
+	-- UserDetail
+	self.UserDetail = CreateControlFromVirtual("DynamicLabel_UserDetail", UserDetailPanelMainMenu, "DynamicText_UserDetail", 0)
+	self.UserDetail:SetAnchor(TOP, UserDetailPanelMainMenu, TOP, 0, 0)
+	self.UserDetail:SetHidden(false)
+	local sc = DynamicLabel_UserDetail0ContainerScrollChild
+	self.DynamicScrollPageUserDetail = CreateControlFromVirtual("Dynamic_stampa_ScrollPanelUserDetail", sc, "DynamicScrollPageUserDetail", 0)
 
 	-- Builds
-	self.Builds = TUI_Builds:New(BuildsPanelMainMenu)
+	self.Builds = TUIT_Builds:New(BuildsPanelMainMenu)
 	self.Builds:Initialize()
 
 	self:CreateScene()
@@ -234,19 +246,19 @@ end
 function TamrielUnlimitedIT:CreateScene()
 
 	-- Creazione Array dati per icona nel menu
-	local TUI_MAIN_MENU_CATEGORY_DATA =
+	local TUIT_MAIN_MENU_CATEGORY_DATA =
 	{
 		descriptor = 1,
-		binding = "TUI_SHOW_PANEL",
-		categoryName = SI_TUI_NOME_ADDON,
-		normal = "TamrielUnlimitedIT/Textures/TamrielUnlimited_up.dds",
-		pressed = "TamrielUnlimitedIT/Textures/TamrielUnlimited_down.dds",
-		highlight = "TamrielUnlimitedIT/Textures/TamrielUnlimited_over.dds",
+		binding = "TUIT_SHOW_PANEL",
+		categoryName = SI_TUIT_ADDON_NAME,
+		normal = "TamrielUnlimitedIT/textures/TamrielUnlimited_up.dds",
+		pressed = "TamrielUnlimitedIT/textures/TamrielUnlimited_down.dds",
+		highlight = "TamrielUnlimitedIT/textures/TamrielUnlimited_over.dds",
 		callback = function ()
 			ZO_MenuBar_ClearSelection(MAIN_MENU_KEYBOARD.categoryBar)
 
 			if (self.BackToMainPage) then
-				self.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TuiUtenti")
+				self.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TUit_User")
 				self.BackToMainPage = false
 			else
 				self.LMM:ToggleCategory(TamrielUnlimitedIT.MENU_CATEGORY_TUI)
@@ -255,12 +267,12 @@ function TamrielUnlimitedIT:CreateScene()
 		end
 	}
 
-	local TUI_MENU_BAR = ZO_FadeSceneFragment:New(ZO_MainMenuCategoryBar)
+	local TUIT_MENU_BAR = ZO_FadeSceneFragment:New(ZO_MainMenuCategoryBar)
 	
 	-- Scene creation - Players
 	if self.Players ~= nil then
-		local TUI_SCENE_UTENTI = self.Players:CreateScene(TUI_MENU_BAR)
-		TUI_SCENE_UTENTI:RegisterCallback("StateChange", function (oldState, newState)
+		local TUIT_SCENE_UTENTI = self.Players:CreateScene(TUIT_MENU_BAR)
+		TUIT_SCENE_UTENTI:RegisterCallback("StateChange", function (oldState, newState)
 				if newState == SCENE_FRAGMENT_HIDDEN then
 					ChiudiAddRemoveFriend()
 				end
@@ -269,8 +281,8 @@ function TamrielUnlimitedIT:CreateScene()
 
 	-- Scene creation - Guilds
 	if self.Guilds ~= nil then
-		local TUI_SCENE_GILDE = self.Guilds:CreateScene(TUI_MENU_BAR)
-		TUI_SCENE_GILDE:RegisterCallback("StateChange", function (oldState, newState)
+		local TUIT_SCENE_GILDE = self.Guilds:CreateScene(TUIT_MENU_BAR)
+		TUIT_SCENE_GILDE:RegisterCallback("StateChange", function (oldState, newState)
 				if newState == SCENE_FRAGMENT_HIDDEN then
 					ChiudiAddRemoveFriend()
 				end
@@ -279,91 +291,91 @@ function TamrielUnlimitedIT:CreateScene()
 
 	-- Scene creation - Events
 	if self.Events ~= nil then
-		self.Events:CreateScene(TUI_MENU_BAR)
+		self.Events:CreateScene(TUIT_MENU_BAR)
 	end
 
 	-- Scene creation - Community
 	if self.Community ~= nil then
-		self.Community:CreateScene(TUI_MENU_BAR)
+		self.Community:CreateScene(TUIT_MENU_BAR)
 	end
 
-	-- Scene creation - Validator
-	if self.Validator ~= nil then
-		self.Validator:CreateScene(TUI_MENU_BAR)
+	-- Scene creation - Validation
+	if self.Validation ~= nil then
+		self.Validation:CreateScene(TUIT_MENU_BAR)
 	end
 
 	-- Scene creation - Contributors
 	if self.Contributors ~= nil then
-		self.Contributors:CreateScene(TUI_MENU_BAR)
+		self.Contributors:CreateScene(TUIT_MENU_BAR)
 	end
 
 	-- Scene creation - DETTAGLI_UTENTE
-	local TUI_SCENE_DETTAGLI_UTENTE = ZO_Scene:New("TuiDettagliUtente", SCENE_MANAGER)
+	local TUIT_SCENE_DETTAGLI_UTENTE = ZO_Scene:New("TUit_UserDetail", SCENE_MANAGER)
 
 	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUI_SCENE_DETTAGLI_UTENTE:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_DETTAGLI_UTENTE:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_DETTAGLI_UTENTE:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_DETTAGLI_UTENTE:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_DETTAGLI_UTENTE:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_DETTAGLI_UTENTE:AddFragment(TOP_BAR_FRAGMENT)
+	-- TUIT_SCENE_DETTAGLI_UTENTE:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
+	TUIT_SCENE_DETTAGLI_UTENTE:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+	TUIT_SCENE_DETTAGLI_UTENTE:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
+	TUIT_SCENE_DETTAGLI_UTENTE:AddFragment(TITLE_FRAGMENT)
+	TUIT_SCENE_DETTAGLI_UTENTE:AddFragment(RIGHT_BG_FRAGMENT)
+	TUIT_SCENE_DETTAGLI_UTENTE:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
-	local TUI_DETTAGLI_UTENTE_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_DETTAGLI_UTENTE) -- The title at the left of the scene is the "global one" but we can change it
-	TUI_SCENE_DETTAGLI_UTENTE:AddFragment(TUI_DETTAGLI_UTENTE_TITLE_FRAGMENT)
+	local TUIT_USER_DETAIL_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_USER_DETAIL) -- The title at the left of the scene is the "global one" but we can change it
+	TUIT_SCENE_DETTAGLI_UTENTE:AddFragment(TUIT_USER_DETAIL_TITLE_FRAGMENT)
 
 	-- Aggiunta codice XML alla Scena
-	DettagliUtentePanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
-	local TUI_DETTAGLI_UTENTE_WINDOW = ZO_FadeSceneFragment:New(DettagliUtentePanelMainMenu)
-	TUI_SCENE_DETTAGLI_UTENTE:AddFragment(TUI_DETTAGLI_UTENTE_WINDOW)
+	UserDetailPanelMainMenu:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
+	local TUIT_USER_DETAIL_WINDOW = ZO_FadeSceneFragment:New(UserDetailPanelMainMenu)
+	TUIT_SCENE_DETTAGLI_UTENTE:AddFragment(TUIT_USER_DETAIL_WINDOW)
 
-	TUI_SCENE_DETTAGLI_UTENTE:AddFragment(TUI_MENU_BAR)
+	TUIT_SCENE_DETTAGLI_UTENTE:AddFragment(TUIT_MENU_BAR)
 
 	-- Scene creation - Builds
 	if self.Builds ~= nil then
-		self.Builds:CreateScene(TUI_MENU_BAR)
+		self.Builds:CreateScene(TUIT_MENU_BAR)
 	end
 
 	do
 		local iconData = {
 			{
-				categoryName = SI_TUI_UTENTI, -- Titolo vicino ai bottoni
-				descriptor = "TuiUtenti",
+				categoryName = SI_TUIT_USER, -- Titolo vicino ai bottoni
+				descriptor = "TUit_User",
 				normal = "EsoUI/art/mainmenu/menubar_social_up.dds",
 				pressed = "EsoUI/art/mainmenu/menubar_social_down.dds",
 				highlight = "EsoUI/art/mainmenu/menubar_social_over.dds",
 			},
 			{
-				categoryName = SI_TUI_GILDE, -- Titolo vicino ai bottoni
-				descriptor = "TuiGilde",
+				categoryName = SI_TUIT_GUILD, -- Titolo vicino ai bottoni
+				descriptor = "TUit_Guild",
 				normal = "EsoUI/art/mainmenu/menubar_guilds_up.dds",
 				pressed = "EsoUI/art/mainmenu/menubar_guilds_down.dds",
 				highlight = "EsoUI/art/mainmenu/menubar_guilds_over.dds",
 			},
 			{
-				categoryName = SI_TUI_BUILDS, -- Titolo vicino ai bottoni
-				descriptor = "TuiBuilds",
+				categoryName = SI_TUIT_BUILD, -- Titolo vicino ai bottoni
+				descriptor = "TUit_Build",
 				normal = "EsoUI/art/mainmenu/menubar_skills_up.dds",
 				pressed = "EsoUI/art/mainmenu/menubar_skills_down.dds",
 				highlight = "EsoUI/art/mainmenu/menubar_skills_over.dds",
 			},
 			{
-				categoryName = SI_TUI_EVENTI, -- Titolo vicino ai bottoni
-				descriptor = "TuiEventi",
+				categoryName = SI_TUIT_EVENT, -- Titolo vicino ai bottoni
+				descriptor = "TUit_Event",
 				normal = "EsoUI/art/guild/tabicon_roster_up.dds",
 				pressed = "EsoUI/art/guild/tabicon_roster_down.dds",
 				highlight = "EsoUI/art/guild/tabicon_roster_over.dds",
 			},
 			{
-				categoryName = SI_TUI_COMMUNITY, -- Titolo vicino ai bottoni
-				descriptor = "TuiCommunity",
+				categoryName = SI_TUIT_COMMUNITY, -- Titolo vicino ai bottoni
+				descriptor = "TUit_Community",
 				normal = "EsoUI/art/mainmenu/menubar_voip_up.dds",
 				pressed = "EsoUI/art/mainmenu/menubar_voip_down.dds",
 				highlight = "EsoUI/art/mainmenu/menubar_voip_over.dds",
 			},
 			{
-				categoryName = SI_TUI_CONVALIDA, -- Titolo vicino ai bottoni
-				descriptor = "TuiConvalida",
+				categoryName = SI_TUIT_VALIDATION, -- Titolo vicino ai bottoni
+				descriptor = "TUit_Validation",
 				normal = "EsoUI/art/guild/guildheraldry_indexicon_finalize_up.dds",
 				pressed = "EsoUI/art/guild/guildheraldry_indexicon_finalize_down.dds",
 				highlight = "EsoUI/art/guild/guildheraldry_indexicon_finalize_over.dds",
@@ -371,13 +383,13 @@ function TamrielUnlimitedIT:CreateScene()
 		}
 
 		-- Registrazione scene in gruppo
-		SCENE_MANAGER:AddSceneGroup("TuiSceneGroup", ZO_SceneGroup:New("TuiUtenti", "TuiGilde", "TuiEventi", "TuiCommunity", "TuiConvalida", "TuiContributori", "TuiDettagliUtente", "TuiBuilds"))
+		SCENE_MANAGER:AddSceneGroup("TUit_SceneGroup", ZO_SceneGroup:New("TUit_User", "TUit_Guild", "TUit_Event", "TUit_Community", "TUit_Validation", "TuiContributori", "TUit_UserDetail", "TUit_Build"))
 
 		-- Aggiunge la categoria al menu in alto ( in teoria )
-		self.MENU_CATEGORY_TUI = self.LMM:AddCategory(TUI_MAIN_MENU_CATEGORY_DATA)
+		self.MENU_CATEGORY_TUI = self.LMM:AddCategory(TUIT_MAIN_MENU_CATEGORY_DATA)
 
 		-- Registra il gruppo e aggiunge i bottoni/label
-		self.LMM:AddSceneGroup(self.MENU_CATEGORY_TUI, "TuiSceneGroup", iconData)
+		self.LMM:AddSceneGroup(self.MENU_CATEGORY_TUI, "TUit_SceneGroup", iconData)
 
 
 		local LMMXML = WINDOW_MANAGER:CreateControl("LMMXML2", ZO_MainMenuCategoryBar, CT_BUTTON)
@@ -395,10 +407,10 @@ function TamrielUnlimitedIT:CreateScene()
 		}
 		ZO_MenuBar_SetData(self.categoryBar, categoryBarData)
 
-		ZO_MenuBar_AddButton(self.categoryBar, TUI_MAIN_MENU_CATEGORY_DATA)
+		ZO_MenuBar_AddButton(self.categoryBar, TUIT_MAIN_MENU_CATEGORY_DATA)
 
-		local MieTab = SCENE_MANAGER:GetSceneGroup("TuiSceneGroup").scenes
-		local MieTabNotBackToMainPage = {"TuiUtenti", "TuiGilde", "TuiEventi", "TuiCommunity", "TuiConvalida", "TuiBuilds"}
+		local MieTab = SCENE_MANAGER:GetSceneGroup("TUit_SceneGroup").scenes
+		local MieTabNotBackToMainPage = {"TUit_User", "TUit_Guild", "TUit_Event", "TUit_Community", "TUit_Validation", "TUit_Build"}
 
 		local ListaKeyBinding = {}
 		for layerIndex = 1, GetNumActionLayers() do
@@ -486,11 +498,11 @@ function ApriMenuPlayer(self, button, BackPage)
 		do return end
 	end
 	local namePG, nameUser, levelPG = nil, nil, nil
-	if BackPage == "TuiUtenti" then
+	if BackPage == "TUit_User" then
 		namePG = self:GetNamedChild("Colonna3Label"):GetText()
 		nameUser = self:GetNamedChild("Colonna3Label_UserID"):GetText()
 		levelPG = tonumber("0" .. self:GetNamedChild("Colonna0Label"):GetText())
-	elseif BackPage == "TuiGilde" then
+	elseif BackPage == "TUit_Guild" then
 		nameUser = self:GetNamedChild("Label_UserID"):GetText()
 		namePG = nameUser
 		levelPG = 50
@@ -528,7 +540,7 @@ function ApriMenuPlayer(self, button, BackPage)
 	end
 	AddRemoveControlLabel_NomeAdd:SetText(namePG) -- Aggiunge il nome PG
 	AddRemoveControlLabel_NomeAdd:SetColor(GetColorForLevel(levelPG):UnpackRGBA())
-	AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(nameUser) -- Aggiunge UserID alla voce dettagli
+	AddRemoveControlUserDetailIDLabel_UserDetailID:SetText(nameUser) -- Aggiunge UserID alla voce dettagli
 	AddRemoveControl:ClearAnchors()
 	local mouseX, mouseY = GetUIMousePosition()
 	AddRemoveControl:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, mouseX, mouseY)
@@ -545,7 +557,7 @@ function ApriMenuPlayer(self, button, BackPage)
 		AddRemoveControlBisbiglia:SetEnabled(false)
 		AddRemoveControlBisbigliaLabel_WhisperFriend:SetColor(0.5, 0.5, 0.5, 1)
 		AddRemoveControlLabel_NomeAdd:SetText(namePG) -- Aggiunge il nome PG
-		AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(nameUser) -- Aggiunge UserID alla voce dettagli
+		AddRemoveControlUserDetailIDLabel_UserDetailID:SetText(nameUser) -- Aggiunge UserID alla voce dettagli
 		AddRemoveControl:ClearAnchors()
 		local mouseX, mouseY = GetUIMousePosition()
 		AddRemoveControl:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, mouseX, mouseY)
@@ -564,7 +576,7 @@ function ApriMenuPlayer(self, button, BackPage)
 			AddRemoveControlRemoveFriendLabel_RemoveFriend:SetColor(0.5, 0.5, 0.5, 1)
 		end
 		AddRemoveControlLabel_NomeAdd:SetText(namePG) -- Aggiunge il nome PG
-		AddRemoveControlDettagliUserIDLabel_DettagliUserID:SetText(nameUser) -- Aggiunge UserID alla voce dettagli
+		AddRemoveControlUserDetailIDLabel_UserDetailID:SetText(nameUser) -- Aggiunge UserID alla voce dettagli
 		AddRemoveControl:ClearAnchors()
 		local mouseX, mouseY = GetUIMousePosition()
 		AddRemoveControl:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, mouseX, mouseY)
@@ -579,12 +591,12 @@ function ChiudiAddRemoveFriend()
 end
 function AggiungiAmico(self)
 	RequestFriend(self:GetParent():GetNamedChild("Label_NomeAdd"):GetText(), "")
-	TamrielUnlimitedIT:SendToChat(GetString(SI_TUI_TEXT_ADDED_FRIEND))
+	TamrielUnlimitedIT:SendToChat(GetString(SI_TUIT_TEXT_ADDED_FRIEND))
 	ChiudiAddRemoveFriend()
 end
 function RimuoviAmico(self)
 	RemoveFriend(self:GetParent():GetNamedChild("Label_NomeAdd"):GetText())
-	TamrielUnlimitedIT:SendToChat(GetString(SI_TUI_TEXT_REMOVED_FRIEND))
+	TamrielUnlimitedIT:SendToChat(GetString(SI_TUIT_TEXT_REMOVED_FRIEND))
 	ChiudiAddRemoveFriend()
 end
 function InviaMail(self)
@@ -601,7 +613,7 @@ function GetCreditByUserID(userID)
 		if #TUitDataVar.Admins ~= 0 then
 			for i = 1, #TUitDataVar.Admins do
 				if TUitDataVar.Admins[i] == userID then
-					credit = credit .. (credit == "" and "" or ", ") .. "|cff0000" .. GetString(SI_TUI_TEXT_TUIROLE_ADMINISTRATOR) .. "|r"
+					credit = credit .. (credit == "" and "" or ", ") .. "|cff0000" .. GetString(SI_TUIT_TEXT_TUIROLE_ADMINISTRATOR) .. "|r"
 					break
 				end
 			end
@@ -611,7 +623,7 @@ function GetCreditByUserID(userID)
 		if #TUitDataVar.Developers ~= 0 then
 			for i = 1, #TUitDataVar.Developers do
 				if TUitDataVar.Developers[i] == userID then
-					credit = credit .. (credit == "" and "" or ", ") .. "|ca1d490" .. GetString(SI_TUI_TEXT_TUIROLE_DEVELOPER) .. "|r"
+					credit = credit .. (credit == "" and "" or ", ") .. "|ca1d490" .. GetString(SI_TUIT_TEXT_TUIROLE_DEVELOPER) .. "|r"
 					break
 				end
 			end
@@ -621,7 +633,7 @@ function GetCreditByUserID(userID)
 		if #TUitDataVar.Translators ~= 0 then
 			for i = 1, #TUitDataVar.Translators do
 				if TUitDataVar.Translators[i] == userID then
-					credit = credit .. (credit == "" and "" or ", ") .. "|cc390d4" .. GetString(SI_TUI_TEXT_TUIROLE_TRANSLATOR) .. "|r"
+					credit = credit .. (credit == "" and "" or ", ") .. "|cc390d4" .. GetString(SI_TUIT_TEXT_TUIROLE_TRANSLATOR) .. "|r"
 					break
 				end
 			end
@@ -631,7 +643,7 @@ function GetCreditByUserID(userID)
 		if #TUitDataVar.Guildmasters ~= 0 then
 			for i = 1, #TUitDataVar.Guildmasters do
 				if TUitDataVar.Guildmasters[i] == userID then
-					credit = credit .. (credit == "" and "" or ", ") .. "|c90c3d4" .. GetString(SI_TUI_TEXT_TUIROLE_GUILDMASTER) .. "|r"
+					credit = credit .. (credit == "" and "" or ", ") .. "|c90c3d4" .. GetString(SI_TUIT_TEXT_TUIROLE_GUILDMASTER) .. "|r"
 					break
 				end
 			end
@@ -640,52 +652,52 @@ function GetCreditByUserID(userID)
 	return credit
 end
 function ApriDettagliPlayer(self, BackPage)
-	local DettagliArray = TamrielUnlimitedIT.TUitDataVar.PlayersData[self:GetNamedChild("Label_DettagliUserID"):GetText()]
-	if (DettagliArray == nil) then
-		TamrielUnlimitedIT:SendToChat(GetString(SI_TUI_TEXT_INVALID_USER))
+	local UserData = TamrielUnlimitedIT.TUitDataVar.PlayersData[self:GetNamedChild("Label_UserDetailID"):GetText()]
+	if (UserData == nil) then
+		TamrielUnlimitedIT:SendToChat(GetString(SI_TUIT_TEXT_INVALID_USER))
 	else
 		TamrielUnlimitedIT.BackToMainPage = true
 
-		local pre = TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTesto")
-		local credit = GetCreditByUserID(self:GetNamedChild("Label_DettagliUserID"):GetText())
+		local pre = TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTesto")
+		local credit = GetCreditByUserID(self:GetNamedChild("Label_UserDetailID"):GetText())
 		credit = credit:gsub(", ", "   ")
 
-		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTesto"):SetDimensions(900, (tablelength(DettagliArray.PG) - 1) * 100)
+		TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTesto"):SetDimensions(900, (tablelength(UserData.PG) - 1) * 100)
 
-		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoUserID"):SetText(self:GetNamedChild("Label_DettagliUserID"):GetText())
-		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoSex"):SetText(GetString(SI_TUI_TEXT_SEX) .. ": " .. (DettagliArray.Sex > 0 and GetString("SI_GENDER", DettagliArray.Sex) or "N.D."))
-		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoSex"):SetColor(GetColorForSex(DettagliArray.Sex):UnpackRGBA())
-		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoCredit"):SetText(credit)
-		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoRiga5Label_BackPage"):SetText(BackPage)
+		TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoUserID"):SetText(self:GetNamedChild("Label_UserDetailID"):GetText())
+		TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoSex"):SetText(GetString(SI_TUIT_TEXT_SEX) .. ": " .. (UserData.Sex > 0 and GetString("SI_GENDER", UserData.Sex) or "N.D."))
+		TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoSex"):SetColor(GetColorForSex(UserData.Sex):UnpackRGBA())
+		TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoCredit"):SetText(credit)
+		TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoRiga5Label_BackPage"):SetText(BackPage)
 
-		TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):SetText("")
+		TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoGildeList"):SetText("")
 
-		if (tablelength(DettagliArray["Guilds"]) ~= 0) then
-			for key, value in pairs(DettagliArray["Guilds"]) do
-				--TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGilde"):SetText("Gilde")
-				TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):SetText(TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):GetText() .. "- " .. value .. "\r\n")
+		if (tablelength(UserData["Guilds"]) ~= 0) then
+			for key, value in pairs(UserData["Guilds"]) do
+				--TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoGilde"):SetText("Gilde")
+				TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoGildeList"):SetText(TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoGildeList"):GetText() .. "- " .. value .. "\r\n")
 			end
 		else
-			TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoGildeList"):SetText(GetString(SI_TUI_TEXT_USER_NO_GUILDS))
+			TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoGildeList"):SetText(GetString(SI_TUIT_TEXT_USER_NO_GUILDS))
 		end
 
-		local el1 = TamrielUnlimitedIT.DynamicScrollPageDettagliUtente:GetNamedChild("ContTestoContUserDinamici")
+		local el1 = TamrielUnlimitedIT.DynamicScrollPageUserDetail:GetNamedChild("ContTestoContUserDinamici")
 		local pre = el1:GetNamedChild("pre")
 
-		--[[ for key, value in pairs(DettagliArray) do
+		--[[ for key, value in pairs(UserData) do
 		d(key, value) end ]]--
 		-- #Test per verificare il corretto costruttore di tabelle
 
 		local i = 1
 
-		for key, value in pairs(DettagliArray) do
+		for key, value in pairs(UserData) do
 			--if (key~="Guilds" and key~="CP") then
 			if (key == "PG") then
 				for key1, value1 in pairs(value) do
 
 					local v1 = el1:GetNamedChild("Dynamic_stampa_Row_User" .. i)
 					if v1 == nil then
-						v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Row_User", el1, "DynamicRowDettagliUtente", i)
+						v1 = CreateControlFromVirtual("$(parent)Dynamic_stampa_Row_User", el1, "DynamicRowUserDetail", i)
 					end
 
 					local colorPG = GetColorForLevel(value1.lev)
@@ -698,11 +710,11 @@ function ApriDettagliPlayer(self, BackPage)
 					v1:GetNamedChild("NomePG"):SetColor(colorPG:UnpackRGBA())
 					v1:GetNamedChild("Alleanza"):SetText(zo_strformat(GetString("SI_ALLIANCE", value1.alli)))
 					v1:GetNamedChild("Alleanza"):SetColor(GetColorForAlliance(value1.alli):UnpackRGBA())
-					v1:GetNamedChild("Liv"):SetText("|cEECA2A" .. GetString(SI_TUI_TEXT_LEVEL) .. "|r: " .. value1.lev)
-					v1:GetNamedChild("CP"):SetText("|cEECA2A" .. GetString(SI_TUI_TEXT_CP) .. "|r: " .. DettagliArray.CP)
-					v1:GetNamedChild("Sex"):SetText("|cEECA2A" .. GetString(SI_TUI_TEXT_SEX) .. "|r: " .. GetString("SI_GENDER", value1.sex))
-					v1:GetNamedChild("Race"):SetText("|cEECA2A" .. GetString(SI_TUI_TEXT_RACE) .. "|r: " .. zo_strformat(SI_RACE_NAME, GetRaceName(value1.sex, value1.race)))
-					v1:GetNamedChild("Class"):SetText("|cEECA2A" .. GetString(SI_TUI_TEXT_CLASS) .. "|r: " .. zo_strformat(SI_CLASS_NAME, GetClassName(value1.sex, value1.class)))
+					v1:GetNamedChild("Liv"):SetText("|cEECA2A" .. GetString(SI_TUIT_TEXT_LEVEL) .. "|r: " .. value1.lev)
+					v1:GetNamedChild("CP"):SetText("|cEECA2A" .. GetString(SI_TUIT_TEXT_CP) .. "|r: " .. UserData.CP)
+					v1:GetNamedChild("Sex"):SetText("|cEECA2A" .. GetString(SI_TUIT_TEXT_SEX) .. "|r: " .. GetString("SI_GENDER", value1.sex))
+					v1:GetNamedChild("Race"):SetText("|cEECA2A" .. GetString(SI_TUIT_TEXT_RACE) .. "|r: " .. zo_strformat(SI_RACE_NAME, GetRaceName(value1.sex, value1.race)))
+					v1:GetNamedChild("Class"):SetText("|cEECA2A" .. GetString(SI_TUIT_TEXT_CLASS) .. "|r: " .. zo_strformat(SI_CLASS_NAME, GetClassName(value1.sex, value1.class)))
 
 					pre = v1
 					i = i + 1
@@ -718,7 +730,7 @@ function ApriDettagliPlayer(self, BackPage)
 			ii = ii + 1
 		end
 
-		TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TuiDettagliUtente")
+		TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TUit_UserDetail")
 	end
 end
 
@@ -727,10 +739,10 @@ end
 -- GUILDS
 
 
--- ACCOUNT VALIDATOR
+-- ACCOUNT VALIDATION
 
 function SendValidationMail()
-	TamrielUnlimitedIT.Validator:SendValidationMail()
+	TamrielUnlimitedIT.Validation:SendValidation()
 end
 
 -- SHARED BUILDS
@@ -793,7 +805,7 @@ function OnMouseEnterBuildRate(self)
 		if i <= rating then
 			tex = "star-full.dds"
 		end
-		el:GetNamedChild("ContentRateRating" .. i):SetTexture("TamrielUnlimitedIT/Textures/" .. tex)
+		el:GetNamedChild("ContentRateRating" .. i):SetTexture("TamrielUnlimitedIT/textures/" .. tex)
 	end
 end
 function OnMouseExitBuildRate(self)
@@ -816,15 +828,29 @@ function TamrielUnlimitedIT:ScheduleTimer(callback, seconds)
 	zo_callLater(callback, seconds * 1000)
 end
 
-function TamrielUnlimitedIT.ReloadUIFn ()
+function TamrielUnlimitedIT.ReloadUI()
 	TamrielUnlimitedIT:ScheduleTimer(function()
-			ZO_Dialogs_ShowDialog("TUIT_DIALOG_RELOADING_UI", nil, nil, false)
-			TamrielUnlimitedIT:ScheduleTimer(function() ReloadUI() end, 3)
-		end, 0.1)
+		ZO_Dialogs_ShowDialog("TUIT_DIALOG_RELOADING_UI_DEFAULT", nil, nil, false)
+		TamrielUnlimitedIT:ScheduleTimer(function() ReloadUI() end, 3)
+	end, 0.1)
+end
+
+function TamrielUnlimitedIT.ReloadUI_ChangeLang()
+	TamrielUnlimitedIT:ScheduleTimer(function()
+		ZO_Dialogs_ShowDialog("TUIT_DIALOG_CHANGE_LANGUAGE", nil, nil, false)
+		TamrielUnlimitedIT:ScheduleTimer(function() SetCVar("language.2", "it")	end, 3)
+	end, 0.1)
+end
+
+function TamrielUnlimitedIT.ReloadUI_SaveValidation()
+	TamrielUnlimitedIT:ScheduleTimer(function()
+		ZO_Dialogs_ShowDialog("SI_TUIT_DIALOG_VALIDATION_REQUEST", nil, nil, false)
+		TamrielUnlimitedIT:ScheduleTimer(function() ReloadUI() end, 3)
+	end, 0.1)
 end
 
 -- ASSOCIAZIONI EVENTI / BIND ( STRINGHE )
---ZO_CreateStringId("SI_BINDING_NAME_DEBUG_UI", "Reload UI")
+ZO_CreateStringId("SI_BINDING_NAME_DEBUG_UI", "Reload UI")
 
 EVENT_MANAGER:RegisterForEvent(TamrielUnlimitedIT.name, EVENT_ADD_ON_LOADED, OnAddOnLoaded)
 EVENT_MANAGER:RegisterForEvent(TamrielUnlimitedIT.name, EVENT_PLAYER_ACTIVATED, function()

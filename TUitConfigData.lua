@@ -1,4 +1,4 @@
-TUI_Config = {
+TUIT_Config = {
     Races = {
         ["1"] = {
             id = 1,

@@ -1,46 +1,46 @@
-TUI_Guilds = ZO_Object:Subclass()
+TUIT_Guilds = ZO_Object:Subclass()
 
-function TUI_Guilds:New(control)
+function TUIT_Guilds:New(control)
     local myInstance = ZO_Object.New(self)
     myInstance.control = control
     return myInstance
 end
 
-function TUI_Guilds:Initialize()
-	self.Guilds = CreateControlFromVirtual("DynamicLabel_screenGuilds", self.control, "DynamicTextGilde", 0)
+function TUIT_Guilds:Initialize()
+	self.Guilds = CreateControlFromVirtual("DynamicLabel_Guild", self.control, "DynamicText_Guild", 0)
 	self.Guilds:SetAnchor(TOP, self.control, TOP, 0, 0)
 	self.Guilds:SetHidden(false)
 	local sc = self.Guilds:GetNamedChild("ContainerScrollChild")
 	self.DynamicScrollPageGilde = CreateControlFromVirtual("Dynamic_print_ScrollPanelGuilds", sc, "DynamicScrollPageGilde", 0)
 end
 
-function TUI_Guilds:CreateScene(TUI_MENU_BAR)
-	local TUI_SCENE_GILDE = ZO_Scene:New("TuiGilde", SCENE_MANAGER)
+function TUIT_Guilds:CreateScene(TUIT_MENU_BAR)
+	local TUIT_SCENE_GILDE = ZO_Scene:New("TUit_Guild", SCENE_MANAGER)
 
 	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUI_SCENE_GILDE:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_GILDE:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_GILDE:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_GILDE:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_GILDE:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_GILDE:AddFragment(TOP_BAR_FRAGMENT)
+	-- TUIT_SCENE_GILDE:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
+	TUIT_SCENE_GILDE:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+	TUIT_SCENE_GILDE:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
+	TUIT_SCENE_GILDE:AddFragment(TITLE_FRAGMENT)
+	TUIT_SCENE_GILDE:AddFragment(RIGHT_BG_FRAGMENT)
+	TUIT_SCENE_GILDE:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
-	TUI_GILDE_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_GILDE_TITLE) -- The title at the left of the scene is the "global one" but we can change it
-	TUI_SCENE_GILDE:AddFragment(TUI_GILDE_TITLE_FRAGMENT)
+	TUIT_GUILD_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_GUILD_TITLE) -- The title at the left of the scene is the "global one" but we can change it
+	TUIT_SCENE_GILDE:AddFragment(TUIT_GUILD_TITLE_FRAGMENT)
 	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
 	-- Aggiunta codice XML alla Scena
-	TUI_GILDE_WINDOW = ZO_FadeSceneFragment:New(self.control)
-	TUI_SCENE_GILDE:AddFragment(TUI_GILDE_WINDOW)
+	TUIT_GUILD_WINDOW = ZO_FadeSceneFragment:New(self.control)
+	TUIT_SCENE_GILDE:AddFragment(TUIT_GUILD_WINDOW)
 
-	TUI_SCENE_GILDE:AddFragment(TUI_MENU_BAR)
+	TUIT_SCENE_GILDE:AddFragment(TUIT_MENU_BAR)
 
 	self:LoadGuilds()
-    return TUI_SCENE_GILDE;
+    return TUIT_SCENE_GILDE;
 end
 
-function TUI_Guilds:LoadGuilds()
+function TUIT_Guilds:LoadGuilds()
 	--local GuildTemp = deepcopy(TUitDataVar.Guild)
 
     self.GuildADTemp = (TUitDataVar.GuildAD ~= nil and deepcopy(TUitDataVar.GuildAD) or {})
@@ -54,7 +54,7 @@ function TUI_Guilds:LoadGuilds()
         self.DynamicScrollPageGilde:GetNamedChild("AD"):SetHidden(true)
         self.DynamicScrollPageGilde:GetNamedChild("DC"):SetHidden(true)
         self.DynamicScrollPageGilde:GetNamedChild("EP"):SetHidden(true)
-        self.DynamicScrollPageGilde:GetNamedChild("NOGuildsLabel"):SetText(GetString(SI_TUI_TEXT_GUILDS_NOGUILDS))
+        self.DynamicScrollPageGilde:GetNamedChild("NOGuildsLabel"):SetText(GetString(SI_TUIT_TEXT_GUILDS_NOGUILDS))
         do return end
     end
 
@@ -99,13 +99,13 @@ function TUI_Guilds:LoadGuilds()
 	self.DynamicScrollPageGilde:SetDimensions(900, self.TotalHeight + 280)
 end
 
-function TUI_Guilds:LoadNoGuild(el, alliance)
+function TUIT_Guilds:LoadNoGuild(el, alliance)
 	el:GetNamedChild("NoGuild"):SetHidden(false)
-	--el:GetNamedChild("NoGuildLabel"):SetText(GetString(SI_TUI_TEXT_GUILDS_NOGUILDS_IN_ALLIANCE) .. " " .. zo_strformat(SI_ALLIANCE_NAME, GetAllianceName(alliance)))
-	el:GetNamedChild("NoGuildLabel"):SetText(GetString(SI_TUI_TEXT_GUILDS_NOGUILDS_IN_ALLIANCE))
+	--el:GetNamedChild("NoGuildLabel"):SetText(GetString(SI_TUIT_TEXT_GUILDS_NOGUILDS_IN_ALLIANCE) .. " " .. zo_strformat(SI_ALLIANCE_NAME, GetAllianceName(alliance)))
+	el:GetNamedChild("NoGuildLabel"):SetText(GetString(SI_TUIT_TEXT_GUILDS_NOGUILDS_IN_ALLIANCE))
 end
 
-function TUI_Guilds:LoadGuild(el, alliance)
+function TUIT_Guilds:LoadGuild(el, alliance)
 	el:GetNamedChild("NoGuild"):SetHidden(true)
     local pre = el:GetNamedChild("Label")
     local tempList

@@ -1,6 +1,6 @@
 <GuiXml>
 	<Controls>
-		<Control name="DynamicTextContributori" virtual="true" >
+		<Control name="DynamicText_Contributor" virtual="true" >
 		<Dimensions x="920" y="660" />
 			<Controls>
 				<Control name="$(parent)Container" inherits="ZO_ScrollContainer">
@@ -45,13 +45,13 @@
 							<Anchor point="TOP" relativePoint="BOTTOM" offsetX="0" offsetY="30" relativeTo="$(parent)Riga4" />
 							<Dimensions x="180" y="35" />
 							<OnMouseDown>
-								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TuiCommunity")
+								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TUit_Community")
 							</OnMouseDown>
 							<Controls>
 								<Label name="$(parent)Label_Contributori" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 									<Dimensions x="115" y="35" />
-									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RETURN))</OnInitialized>
+									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_RETURN))</OnInitialized>
 								</Label> 
 							</Controls>
 						</Button>

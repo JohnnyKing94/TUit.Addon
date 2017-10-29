@@ -1,13 +1,13 @@
-TUI_Events = ZO_Object:Subclass()
+TUIT_Events = ZO_Object:Subclass()
 
-function TUI_Events:New(control)
+function TUIT_Events:New(control)
     local myInstance = ZO_Object.New(self)
     myInstance.control = control
     return myInstance
 end
 
-function TUI_Events:Initialize()
-	self.Events = CreateControlFromVirtual("DynamicLabel_screenEvents", self.control, "DynamicTextEventi", 0)
+function TUIT_Events:Initialize()
+	self.Events = CreateControlFromVirtual("DynamicLabel_Event", self.control, "DynamicText_Event", 0)
 	self.Events:SetAnchor(TOP, self.control, TOP, 0, 0)
 	self.Events:SetHidden(false)
 	local sc = self.Events:GetNamedChild("ContainerScrollChild")
@@ -15,39 +15,39 @@ function TUI_Events:Initialize()
 	self.DynamicScrollPageEventiMessage = CreateControlFromVirtual("Dynamic_print_ScrollPanelEventsMessage", sc, "EventMessage", 0)
 end
 
-function TUI_Events:CreateScene(TUI_MENU_BAR)
-	local TUI_SCENE_EVENTI = ZO_Scene:New("TuiEventi", SCENE_MANAGER)
+function TUIT_Events:CreateScene(TUIT_MENU_BAR)
+	local TUIT_SCENE_EVENTI = ZO_Scene:New("TUit_Event", SCENE_MANAGER)
 
 	-- Assegnazione Background e "componenti" grafici da visualizzare
-	-- TUI_SCENE_EVENTI:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
-	TUI_SCENE_EVENTI:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-	TUI_SCENE_EVENTI:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
-	TUI_SCENE_EVENTI:AddFragment(TITLE_FRAGMENT)
-	TUI_SCENE_EVENTI:AddFragment(RIGHT_BG_FRAGMENT)
-	TUI_SCENE_EVENTI:AddFragment(TOP_BAR_FRAGMENT)
+	-- TUIT_SCENE_EVENTI:AddFragment(ZO_WindowSoundFragment:New(SOUNDS.BACKPACK_WINDOW_OPEN, SOUNDS.BACKPACK_WINDOW_CLOSE))
+	TUIT_SCENE_EVENTI:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+	TUIT_SCENE_EVENTI:AddFragmentGroup(FRAGMENT_GROUP.PLAYER_PROGRESS_BAR_KEYBOARD_CURRENT)
+	TUIT_SCENE_EVENTI:AddFragment(TITLE_FRAGMENT)
+	TUIT_SCENE_EVENTI:AddFragment(RIGHT_BG_FRAGMENT)
+	TUIT_SCENE_EVENTI:AddFragment(TOP_BAR_FRAGMENT)
 
 	-- Settaggio del titolo
-	TUI_EVENTI_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUI_EVENTI_TITLE) -- The title at the left of the scene is the "global one" but we can change it
-	TUI_SCENE_EVENTI:AddFragment(TUI_EVENTI_TITLE_FRAGMENT)
+	TUIT_EVENT_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_TUIT_EVENT_TITLE) -- The title at the left of the scene is the "global one" but we can change it
+	TUIT_SCENE_EVENTI:AddFragment(TUIT_EVENT_TITLE_FRAGMENT)
 	self.control:SetAnchor(TOPLEFT, TITLE_FRAGMENT.control, BOTTOMLEFT, 200, 0)
 
 	-- Aggiunta codice XML alla Scena
-	TUI_EVENTI_WINDOW = ZO_FadeSceneFragment:New(self.control)
-	TUI_SCENE_EVENTI:AddFragment(TUI_EVENTI_WINDOW)
+	TUIT_EVENT_WINDOW = ZO_FadeSceneFragment:New(self.control)
+	TUIT_SCENE_EVENTI:AddFragment(TUIT_EVENT_WINDOW)
 
-	TUI_SCENE_EVENTI:AddFragment(TUI_MENU_BAR)
+	TUIT_SCENE_EVENTI:AddFragment(TUIT_MENU_BAR)
 
     self:LoadEvents()
-    return TUI_SCENE_EVENTI;
+    return TUIT_SCENE_EVENTI;
 end
 
 --[[function self:Sort()
 	quicksort(TamrielUnlimitedIT.TUitDataVar.Events, function (v1, v2) return v1[1] <= v2[1] end)
 end]]--
 
-function TUI_Events:LoadEvents()
+function TUIT_Events:LoadEvents()
 	if TamrielUnlimitedIT.TUitDataVar.Events ~= nil and #TamrielUnlimitedIT.TUitDataVar.Events > 0 then
-        TUI_Events.CalculateRepeatsEvents()
+        TUIT_Events.CalculateRepeatsEvents()
         --Sort()
         self:LoadEventsList()
 	else
@@ -55,15 +55,15 @@ function TUI_Events:LoadEvents()
 	end
 end
 
-function TUI_Events:LoadNoEvents()
+function TUIT_Events:LoadNoEvents()
     local el1 = self.DynamicScrollPageEventi
     local eventMessage = self.DynamicScrollPageEventiMessage
 	eventMessage:SetHidden(false)
 	el1:SetHidden(true)
-	eventMessage:GetNamedChild("Label"):SetText(GetString(SI_TUI_TEXT_EVENTS_NOEVENTS))
+	eventMessage:GetNamedChild("Label"):SetText(GetString(SI_TUIT_TEXT_EVENTS_NOEVENTS))
 end
 
-function TUI_Events:LoadEventsList()
+function TUIT_Events:LoadEventsList()
 
     local el1 = self.DynamicScrollPageEventi
     local eventMessage = self.DynamicScrollPageEventiMessage
@@ -122,28 +122,28 @@ function TUI_Events:LoadEventsList()
 				if (diff < 86400) then
 					-- Controllo che l'evento non inizia in meno di un ora
 					zo_callLater(function ()
-							TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_STARTED))
+							TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTED))
 						end, diff * 1000)
 					if (diff > 3600) then
 						zo_callLater(function ()
-								TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_STARTING_1H))
+								TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTING_1H))
 							end, (diff - 3600) * 1000)
 					end
 					if (diff > 600) then
 						zo_callLater(function ()
-								TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra 10 minuti!")
+								TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", "L'evento inizierà tra 10 minuti!")
 							end, (diff - 600) * 1000)
 					end
 					if ((diff > 661 and diff < 3600) or (diff > 60 and diff < 600)) then
 						if (DDiff.minuto == 1) then
-							AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_STARTING_IN_MINUTE)))
+							AddPreLoadEvent(TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTING_IN_MINUTE)))
 						else
-							AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_STARTING_IN_MINUTES):gsub("{MINUTES}", DDiff.minuto)))
+							AddPreLoadEvent(TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_STARTING_IN_MINUTES):gsub("{MINUTES}", DDiff.minuto)))
 						end
 					end
 				end
 			else
-				AddPreLoadEvent(TUI_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUI_TEXT_EVENTS_LIVENOW)))
+				AddPreLoadEvent(TUIT_Events.ShowEventMessage("|cffe823" .. TamrielUnlimitedIT.TUitDataVar.Events[i]["title"] .. "|r", GetString(SI_TUIT_TEXT_EVENTS_LIVENOW)))
 			end
 		end
 	end
@@ -165,11 +165,11 @@ function TUI_Events:LoadEventsList()
     end
 end
 
-TUI_Events.ShowEventMessage = function (Titolo, Corpo)
-	CENTER_SCREEN_ANNOUNCE:AddMessage(EVENT_DISPLAY_ANNOUNCEMENT, CSA_EVENT_COMBINED_TEXT, SOUNDS.OBJECTIVE_COMPLETED, Titolo, Corpo, 'TamrielUnlimitedIT/Textures/calendar.dds', nil, nil, nil, 6000, true)
+TUIT_Events.ShowEventMessage = function (Titolo, Corpo)
+	CENTER_SCREEN_ANNOUNCE:AddMessage(EVENT_DISPLAY_ANNOUNCEMENT, CSA_EVENT_COMBINED_TEXT, SOUNDS.OBJECTIVE_COMPLETED, Titolo, Corpo, 'TamrielUnlimitedIT/textures/calendar.dds', nil, nil, nil, 6000, true)
 end
 
-TUI_Events.CalculateRepeatsEvents = function ()
+TUIT_Events.CalculateRepeatsEvents = function ()
 
 	local NumeroMaxRipetizioniSeNonSettate = 5
 	ArrTemp = {}

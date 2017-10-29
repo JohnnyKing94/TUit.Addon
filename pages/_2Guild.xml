@@ -1,6 +1,6 @@
 <GuiXml>
 	<Controls>
-		<Control name="DynamicTextGilde" virtual="true" >
+		<Control name="DynamicText_Guild" virtual="true" >
 			<Dimensions x="920" y="680" />
 			<Controls>
 				<Control name="$(parent)Container" inherits="ZO_ScrollContainer">
@@ -19,12 +19,12 @@
 				<Label name="$(parent)LabelWarningApp" font="ZoFontWinT2" inheritAlpha="true" color="CC0000" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Anchor point="TOP" relativePoint="TOP" relativeTo="$(parent)"/>
 					<Dimensions y="40" />
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_WARNING_APP))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_WARNING_APP))</OnInitialized>
 				</Label>
 				<Label name="$(parent)LabelWelcome" font="ZoFontWinT2" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 					<Dimensions y="50" />
 					<Anchor point="TOP" relativeTo="$(parent)LabelWarningApp" relativePoint="BOTTOM" offsetY="30"/>
-					<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_GUILDS_WELCOME))</OnInitialized>
+					<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_GUILDS_WELCOME))</OnInitialized>
 				</Label>
 				<Control name="$(parent)cn">
 					<Dimensions x="710" y="140" />
@@ -34,7 +34,7 @@
 						<Label name="$(parent)LabelNews" font="ZoFontWinT2" inheritAlpha="true" color="FFFFFF" wrapMode="ELLIPSIS" verticalAlignment="TOP" horizontalAlignment="LEFT">
 							<Dimensions x="710" y="95" />
 							<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_GUILDS_NEWS))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_GUILDS_NEWS))</OnInitialized>
 						</Label>
 						<Control name="$(parent)link" >
 							<Dimensions x="710" y="30"/>
@@ -170,7 +170,7 @@
 					<Dimensions x="160" y="160" />
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
 					<Controls>		
-						<Texture name="$(parent)Texture" textureFile="\TamrielUnlimitedIT\Textures\calendar.dds" >
+						<Texture name="$(parent)Texture" textureFile="\TamrielUnlimitedIT\textures\calendar.dds" >
 							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" offsetX="0" offsetY="0"/>
 							<Dimensions x="160" y="160" />
 						</Texture>
@@ -209,7 +209,7 @@
 							<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
 							<MouseButton button="2" enabled="true"/>
 							<MouseButton button="1" enabled="true"/>
-							<OnMouseDown>ApriMenuPlayer(self,button,"TuiGilde")</OnMouseDown>
+							<OnMouseDown>ApriMenuPlayer(self,button,"TUit_Guild")</OnMouseDown>
 							<Dimensions x="580" y="20" />
 							<Controls>
 								<Label name="$(parent)Label" font="ZoFontWinH3" inheritAlpha="true" color="FFCE1F" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="LEFT" text="">

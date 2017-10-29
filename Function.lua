@@ -242,36 +242,36 @@ end
 function GetMonthName(month)
 	local months =
 	{
-		GetString(SI_TUI_TEXT_MONTH_1),
-		GetString(SI_TUI_TEXT_MONTH_2),
-		GetString(SI_TUI_TEXT_MONTH_3),
-		GetString(SI_TUI_TEXT_MONTH_4),
-		GetString(SI_TUI_TEXT_MONTH_5),
-		GetString(SI_TUI_TEXT_MONTH_6),
-		GetString(SI_TUI_TEXT_MONTH_7),
-		GetString(SI_TUI_TEXT_MONTH_8),
-		GetString(SI_TUI_TEXT_MONTH_9),
-		GetString(SI_TUI_TEXT_MONTH_10),
-		GetString(SI_TUI_TEXT_MONTH_11),
-		GetString(SI_TUI_TEXT_MONTH_12)
+		GetString(SI_TUIT_TEXT_MONTH_1),
+		GetString(SI_TUIT_TEXT_MONTH_2),
+		GetString(SI_TUIT_TEXT_MONTH_3),
+		GetString(SI_TUIT_TEXT_MONTH_4),
+		GetString(SI_TUIT_TEXT_MONTH_5),
+		GetString(SI_TUIT_TEXT_MONTH_6),
+		GetString(SI_TUIT_TEXT_MONTH_7),
+		GetString(SI_TUIT_TEXT_MONTH_8),
+		GetString(SI_TUIT_TEXT_MONTH_9),
+		GetString(SI_TUIT_TEXT_MONTH_10),
+		GetString(SI_TUIT_TEXT_MONTH_11),
+		GetString(SI_TUIT_TEXT_MONTH_12)
 	}
 	return months[tonumber(month)]
 end
 function GetMonthNameAbbr(month)
 	local months =
 	{
-		GetString(SI_TUI_TEXT_MONTH_ABBR_1),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_2),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_3),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_4),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_5),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_6),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_7),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_8),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_9),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_10),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_11),
-		GetString(SI_TUI_TEXT_MONTH_ABBR_12)
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_1),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_2),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_3),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_4),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_5),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_6),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_7),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_8),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_9),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_10),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_11),
+		GetString(SI_TUIT_TEXT_MONTH_ABBR_12)
 	}
 	return months[tonumber(month)]
 end
@@ -286,9 +286,9 @@ function SetToolTip(ctrl, text)
 	end)
 end
 function GetConfigRaceInfo(raceId)
-	if TUI_Config ~= nil then
-		if TUI_Config.Races ~= nil then
-			for key, value in pairs(TUI_Config.Races) do
+	if TUIT_Config ~= nil then
+		if TUIT_Config.Races ~= nil then
+			for key, value in pairs(TUIT_Config.Races) do
 				if value.id == raceId then
 					return value
 				end
@@ -298,9 +298,9 @@ function GetConfigRaceInfo(raceId)
 	return nil
 end
 function GetConfigClassInfo(classId)
-	if TUI_Config ~= nil then
-		if TUI_Config.Classes ~= nil then
-			for key, value in pairs(TUI_Config.Classes) do
+	if TUIT_Config ~= nil then
+		if TUIT_Config.Classes ~= nil then
+			for key, value in pairs(TUIT_Config.Classes) do
 				if value.id == classId then
 					return value
 				end
@@ -310,10 +310,10 @@ function GetConfigClassInfo(classId)
 	return nil
 end
 function GetConfigRoleInfo(roleId)
-	if TUI_Config and TUI_Config.Roles then
-		for i = 1, #TUI_Config.Roles do
+	if TUIT_Config and TUIT_Config.Roles then
+		for i = 1, #TUIT_Config.Roles do
 			if i == roleId then
-				return TUI_Config.Roles[i]
+				return TUIT_Config.Roles[i]
 			end
 		end
 	end
@@ -322,21 +322,21 @@ end
 function GetRaceTexture(raceId)
 	local raceInfo = GetConfigRaceInfo(raceId)
 	if raceInfo ~= nil then
-		return (raceInfo.texture ~= "" and "TamrielUnlimitedIT/Textures/Race/" .. raceInfo.texture or "")
+		return (raceInfo.texture ~= "" and "TamrielUnlimitedIT/textures/Race/" .. raceInfo.texture or "")
 	end
 	return ""
 end
 function GetClassTexture(classId)
 	local classInfo = GetConfigClassInfo(classId)
 	if classInfo ~= nil then
-		return (classInfo.texture ~= "" and "TamrielUnlimitedIT/Textures/Class/" .. classInfo.texture or "")
+		return (classInfo.texture ~= "" and "TamrielUnlimitedIT/textures/Class/" .. classInfo.texture or "")
 	end
 	return ""
 end
 function GetRoleTexture(roleId)
 	local roleInfo = GetConfigRoleInfo(roleId)
 	if roleInfo ~= nil and roleInfo.texture ~= nil then
-		return "TamrielUnlimitedIT/Textures/Role/" .. roleInfo.texture
+		return "TamrielUnlimitedIT/textures/Role/" .. roleInfo.texture
 	end
 	return ""
 end
@@ -356,12 +356,12 @@ function GetRatingTextures(rating)
 	local texture_index = 1
 	if full > 0 then
 		for i = 1, full do
-			textures[texture_index] = "TamrielUnlimitedIT/Textures/star-full.dds"
+			textures[texture_index] = "TamrielUnlimitedIT/textures/star-full.dds"
 			texture_index = texture_index + 1
 		end
 	end
 	if half > 0 then
-		textures[texture_index] = "TamrielUnlimitedIT/Textures/star-half.dds"
+		textures[texture_index] = "TamrielUnlimitedIT/textures/star-half.dds"
 	end
 	return textures
 end
@@ -374,19 +374,19 @@ function MakeItemSetLink( id, flags )
 	local crafted = 0;
 	local health = 10000;
 
-	if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.crafted)) then
+	if (CheckItemSetFlag(flags, TUIT_Config.ItemData.flags.crafted)) then
 		quality = 370;
 		crafted = 1;
-	elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.jewelry)) then
+	elseif (CheckItemSetFlag(flags, TUIT_Config.ItemData.flags.jewelry)) then
 		quality = 363;
 		health = 0;
-	elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.weapon)) then
+	elseif (CheckItemSetFlag(flags, TUIT_Config.ItemData.flags.weapon)) then
 		health = 500;
 	end
 
 	local style = ITEMSTYLE_NONE;
 
-	if (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.allianceStyle)) then
+	if (CheckItemSetFlag(flags, TUIT_Config.ItemData.flags.allianceStyle)) then
 		local allianceStyles = {
 			[ALLIANCE_NONE]                = ITEMSTYLE_NONE,
 			[ALLIANCE_ALDMERI_DOMINION]    = ITEMSTYLE_ALLIANCE_ALDMERI,
@@ -394,7 +394,7 @@ function MakeItemSetLink( id, flags )
 			[ALLIANCE_DAGGERFALL_COVENANT] = ITEMSTYLE_ALLIANCE_DAGGERFALL,
 		};
 		style = allianceStyles[GetUnitAlliance("player")];
-	elseif (CheckItemSetFlag(flags, TUI_Config.ItemData.flags.multiStyle)) then
+	elseif (CheckItemSetFlag(flags, TUIT_Config.ItemData.flags.multiStyle)) then
 		local multiStyle = GetUnitRaceId("player");
 		if multiStyle == 10 then
 			multiStyle = ITEMSTYLE_RACIAL_IMPERIAL

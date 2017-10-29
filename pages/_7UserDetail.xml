@@ -1,6 +1,6 @@
 <GuiXml>
 	<Controls>
-		<Control name="DynamicTextDettagliUtente" virtual="true" >
+		<Control name="DynamicText_UserDetail" virtual="true" >
 		<Dimensions x="920" y="660" />
 			<Controls>
 				<Control name="$(parent)Container" inherits="ZO_ScrollContainer">
@@ -9,7 +9,7 @@
                 </Control>
 			</Controls> 
 		</Control>
-		<Control name="DynamicScrollPageDettagliUtente" virtual="true">
+		<Control name="DynamicScrollPageUserDetail" virtual="true">
 			<Anchor point="TOP" relativePoint="TOP" offsetX="0" relativeTo="$(parent)" />
 			<Dimensions x="900" y="160" />
 			<Controls>
@@ -33,7 +33,7 @@
 						<Label name="$(parent)Gilde" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="F2DD7E" wrapMode="ELLIPSIS" verticalAlignment="TOP" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)Credit" relativePoint="BOTTOMLEFT" offsetY="30" />
 							<Dimensions x="115" y="35" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_USER_GUILDS_TITLE))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_USER_GUILDS_TITLE))</OnInitialized>
 						</Label>
 						<Label name="$(parent)GildeList" font="ZoFontWinT1" verticalAlignment="TOP" horizontalAlignment="LEFT" text="">
 							<Dimensions x="850" />
@@ -55,7 +55,7 @@
 						<Label name="$(parent)Personaggi" height="10" font="ZoFontWinH2" inheritAlpha="false" alpha="1" color="F2DD7E" wrapMode="ELLIPSIS" verticalAlignment="CENTER" horizontalAlignment="LEFT">
 							<Anchor point="TOPLEFT" relativeTo="$(parent)GildeList" relativePoint="BOTTOMLEFT" offsetY="30"/>
 							<Dimensions x="250" y="35" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_USER_CHARACTERS_TITLE))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_USER_CHARACTERS_TITLE))</OnInitialized>
 						</Label>						
 						<Control name="$(parent)ContUserDinamici">
 						<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Personaggi" offsetX="30" />
@@ -74,13 +74,13 @@
 								TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, self:GetNamedChild("Label_BackPage"):GetText())
 							</OnMouseDown>
 							<Controls>
-								<Label name="$(parent)Label_DettagliUtente" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
+								<Label name="$(parent)Label_UserDetail" height="10" font="ZoFontWinH3" inheritAlpha="false" alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 									<Dimensions x="115" y="35" />
-									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_RETURN))</OnInitialized>
+									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_RETURN))</OnInitialized>
 								</Label> 
-								<Label name="$(parent)Label_BackPage"  hidden="true" text="TuiUtenti">
-									<Anchor point="CENTER" relativeTo="$(parent)Label_DettagliUtente" relativePoint="CENTER" offsetY="0"/>
+								<Label name="$(parent)Label_BackPage"  hidden="true" text="TUit_User">
+									<Anchor point="CENTER" relativeTo="$(parent)Label_UserDetail" relativePoint="CENTER" offsetY="0"/>
 								</Label> 
 							</Controls>
 						</Button>
@@ -89,7 +89,7 @@
 			</Controls>
 		</Control>
 
-		<Control name="DynamicRowDettagliUtente" virtual="true">
+		<Control name="DynamicRowUserDetail" virtual="true">
 			<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)ContUserDinamici" offsetY="10" />
 			<Dimensions x="700" y="80" />
 			<Controls>

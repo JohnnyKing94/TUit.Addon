@@ -4,8 +4,8 @@
 ; States and/or other countries. All rights reserved.
 ; You can read the full terms at https://account.elderscrollsonline.com/add-on-terms
 
-## Title: |cffe823Tamriel Unlimited|r |c0086dbIT|r
-## APIVersion: 100020
+## Title: |cffe823TU|r|c0086dbit|r Beta
+## APIVersion: 100021
 ## Description: |cffe823Tamriel Unlimited|r |c43db00I|r|cffffffT|r|cff0000A|r è un addon realizzato dalla community italiana di |cff0000tamrielunlimited.it|r al fine di unire gli utenti italiani nel gioco di ESO, ma sopratutto traduce il gioco!
 ## Author: |cdb4d00Rarder44|r & |cdbb400JohnnyKing94|r & |cdbb400ZioRed|r
 ## SavedVariables: TUitData
@@ -27,24 +27,24 @@ libs/LibMainMenu/LibMainMenu.lua
 Function.lua
 
 ; TUit Modules
-Modules/TUI_Players.lua
-Modules/TUI_Builds.lua
-Modules/TUI_Guilds.lua
-Modules/TUI_Events.lua
-Modules/TUI_Community.lua
-Modules/TUI_Validator.lua
-Modules/TUI_Contributors.lua
+modules/TUIT_User.lua
+modules/TUIT_Build.lua
+modules/TUIT_Guild.lua
+modules/TUIT_Event.lua
+modules/TUIT_Community.lua
+modules/TUIT_Validation.lua
+modules/TUIT_Contributor.lua
 
-; Pages
+; TUit Pages
 TamrielUnlimitedIT.xml
-Pages/_1Utenti.xml
-Pages/_2Gilde.xml
-Pages/_3Eventi.xml
-Pages/_4Community.xml
-Pages/_5Convalida.xml
-Pages/_6Contributori.xml
-Pages/_7DettagliUtente.xml
-Pages/_8Builds.xml
+pages/_1User.xml
+pages/_2Guild.xml
+pages/_3Event.xml
+pages/_4Community.xml
+pages/_5Validation.xml
+pages/_6Contributor.xml
+pages/_7UserDetail.xml
+pages/_8Build.xml
 
 ; AddOn handlers
 TamrielUnlimitedIT.lua

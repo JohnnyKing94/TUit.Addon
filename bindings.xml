@@ -2,9 +2,9 @@
   <Layer name="SI_KEYBINDINGS_LAYER_GENERAL">
 	<Category name="|cffe823Tamriel Unlimited IT|r">
 	  <Action name="DEBUG_UI">
-	     <Down>TamrielUnlimitedIT.ReloadUIFn()</Down>
+	     <Down>TamrielUnlimitedIT.ReloadUI()</Down>
       </Action>
-	  <Action name="TUI_SHOW_PANEL">
+	  <Action name="TUIT_SHOW_PANEL">
         <Down>
 		
 		if(SCENE_MANAGER:GetCurrentScene():GetName()~="market") then
@@ -13,7 +13,7 @@
 				SCENE_MANAGER:ShowBaseScene()
 			else
 				if(TamrielUnlimitedIT.BackToMainPage) then
-					TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TuiUtenti")
+					TamrielUnlimitedIT.LMM:Update(TamrielUnlimitedIT.MENU_CATEGORY_TUI, "TUit_User")
 					TamrielUnlimitedIT.BackToMainPage=false
 				else
 					ZO_MenuBar_SelectDescriptor(TamrielUnlimitedIT.categoryBar, 1, true)

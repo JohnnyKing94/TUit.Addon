@@ -1,6 +1,6 @@
 <GuiXml>
 	<Controls>
-		<Control name="DynamicTextCommunity" virtual="true" >
+		<Control name="DynamicText_Community" virtual="true" >
 		<Dimensions x="920" y="680" />
 			<Controls>
 				<Control name="$(parent)Container" inherits="ZO_ScrollContainer">
@@ -27,12 +27,12 @@
 						<Label name="$(parent)Riga0" font="$(BOLD_FONT)|22|soft-shadow-thin" inheritAlpha="true" color="FF3000" wrapMode="TRUNCATE">
 							<Dimensions x="815" y="22"  />
 							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$(parent)" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TRANSLATE_TITLE))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_TRANSLATE_TITLE))</OnInitialized>
 						</Label>
 						<Label name="$(parent)Riga1" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE" text="Contatti">
 							<Dimensions x="900" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga0" offsetY="10" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TRANSLATE_TEXT))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_TRANSLATE_TEXT))</OnInitialized>
 						</Label>
 						<Control name="$(parent)Riga2" >
 							<Dimensions y="22" x="815" />
@@ -68,19 +68,19 @@
 								<Label name="$(parent)Label_Title" font="ZoFontWinH4" inheritAlpha="true" color="FF9600" verticalAlignment="TOP"  horizontalAlignment="CENTER" wrapMode="TRUNCATE">
 									<Dimensions x="710" y="22" />
 									<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
-									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TRANSLATED_TITLE))</OnInitialized>
+									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_TRANSLATED_TITLE))</OnInitialized>
 								</Label>
 								<Label name="$(parent)Label_Tradotto" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE">
 									<Anchor point="TOP" relativeTo="$(parent)Label_Title" relativePoint="TOPLEFT" offsetX="50" offsetY="44"/>
 									<Dimensions x="80" y="22" />
-									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TRANSLATED_TRANSLATED))</OnInitialized>
+									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_TRANSLATED_TRANSLATED))</OnInitialized>
 								</Label>
 								<Label name="$(parent)Label_NumTradotto" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE">
 									<Anchor point="TOPLEFT" relativeTo="$(parent)Label_Tradotto" relativePoint="TOPRIGHT" offsetX="5" offsetY="0"/>
 										<OnInitialized>
 										if TUitDataVar.TranslationStats ~= nil then
 											if TUitDataVar.TranslationStats.translated ~= nil then
-												self:SetText(TUitDataVar.TranslationStats["translated"].." "..GetString(SI_TUI_TEXT_COMMUNITY_TRANSLATED_STRINGS))
+												self:SetText(TUitDataVar.TranslationStats["translated"].." "..GetString(SI_TUIT_TEXT_COMMUNITY_TRANSLATED_STRINGS))
 											else
 												self:SetText("--")
 											end
@@ -93,14 +93,14 @@
 								<Label name="$(parent)Label_Totale" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE">
 									<Anchor point="TOP" relativeTo="$(parent)Label_Tradotto" relativePoint="TOPLEFT" offsetX="50" offsetY="30"/>
 									<Dimensions x="60" y="22" />
-									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TRANSLATED_TOTAL))</OnInitialized>
+									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_TRANSLATED_TOTAL))</OnInitialized>
 								</Label>
 								<Label name="$(parent)Label_NumTotale" font="ZoFontWinH3" inheritAlpha="false" color="FFFFFF" wrapMode="TRUNCATE">
 									<Anchor point="TOPLEFT" relativeTo="$(parent)Label_Totale" relativePoint="TOPRIGHT" offsetX="5" offsetY="0"/>
 										<OnInitialized>
 										if TUitDataVar.TranslationStats ~= nil then
 											if TUitDataVar.TranslationStats.to_translate ~= nil then
-												self:SetText(TUitDataVar.TranslationStats["to_translate"].." "..GetString(SI_TUI_TEXT_COMMUNITY_TRANSLATED_STRINGS))
+												self:SetText(TUitDataVar.TranslationStats["to_translate"].." "..GetString(SI_TUIT_TEXT_COMMUNITY_TRANSLATED_STRINGS))
 											else
 												self:SetText("--")
 											end
@@ -141,7 +141,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 											<Dimensions x="110" y="22" />
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_CONTRIBUTORS)..":")</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_CONTRIBUTORS)..":")</OnInitialized>
 										</Label>
 										<EditBox name="$(parent)SearchBox" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
 											<Dimensions x="565" y="22" />
@@ -172,7 +172,7 @@
 								<Label name="$(parent)Label_Contributori" height="10" font="ZoFontWinH3" inheritAlpha="false"alpha="1" color="FFFFFF" wrapMode="TRUNCATE" verticalAlignment="CENTER" horizontalAlignment="CENTER">
 									<Anchor point="CENTER" relativeTo="$(parent)" relativePoint="CENTER" offsetY="0"/>
 									<Dimensions x="115" y="35" />
-									<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_CONTRIBUTORS))</OnInitialized>
+									<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_CONTRIBUTORS))</OnInitialized>
 								</Label> 
 							</Controls>
 						</Button>-->
@@ -181,17 +181,17 @@
 						<Label name="$(parent)Riga4" font="$(BOLD_FONT)|22|soft-shadow-thin" inheritAlpha="true" color="ff3000" wrapMode="TRUNCATE">
 							<Dimensions x="815" y="22"  />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga3" offsetY="50" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TS_TITLE))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_TS_TITLE))</OnInitialized>
 						</Label>
 						<Label name="$(parent)Riga5" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 							<Dimensions x="815" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga4" offsetY="10" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_SI_TUI_TEXT_COMMUNITY_TS_TEXTTS_TITLE))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_SI_TUIT_TEXT_COMMUNITY_TS_TEXTTS_TITLE))</OnInitialized>
 						</Label>
 						<Label name="$(parent)Riga13" font="$(BOLD_FONT)|18|soft-shadow-thin" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 							<Dimensions x="815" y="22"  />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga5"  offsetY="30" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TS_DATA))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_TS_DATA))</OnInitialized>
 						</Label>
 						<Control name="$(parent)Riga6" >
 							<Dimensions  x="815" y="22" />
@@ -204,7 +204,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 											<Dimensions x="80" y="22" />
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TS_ADDRESS))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_TS_ADDRESS))</OnInitialized>
 										</Label>
 										<EditBox name="$(parent)SearchBox" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
 											<Dimensions x="170" y="22" />
@@ -232,7 +232,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 											<Dimensions x="540" y="22" />
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TS_PASSWORD))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_TS_PASSWORD))</OnInitialized>
 										</Label>
 									</Controls>
 								</Control>
@@ -249,7 +249,7 @@
 										<Label name="$(parent)Label" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 											<Dimensions x="80" y="22" />
 											<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" offsetY="10"/>
-											<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_TS_MORE))</OnInitialized>
+											<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_TS_MORE))</OnInitialized>
 										</Label>
 										<EditBox name="$(parent)SearchBox" inherits="ZO_DefaultEditForBackdrop" maxInputCharacters="100" editEnabled="false" multiLine="false" newLineEnabled="false" >
 											<Dimensions x="565" y="22" />
@@ -271,17 +271,17 @@
 						<Label name="$(parent)Riga8" font="$(BOLD_FONT)|22|soft-shadow-thin" inheritAlpha="true" color="ff3000" wrapMode="TRUNCATE">
 							<Dimensions x="815" y="22"  />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga11"  offsetY="30" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_REQUEST_TITLE))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_REQUEST_TITLE))</OnInitialized>
 						</Label>
 						<Label name="$(parent)Riga9" font="$(MEDIUM_FONT)|18|soft-shadow-thin" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 							<Dimensions x="815" y="22"  />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga8"  offsetY="10"/>
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_REQUEST_TS))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_REQUEST_TS))</OnInitialized>
 						</Label>
 						<Label name="$(parent)Riga10" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 							<Dimensions x="785" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga9" offsetY="10" offsetX="30" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_REQUEST_TS_TEXT))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_REQUEST_TS_TEXT))</OnInitialized>
 						</Label>
 						<Control name="$(parent)Riga12" >
 							<Dimensions  x="815" y="22" />
@@ -313,12 +313,12 @@
 						<Label name="$(parent)Riga16" font="$(MEDIUM_FONT)|18|soft-shadow-thin" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 							<Dimensions x="815"  />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga12"  offsetY="40" offsetX="-30" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_REQUEST_FORUM))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_REQUEST_FORUM))</OnInitialized>
 						</Label>
 						<Label name="$(parent)Riga17" font="ZoFontWinH4" inheritAlpha="true" color="FFFFFF" wrapMode="TRUNCATE">
 							<Dimensions x="785" />
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Riga16" offsetY="10" offsetX="30" />
-							<OnInitialized>self:SetText(GetString(SI_TUI_TEXT_COMMUNITY_REQUEST_FORUM_TEXT))</OnInitialized>
+							<OnInitialized>self:SetText(GetString(SI_TUIT_TEXT_COMMUNITY_REQUEST_FORUM_TEXT))</OnInitialized>
 						</Label>
 						<Control name="$(parent)Riga18" >
 							<Dimensions y="22" x="815" />
