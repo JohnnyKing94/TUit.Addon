@@ -12,9 +12,9 @@ end
 
 local TUIT_Builds_Target =
 {
-	[1] = { name = "PVE", icon = "TamrielUnlimitedIT/textures/PVE.dds" },
-	[2] = { name = "PVP", icon = "TamrielUnlimitedIT/textures/PVP.dds" },
-	[3] = { name = "PVP/PVE", icon = "TamrielUnlimitedIT/textures/PVE-PVP.dds" }
+	[1] = { name = "PVE", icon = "TamrielUnlimitedIT/textures/pve.dds" },
+	[2] = { name = "PVP", icon = "TamrielUnlimitedIT/textures/pvp.dds" },
+	[3] = { name = "PVP/PVE", icon = "TamrielUnlimitedIT/textures/pve-pvp.dds" }
 }
 local BUILD_MIN_PIECES = 3
 

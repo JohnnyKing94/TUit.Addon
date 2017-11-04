@@ -322,21 +322,21 @@ end
 function GetRaceTexture(raceId)
 	local raceInfo = GetConfigRaceInfo(raceId)
 	if raceInfo ~= nil then
-		return (raceInfo.texture ~= "" and "TamrielUnlimitedIT/textures/Race/" .. raceInfo.texture or "")
+		return (raceInfo.texture ~= "" and "TamrielUnlimitedIT/textures/race/" .. raceInfo.texture or "")
 	end
 	return ""
 end
 function GetClassTexture(classId)
 	local classInfo = GetConfigClassInfo(classId)
 	if classInfo ~= nil then
-		return (classInfo.texture ~= "" and "TamrielUnlimitedIT/textures/Class/" .. classInfo.texture or "")
+		return (classInfo.texture ~= "" and "TamrielUnlimitedIT/textures/class/" .. classInfo.texture or "")
 	end
 	return ""
 end
 function GetRoleTexture(roleId)
 	local roleInfo = GetConfigRoleInfo(roleId)
 	if roleInfo ~= nil and roleInfo.texture ~= nil then
-		return "TamrielUnlimitedIT/textures/Role/" .. roleInfo.texture
+		return "TamrielUnlimitedIT/textures/role/" .. roleInfo.texture
 	end
 	return ""
 end

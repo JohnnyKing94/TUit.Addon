@@ -15,11 +15,22 @@
 locales/en.lua
 locales/$(language).lua
 
-; Configurations
+; TUit Configurations
 TUitConfigData.lua
 TUitData.lua
-ItemsData.lua
-SharedBuilds.lua
+
+; TUit Data
+data/builds_channels.lua
+data/builds_gear.lua
+data/builds_private.lua
+data/builds_public.lua
+data/builds_skill.lua
+data/community.lua
+data/events.lua
+data/guilds.lua
+data/options.lua
+data/players.lua
+data/translations.lua
 
 ; Libraries
 libs/LibStub/LibStub.lua

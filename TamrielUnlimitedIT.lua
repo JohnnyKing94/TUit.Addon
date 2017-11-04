@@ -247,9 +247,9 @@ function TamrielUnlimitedIT:CreateScene()
 		descriptor = 1,
 		binding = "TUIT_SHOW_PANEL",
 		categoryName = SI_TUIT_ADDON_NAME,
-		normal = "TamrielUnlimitedIT/textures/TamrielUnlimited_up.dds",
-		pressed = "TamrielUnlimitedIT/textures/TamrielUnlimited_down.dds",
-		highlight = "TamrielUnlimitedIT/textures/TamrielUnlimited_over.dds",
+		normal = "TamrielUnlimitedIT/textures/tuit_up.dds",
+		pressed = "TamrielUnlimitedIT/textures/tuit_down.dds",
+		highlight = "TamrielUnlimitedIT/textures/tuit_over.dds",
 		callback = function ()
 			ZO_MenuBar_ClearSelection(MAIN_MENU_KEYBOARD.categoryBar)
 

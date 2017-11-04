@@ -23,7 +23,7 @@ TUitBuildsChannels =
 			["members"] =
 			{
 				[1] = "@topolino",
-				[2] = "@gabry90"
+				[2] = "@gabry90",
 				[3] = "@qui",
 				[4] = "@quo",
 				[5] = "@qua",

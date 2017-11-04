@@ -1,2 +1,6 @@
+# Exclude list
 textures/guild/*
 Thumbs.db
+
+# Expection list
+# !folder/file.ext
