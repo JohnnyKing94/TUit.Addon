@@ -3,4 +3,4 @@ textures/guild/*
 Thumbs.db
 
 # Expection list
-# !folder/file.ext
+!textures/guild/
